@@ -1,5 +1,10 @@
 .buttons {
     display: flex;
     flex-direction: column;
+
+    position: fixed;
+
+    box-sizing: border-box;
+
     gap: 30px;
 }

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const MainPage = ({}) => {
     const navigate = useNavigate()
+
     return (
         <main className={cl.mainpage}>
             <Buttons buttons={[
@@ -26,6 +27,8 @@ export const MainPage = ({}) => {
                     }
                 },
             ]}
+            left={100}
+            top={(window.innerHeight / 2)-250}
             ></Buttons>
         </main>
     )
