@@ -7,6 +7,6 @@ type ButtonProps = {
 
 export const ButtonPlay = ({children, onClick}: ButtonProps) => {
     return (<button onClick={onClick} className={cl.button}>
-        {children}
+        <span>{children}</span>
     </button>)
 }
