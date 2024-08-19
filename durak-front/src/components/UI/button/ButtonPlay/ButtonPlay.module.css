@@ -1,0 +1,18 @@
+.button {
+    width: 200px;
+    height: 40px;
+
+    border: 0px;
+    border-radius: 6px;
+
+    background: linear-gradient(83deg, rgb(42, 158, 18) 0%, rgba(40,207,76,1) 100%);
+
+    font-size: 1rem;
+    color: white;
+
+    cursor: pointer;
+}
+
+.button:focus {
+    outline: 0px;
+}
