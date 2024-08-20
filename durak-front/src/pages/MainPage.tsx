@@ -1,4 +1,4 @@
-import cl from './MainPage.module.css'
+// import cl from './MainPage.module.css'
 import { Buttons } from '../components/Buttons.tsx'
 import { useNavigate } from 'react-router-dom'
 
@@ -6,7 +6,7 @@ export const MainPage = ({}) => {
     const navigate = useNavigate()
 
     return (
-        <main className={cl.mainpage}>
+        <>
             <Buttons buttons={[
                 {
                     title:'Присоединиться к игре',
@@ -23,13 +23,13 @@ export const MainPage = ({}) => {
                 {
                     title:'Игра с самим собой',
                     onClick: (e) => {
-                        navigate('/gamewithu')
+                        navigate('/gamewithuself')
                     }
                 },
             ]}
             left={200}
             top={(window.innerHeight / 2)-250}
             ></Buttons>
-        </main>
+        </>
     )
 }
