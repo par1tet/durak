@@ -1,6 +1,6 @@
 // import cl from './MainPage.module.css'
-import { Buttons } from '../components/Buttons.tsx'
 import { useNavigate } from 'react-router-dom'
+import { Buttons } from '../../components/Buttons.tsx'
 
 export const MainPage = ({}) => {
     const navigate = useNavigate()

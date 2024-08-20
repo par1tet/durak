@@ -1,0 +1,31 @@
+.creategame {
+    display: flex;
+    position: fixed;
+
+    background: linear-gradient(83deg, rgb(42, 158, 18) 0%, rgba(40,207,76,1) 100%);
+    border-radius: 6px;
+
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 10px 8px;
+
+    gap: 12px;
+
+    flex-direction: column;
+
+    width: 800px;
+    height: 600px;
+}
+
+.creategame-setting {
+    display: flex;
+    flex-direction: row;
+
+    gap: 8px
+}
+
+.creategame-setting > span {
+    font-weight: 600;
+}

@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
-import { MainPage } from './pages/MainPage.tsx'
-import { GameWithUSelf } from './pages/GameWithUSelf.tsx'
+import { GameWithUSelf } from './pages/GameWithUSelf/GameWithUSelf.tsx'
+import { MainPage } from './pages/MainPage/MainPage.tsx'
 
 function App() {
   return (
