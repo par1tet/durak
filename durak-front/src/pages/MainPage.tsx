@@ -10,20 +10,20 @@ export const MainPage = ({}) => {
             <Buttons buttons={[
                 {
                     title:'Присоединиться к игре',
-                    onClick: (e) => console.log('еще нет')
+                    onClick: () => console.log('еще нет')
                 },
                 {
                     title:'Создать игру',
-                    onClick: (e) => console.log('еще нет')
+                    onClick: () => console.log('еще нет')
                 },
                 {
                     title:'Игра с ботами',
-                    onClick: (e) => console.log('еще нет')
+                    onClick: () => console.log('еще нет')
                 },
                 {
                     title:'Игра с самим собой',
-                    onClick: (e) => {
-                        navigate('/gamewithuself')
+                    onClick: () => {
+                        navigate('/gamewithuself?isSetting=true')
                     }
                 },
             ]}
