@@ -1,7 +1,7 @@
 .inputnumber {
     display: flex;
 
-    border: 0px;
+    border: 1px solid gray;
     border-radius: 6px;
 
     padding-left: 6px;

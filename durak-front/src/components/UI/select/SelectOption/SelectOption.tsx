@@ -1,3 +1,5 @@
+import cl from './SelectOption.module.css'
+
 type propsSelect = {
     options: {
         title: string,
@@ -6,7 +8,7 @@ type propsSelect = {
 }
 
 export const SelectOption = ({options}: propsSelect) => {
-    return (<select>
+    return (<select className={cl.select}>
         {options.map(option =>
             <option value={option.valueName} key={option.valueName}>
                 {option.title}

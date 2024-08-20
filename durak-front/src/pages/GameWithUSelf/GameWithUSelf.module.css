@@ -14,18 +14,31 @@
     gap: 12px;
 
     flex-direction: column;
+    justify-content: space-between;
 
     width: 800px;
     height: 600px;
 }
+.creategame > div {
+    margin: 0px auto;
+}
 
-.creategame-setting {
+.creategame__settings {
+    display: flex;
+
+    width: 100%;
+
+    gap: 12px;
+    flex-direction: column;
+}
+
+.creategame__settings > div {
     display: flex;
     flex-direction: row;
 
     gap: 8px
 }
 
-.creategame-setting > span {
+.creategame__settings > div > span {
     font-weight: 600;
 }
