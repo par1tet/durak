@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import { Cart } from "../utils/abstractClasses/carts";
-import { Trump } from "../utils/enums/trump";
+import { Cart } from "../utils/abstractClasses/cart";
 import { Player } from "../utils/abstractClasses/player";
+import { Trump } from "../utils/enums/trump";
 
 export class gameWithYourselfStore{
     carts: Cart[] = []

@@ -1,4 +1,4 @@
-import { Cart } from "./carts.ts"
+import { Cart } from "./cart.ts"
 
 export abstract class Player{
     carts: Cart[] = []

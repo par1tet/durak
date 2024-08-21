@@ -4,14 +4,45 @@ import cl from './GameWithUSelf.module.css';
 import { InputNumber } from "../../components/UI/input/InputNumber/InputNumber.tsx";
 import { SelectOption } from "../../components/UI/select/SelectOption/SelectOption.tsx";
 import { ButtonPlay } from "../../components/UI/button/ButtonPlay/ButtonPlay.tsx";
+import { useStore } from "../../hooks/useStore.ts";
+import { rootStore } from "../../store/rootStore.ts";
+import { useRef } from "react";
+import { createCartsArray } from "../../utils/functions/createCartsArray.ts";
+import { Cart } from "../../utils/abstractClasses/cart.ts";
+import { createPlayersArray } from "../../utils/functions/createPlayesArray.ts";
+import { Player } from "../../utils/abstractClasses/player.ts";
 
 export const GameWithUSelf = () => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const myRootStore: rootStore = useStore()
+    const settingsRef = useRef<HTMLDivElement>(null)
+
+    function handleStart(): undefined {
+        // setSearchParams({isSetting:'false'})
+        if (!settingsRef.current) return undefined;// проверка что ref не null
+
+        // создаем массив карт
+        const cartsArray: Cart[] = createCartsArray(+((settingsRef.current.children[0].children[1] as HTMLInputElement).value))
+
+        // создаем массив игроков
+        const playersArray = createPlayersArray(
+            +((settingsRef.current.children[1].children[1] as HTMLInputElement).value),
+            cartsArray
+        )
+
+        console.log(cartsArray)
+        console.log(playersArray)
+        console.log(cartsArray)
+
+
+        // myRootStore.gameWithYourself.createGameWithYourself(cartsArray)
+    }
+
     if(searchParams.get('isSetting') === 'true'){
         return (<>
             <div className={cl['creategame']}>
-                <div className={cl['creategame__settings']}>
-                    <Setting title='Колечество карт:'><InputNumber
+                <div className={cl['creategame__settings']} ref={settingsRef}>
+                    <Setting title='Количество карт:'><InputNumber
                         max={52}
                         min={36}
                         startNumber={36}
@@ -19,7 +50,7 @@ export const GameWithUSelf = () => {
                         width={100}
                         heigth={20}
                     ></InputNumber></Setting>
-                    <Setting title='Колечество игроков:'><InputNumber
+                    <Setting title='Количество игроков:'><InputNumber
                         max={6}
                         min={2}
                         startNumber={2}
@@ -53,7 +84,7 @@ export const GameWithUSelf = () => {
                             {title: 'Обычный', valueName: 'standart'},
                         ]}
                     /></Setting>
-                    <Setting title='Жулиничевство:'><SelectOption
+                    <Setting title='Жульничевство:'><SelectOption
                         options={[
                             {title: 'Есть', valueName: 'true'},
                             {title: 'Нету', valueName: 'false'},
@@ -61,7 +92,7 @@ export const GameWithUSelf = () => {
                     /></Setting>
                 </div>
                 <div>
-                    <ButtonPlay>
+                    <ButtonPlay onClick={handleStart}>
                         Запустить
                     </ButtonPlay>
                 </div>
@@ -69,7 +100,12 @@ export const GameWithUSelf = () => {
         </>)
     }else if((searchParams.get('isSetting') === 'false')){
         return (<>
-            игра
+            {myRootStore.gameWithYourself.carts}
+            {myRootStore.gameWithYourself.players}
+            {myRootStore.gameWithYourself.scam}
+            {myRootStore.gameWithYourself.timeForMove}
+            {myRootStore.gameWithYourself.trump}
+            {myRootStore.gameWithYourself.whoMove}
         </>)
     }else{
         return (<>
