@@ -10,6 +10,7 @@ export class gameWithYourselfStore{
     timeForMove: string = '10m'
     scam: boolean = true
     whoMove: number = 0
+    typeGame: string = ''
 
     constructor(){
         makeAutoObservable(this)
@@ -21,7 +22,9 @@ export class gameWithYourselfStore{
             trump: Trump,
             timeForMove: string,
             scam: boolean,
-            whoMove: number)
+            whoMove: number,
+            typeGame: string
+        )
     {
         this.carts = carts
         this.players = players
@@ -29,7 +32,6 @@ export class gameWithYourselfStore{
         this.timeForMove = timeForMove
         this.scam = scam
         this.whoMove = whoMove
-
-        makeAutoObservable(this)
+        this.typeGame = typeGame
     }
 }

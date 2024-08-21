@@ -18,12 +18,7 @@ export function createPlayersArray(countPlayrs: number, carts: Cart[]): Player[]
         }
 
 
-        players.push(new PlayerR(cartsForPlayer, !i))
-
-        // Обьяснение !i
-        // Конструкция !i - значит что мы преборазуем i к Boolean, а потом инвертуруем (ну точнее наоборот, но так лучше доходит)
-        // Таким образом мы добиваемся того что при первой итерации, будет 0, и преобразуеться к true, при следуищих, к false
-        // Благодаря этому только первый игрок получить true значение
+        players.push(new PlayerR(cartsForPlayer))
     }
 
     return players

@@ -6,25 +6,36 @@ import { SelectOption } from "../../components/UI/select/SelectOption/SelectOpti
 import { ButtonPlay } from "../../components/UI/button/ButtonPlay/ButtonPlay.tsx";
 import { useStore } from "../../hooks/useStore.ts";
 import { rootStore } from "../../store/rootStore.ts";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { createCartsArray } from "../../utils/functions/createCartsArray.ts";
 import { Cart } from "../../utils/abstractClasses/cart.ts";
 import { createPlayersArray } from "../../utils/functions/createPlayesArray.ts";
 import { shuffle } from "../../utils/functions/shuffle.ts";
+import { Trump } from "../../utils/enums/trump.ts";
+import { toJS } from "mobx";
 
 export const GameWithUSelf = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const myRootStore: rootStore = useStore()
     const settingsRef = useRef<HTMLDivElement>(null)
 
+    // useEffect(() => {
+    //     console.log(toJS(myRootStore.gameWithYourself.carts))
+    //     console.log(toJS(myRootStore.gameWithYourself.players))
+    //     console.log(toJS(myRootStore.gameWithYourself.scam))
+    //     console.log(toJS(myRootStore.gameWithYourself.timeForMove))
+    //     console.log(toJS(myRootStore.gameWithYourself.trump))
+    //     console.log(toJS(myRootStore.gameWithYourself.typeGame))
+    //     console.log(toJS(myRootStore.gameWithYourself.whoMove))
+    //     console.log('/////////////////////////////')
+    // }, [searchParams])
+
     function handleStart(): undefined {
-        // setSearchParams({isSetting:'false'})
         if (!settingsRef.current) return undefined;// проверка что ref не null
 
         // создаем массив карт
         const cartsArray: Cart[] = createCartsArray(+((settingsRef.current.children[0].children[1] as HTMLInputElement).value))
-        console.log(cartsArray)
-        console.log(shuffle(cartsArray))
+        shuffle(cartsArray)
 
         // создаем массив игроков
         const playersArray = createPlayersArray(
@@ -32,10 +43,47 @@ export const GameWithUSelf = () => {
             cartsArray
         )
 
-        console.log(playersArray)
-        console.log(cartsArray)
+        // получаем козырь
+        let trump: Trump = Trump['rand']
+        switch((settingsRef.current.children[2].children[1] as HTMLInputElement).value){
+            case 'diamonds':
+                trump = Trump['diamonds']
+                break;
+            case 'hearts':
+                trump = Trump['hearts']
+                break;
+            case 'spades':
+                trump = Trump['spades']
+                break;
+            case 'clubs':
+                trump = Trump['clubs']
+                break;
+        }
 
-        // myRootStore.gameWithYourself.createGameWithYourself(cartsArray)
+        // получаем время на ход
+        const timeForMove = (settingsRef.current.children[3].children[1] as HTMLInputElement).value
+
+        // получаем тип игры
+        const typeGame = (settingsRef.current.children[4].children[1] as HTMLInputElement).value
+
+        // получаем жульничевство
+        let isScam:  boolean = false
+        if((settingsRef.current.children[5].children[1] as HTMLInputElement).value === 'true'){
+            isScam = true
+        }
+
+        // добавляем в стор
+        myRootStore.gameWithYourself.createGameWithYourself(
+            cartsArray,
+            playersArray,
+            trump,
+            timeForMove,
+            isScam,
+            0,
+            typeGame
+        )
+
+        setSearchParams({isSetting:'false'})
     }
 
     if(searchParams.get('isSetting') === 'true'){
@@ -100,12 +148,6 @@ export const GameWithUSelf = () => {
         </>)
     }else if((searchParams.get('isSetting') === 'false')){
         return (<>
-            {myRootStore.gameWithYourself.carts}
-            {myRootStore.gameWithYourself.players}
-            {myRootStore.gameWithYourself.scam}
-            {myRootStore.gameWithYourself.timeForMove}
-            {myRootStore.gameWithYourself.trump}
-            {myRootStore.gameWithYourself.whoMove}
         </>)
     }else{
         return (<>
