@@ -10,7 +10,7 @@ import { useRef } from "react";
 import { createCartsArray } from "../../utils/functions/createCartsArray.ts";
 import { Cart } from "../../utils/abstractClasses/cart.ts";
 import { createPlayersArray } from "../../utils/functions/createPlayesArray.ts";
-import { Player } from "../../utils/abstractClasses/player.ts";
+import { shuffle } from "../../utils/functions/shuffle.ts";
 
 export const GameWithUSelf = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -24,15 +24,16 @@ export const GameWithUSelf = () => {
         // создаем массив карт
         const cartsArray: Cart[] = createCartsArray(+((settingsRef.current.children[0].children[1] as HTMLInputElement).value))
         console.log(cartsArray)
+        console.log(shuffle(cartsArray))
 
         // создаем массив игроков
-        // const playersArray = createPlayersArray(
-        //     +((settingsRef.current.children[1].children[1] as HTMLInputElement).value),
-        //     cartsArray
-        // )
+        const playersArray = createPlayersArray(
+            +((settingsRef.current.children[1].children[1] as HTMLInputElement).value),
+            cartsArray
+        )
 
-        // console.log(playersArray)
-        // console.log(cartsArray)
+        console.log(playersArray)
+        console.log(cartsArray)
 
         // myRootStore.gameWithYourself.createGameWithYourself(cartsArray)
     }
