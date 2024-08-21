@@ -1,7 +1,7 @@
 export enum Trump{
-    'rand',
-    'diamonds',
-    'hearts',
-    'spades',
-    'clubs',
+    diamonds,
+    hearts,
+    spades,
+    clubs,
+    rand,
 }

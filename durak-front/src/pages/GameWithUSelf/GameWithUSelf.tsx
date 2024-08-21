@@ -23,17 +23,16 @@ export const GameWithUSelf = () => {
 
         // создаем массив карт
         const cartsArray: Cart[] = createCartsArray(+((settingsRef.current.children[0].children[1] as HTMLInputElement).value))
+        console.log(cartsArray)
 
         // создаем массив игроков
-        const playersArray = createPlayersArray(
-            +((settingsRef.current.children[1].children[1] as HTMLInputElement).value),
-            cartsArray
-        )
+        // const playersArray = createPlayersArray(
+        //     +((settingsRef.current.children[1].children[1] as HTMLInputElement).value),
+        //     cartsArray
+        // )
 
-        console.log(cartsArray)
-        console.log(playersArray)
-        console.log(cartsArray)
-
+        // console.log(playersArray)
+        // console.log(cartsArray)
 
         // myRootStore.gameWithYourself.createGameWithYourself(cartsArray)
     }
