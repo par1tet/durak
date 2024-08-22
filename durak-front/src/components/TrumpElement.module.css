@@ -1,0 +1,46 @@
+.trump {
+    position: fixed;
+
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+}
+
+.trump-cards {
+    position: relative;
+    z-index: 2;
+
+    width: 80px;
+    height: 108px;
+}
+
+.trump-cards > img {
+    width: 80px;
+}
+
+.trump-cards > span {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-weight: 700;
+    font-size: 1.2rem;
+    background-color: rgba(0, 0, 0, 0.418);
+
+    border-radius: 6px;
+}
+
+.trump-trumpcard {
+    position: absolute;
+
+    top: 0%;
+    left: 40px;
+
+    width: 80px;
+    height: 108px;
+
+    transform: rotate(90deg);
+    z-index: 1;
+}

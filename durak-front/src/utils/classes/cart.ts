@@ -1,8 +1,8 @@
 import { Cart } from "../abstractClasses/cart";
-import { Trump } from "../enums/trump";
+import { Suit } from "../enums/suit";
 
 export class CartR extends Cart {
-    constructor(suit: Trump, level: number){
+    constructor(suit: Suit, level: number){
         super();
         this.suit = suit
         this.level = level

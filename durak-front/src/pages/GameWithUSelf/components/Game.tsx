@@ -3,11 +3,13 @@ import { rootStore } from "../../../store/rootStore"
 import { PlayerElement } from "../../../components/Player"
 import cl from './../GameWithUSelf.module.css';
 import { toJS } from "mobx"
+import { TrumpElement } from "../../../components/TrumpElement";
 
 export const Game = ({}) => {
     const myRootStore: rootStore = useStore()
 
     return (<>
+        <TrumpElement></TrumpElement>
         <div className={cl["otherplayers"]}>
             {toJS(myRootStore.gameWithYourself.players).map((player, index) => {
                 if (index === 0){
@@ -15,7 +17,8 @@ export const Game = ({}) => {
                 }else{
                     return (
                         <PlayerElement
-                        player={player}
+                            key={`${player.carts}`}
+                            player={player}
                         ></PlayerElement>
                     )
                 }

@@ -1,6 +1,6 @@
-import { Trump } from "../enums/trump"
+import { Suit } from "../enums/suit"
 
 export abstract class Cart{
-    suit: Trump = Trump['diamonds']
+    suit: Suit = Suit['diamonds']
     level: number = 6
 }

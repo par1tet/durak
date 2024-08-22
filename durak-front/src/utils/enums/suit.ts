@@ -1,4 +1,4 @@
-export enum Trump {
+export enum Suit {
     diamonds = 0,// бубны
     hearts = 1,// черви
     spades = 2,// пики

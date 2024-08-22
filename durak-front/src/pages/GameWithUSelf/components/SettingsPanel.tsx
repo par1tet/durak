@@ -1,17 +1,17 @@
+import { useRef } from "react";
+import { useSearchParams } from "react-router-dom";
+import { ButtonPlay } from "../../../components/UI/button/ButtonPlay/ButtonPlay.tsx";
 import { InputNumber } from "../../../components/UI/input/InputNumber/InputNumber.tsx";
 import { SelectOption } from "../../../components/UI/select/SelectOption/SelectOption.tsx";
-import { ButtonPlay } from "../../../components/UI/button/ButtonPlay/ButtonPlay.tsx";
-import { Setting } from "./Setting.tsx";
-import { rootStore } from "../../../store/rootStore.ts";
 import { useStore } from "../../../hooks/useStore.ts";
-import { useSearchParams } from "react-router-dom";
-import { useRef } from "react";
-import cl from './../GameWithUSelf.module.css';
-import { shuffle } from "../../../utils/functions/shuffle.ts";
-import { Trump } from "../../../utils/enums/trump.ts";
+import { rootStore } from "../../../store/rootStore.ts";
 import { Cart } from "../../../utils/abstractClasses/cart.ts";
+import { Suit } from "../../../utils/enums/suit.ts";
 import { createCartsArray } from "../../../utils/functions/createCartsArray.ts";
 import { createPlayersArray } from "../../../utils/functions/createPlayersArray.ts";
+import { shuffle } from "../../../utils/functions/shuffle.ts";
+import cl from './../GameWithUSelf.module.css';
+import { Setting } from "./Setting.tsx";
 
 export const SettingsPanel = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -21,32 +21,57 @@ export const SettingsPanel = ({}) => {
     function handleStart(): undefined {
         if (!settingsRef.current) return undefined;// проверка что ref не null
 
+        const countPlayers: number = +((settingsRef.current.children[1].children[1] as HTMLInputElement).value)
+
+        // получаем козырь
+        let trump: Suit = Suit['rand']
+        switch((settingsRef.current.children[2].children[1] as HTMLInputElement).value){
+            case 'diamonds':
+                trump = Suit['diamonds']
+                break;
+            case 'hearts':
+                trump = Suit['hearts']
+                break;
+            case 'spades':
+                trump = Suit['spades']
+                break;
+            case 'clubs':
+                trump = Suit['clubs']
+                break;
+            case 'rand':
+                switch (Math.floor(Math.random() * 4)){
+                    case 0:
+                        trump = Suit['clubs']
+                        break
+                    case 1:
+                        trump = Suit['diamonds']
+                        break
+                    case 2:
+                        trump = Suit['spades']
+                        break
+                    case 3:
+                        trump = Suit['hearts']
+                        break
+                }
+                break;
+        }
+
         // создаем массив карт
         const cartsArray: Cart[] = createCartsArray(+((settingsRef.current.children[0].children[1] as HTMLInputElement).value))
         shuffle(cartsArray)
 
+        // получаем козырную карту
+        let trumpCart: Cart | null = null
+
+        if (cartsArray.length / countPlayers !== countPlayers){
+            trumpCart = cartsArray.filter(cart => cart.suit === trump)[0]
+        }
+
         // создаем массив игроков
         const playersArray = createPlayersArray(
-            +((settingsRef.current.children[1].children[1] as HTMLInputElement).value),
+            countPlayers,
             cartsArray
         )
-
-        // получаем козырь
-        let trump: Trump = Trump['rand']
-        switch((settingsRef.current.children[2].children[1] as HTMLInputElement).value){
-            case 'diamonds':
-                trump = Trump['diamonds']
-                break;
-            case 'hearts':
-                trump = Trump['hearts']
-                break;
-            case 'spades':
-                trump = Trump['spades']
-                break;
-            case 'clubs':
-                trump = Trump['clubs']
-                break;
-        }
 
         // получаем время на ход
         const timeForMove = (settingsRef.current.children[3].children[1] as HTMLInputElement).value
@@ -68,7 +93,8 @@ export const SettingsPanel = ({}) => {
             timeForMove,
             isScam,
             0,
-            typeGame
+            typeGame,
+            trumpCart
         )
 
         setSearchParams({isSetting:'false'})
