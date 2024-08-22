@@ -11,7 +11,7 @@ import { shuffle } from "../../../utils/functions/shuffle.ts";
 import { Trump } from "../../../utils/enums/trump.ts";
 import { Cart } from "../../../utils/abstractClasses/cart.ts";
 import { createCartsArray } from "../../../utils/functions/createCartsArray.ts";
-import { createPlayersArray } from "../../../utils/functions/createPlayesArray.ts";
+import { createPlayersArray } from "../../../utils/functions/createPlayersArray.ts";
 
 export const SettingsPanel = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();

@@ -42,3 +42,24 @@
 .creategame__settings > div > span {
     font-weight: 600;
 }
+
+.mainplayer {
+    position: fixed;
+
+    left: 50%;
+    top: 80%;
+    transform: translate(-50%, -50%);
+}
+
+.otherplayers {
+    display: flex;
+    position: fixed;
+
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, -50%);
+
+    flex-direction: row;
+
+    gap: 100px;
+}

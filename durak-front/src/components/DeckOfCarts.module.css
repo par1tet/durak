@@ -7,4 +7,11 @@
 .deck-img {
     width: 80px;
     margin-right: -36px;
+
+    transition: margin 0.25s;
+}
+
+.deck-img:hover {
+    margin-top: -13px;
+    margin-bottom: 13px;
 }

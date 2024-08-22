@@ -6,10 +6,10 @@ type propsDeck = {
 }
 
 export const DeckOfCarts = ({carts}: propsDeck) => {
-    carts.map(cart =>{
-        console.log(cart.level)
-        console.log(cart.suit)
-    })
+    // carts.map(cart =>{
+    //     console.log(cart.level)
+    //     console.log(cart.suit)
+    // })
     return (<>
         <div className={cl.deck}>
             {carts.map(cart =>

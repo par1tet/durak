@@ -11,16 +11,16 @@ export const GameWithUSelf = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const myRootStore: rootStore = useStore()
 
-    useEffect(() => {
-        console.log(toJS(myRootStore.gameWithYourself.carts))
-        console.log(toJS(myRootStore.gameWithYourself.players))
-        console.log(toJS(myRootStore.gameWithYourself.scam))
-        console.log(toJS(myRootStore.gameWithYourself.timeForMove))
-        console.log(toJS(myRootStore.gameWithYourself.trump))
-        console.log(toJS(myRootStore.gameWithYourself.typeGame))
-        console.log(toJS(myRootStore.gameWithYourself.whoMove))
-        console.log('/////////////////////////////')
-    }, [searchParams])
+    // useEffect(() => {
+    //     console.log(toJS(myRootStore.gameWithYourself.carts))
+    //     console.log(toJS(myRootStore.gameWithYourself.players))
+    //     console.log(toJS(myRootStore.gameWithYourself.scam))
+    //     console.log(toJS(myRootStore.gameWithYourself.timeForMove))
+    //     console.log(toJS(myRootStore.gameWithYourself.trump))
+    //     console.log(toJS(myRootStore.gameWithYourself.typeGame))
+    //     console.log(toJS(myRootStore.gameWithYourself.whoMove))
+    //     console.log('/////////////////////////////')
+    // }, [searchParams])
 
     if(searchParams.get('isSetting') === 'true'){
         return (<>
