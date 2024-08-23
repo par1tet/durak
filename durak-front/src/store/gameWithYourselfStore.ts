@@ -45,4 +45,14 @@ export class gameWithYourselfStore{
     changeBatleCards(indexOfBatleCard: number, cart: Cart){
         this.batleCards[indexOfBatleCard] = cart
     }
+
+    setWhoMove( prevFunc: (prev:number) => number ){
+        const newValue = prevFunc(this.whoMove)
+
+        if(newValue >= this.players.length || newValue < 0){
+            this.whoMove = 0
+        }
+
+        this.whoMove = newValue
+    }
 }

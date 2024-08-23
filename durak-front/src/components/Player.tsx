@@ -7,10 +7,11 @@ import { useStore } from "../hooks/useStore"
 import { rootStore } from "../store/rootStore"
 import { Cart } from "../utils/abstractClasses/cart"
 import { useState } from "react"
+import { stateOfPlayer } from "../utils/enums/stateOfPlayer"
 
 type propsPlayer = {
     player: Player,
-    isMove: boolean
+    isMove: stateOfPlayer
 }
 
 export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
@@ -22,11 +23,16 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
 
         if (elementFromPoint === null) { return undefined }
 
+        if(!(myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.whoMove] === player)){
+            return
+        }
+
         const indexOfCartBuild: number = +((elementFromPoint.attributes as any).getNamedItem('data-index').value)
 
         myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart)
         player.removeCart(cart)
 
+        myRootStore.gameWithYourself.setWhoMove(prev => prev+1)
         setRerender(prev => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 
@@ -36,14 +42,34 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
                 {player.nickName}
             </span>
             {(() => {
-                if (isMove){
-                    return (
-                        <img
-                            className={cl['moveindicator']}
-                            src={moveIndicator}
-                            alt="move"
-                        />
-                    )
+                switch (isMove){
+                    case stateOfPlayer['move']:{
+                        return (
+                            <img
+                                className={cl['moveindicator']}
+                                src={moveIndicator}
+                                alt="move"
+                            />
+                        )
+                    }
+                    case stateOfPlayer['def']:{
+                        return (
+                            <img
+                                className={cl['defindicator']}
+                                src={moveIndicator}
+                                alt="move"
+                            />
+                        )
+                    }
+                    case stateOfPlayer['retr']:{
+                        return (
+                            <img
+                                className={cl['retrindicator']}
+                                src={moveIndicator}
+                                alt="move"
+                            />
+                        )
+                    }
                 }
             })()}
         </div>

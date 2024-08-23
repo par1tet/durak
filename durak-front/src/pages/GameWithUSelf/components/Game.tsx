@@ -2,11 +2,13 @@ import { useStore } from "../../../hooks/useStore"
 import { rootStore } from "../../../store/rootStore"
 import { PlayerElement } from "../../../components/Player"
 import cl from './../GameWithUSelf.module.css';
-import { toJS } from "mobx"
+import { observable, toJS } from "mobx"
 import { TrumpElement } from "../../../components/TrumpElement";
 import { BattleCards } from "../../../components/BattleCards";
+import { stateOfPlayer } from "../../../utils/enums/stateOfPlayer";
+import { observer } from "mobx-react-lite";
 
-export const Game = ({}) => {
+export const Game = observer(({}) => {
     const myRootStore: rootStore = useStore()
 
     return (<>
@@ -21,7 +23,15 @@ export const Game = ({}) => {
                         <PlayerElement
                             key={`${player.carts}`}
                             player={player}
-                            isMove={toJS(myRootStore.gameWithYourself.whoMove) === index}
+                            isMove={(()=>{
+                                if (toJS(myRootStore.gameWithYourself.whoMove) === index){
+                                    return stateOfPlayer['move']
+                                }else if(toJS(myRootStore.gameWithYourself.whoMove) === index - 1){
+                                    return stateOfPlayer['def']
+                                }else {
+                                    return stateOfPlayer['retr']
+                                }
+                            })()}
                         ></PlayerElement>
                     )
                 }
@@ -30,8 +40,16 @@ export const Game = ({}) => {
         <div className={cl["mainplayer"]}>
             <PlayerElement
                 player={toJS(myRootStore.gameWithYourself.players[0])}
-                isMove={toJS(myRootStore.gameWithYourself.whoMove) === 0}
+                isMove={(()=>{
+                    if (toJS(myRootStore.gameWithYourself.whoMove) === 0){
+                        return stateOfPlayer['move']
+                    }else if(toJS(myRootStore.gameWithYourself.whoMove) === toJS(myRootStore.gameWithYourself.players.length)-1){
+                        return stateOfPlayer['def']
+                    }else {
+                        return stateOfPlayer['retr']
+                    }
+                })()}
             ></PlayerElement>
         </div>
     </>)
-}
+})

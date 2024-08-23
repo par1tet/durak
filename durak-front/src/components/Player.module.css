@@ -39,3 +39,13 @@
     margin-top: -13px;
     margin-bottom: 13px;
 }
+
+.defindicator{
+    width: 10px;
+    filter: invert(1);
+}
+
+.retrindicator{
+    width: 10px;
+    filter: invert(0.5);
+}
