@@ -13,6 +13,7 @@ export class gameWithYourselfStore{
     whoMove: number = 0
     typeGame: string = ''
     trumpCart: Cart | null = null
+    batleCards: (Cart | null)[] = []
 
     constructor(){
         makeAutoObservable(this)
@@ -37,5 +38,8 @@ export class gameWithYourselfStore{
         this.whoMove = whoMove
         this.typeGame = typeGame
         this.trumpCart = trumpCart
+        this.batleCards =
+                        [null,null,null,
+                        null,null,null]
     }
 }

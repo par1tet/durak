@@ -20,3 +20,9 @@
 
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.battlecards-cardshow {
+    width: 80px;
+
+    transition: margin 0.25s;
+}

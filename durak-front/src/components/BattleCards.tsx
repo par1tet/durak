@@ -1,16 +1,37 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import cl from './BattleCards.module.css'
+import { useStore } from '../hooks/useStore'
+import { rootStore } from '../store/rootStore'
+import { Cart } from '../utils/abstractClasses/cart'
+import { observer } from 'mobx-react-lite'
+import { toJS } from 'mobx'
 
-export const BattleCards = ({}) => {
+export const BattleCards = observer(({}) => {
+    const myRootStore: rootStore = useStore()
+
+    console.log(toJS(myRootStore.gameWithYourself.batleCards))
+
     return (<div className={cl['battlecards']}>
-        {(() => {
-            const cardsArray: ReactNode[] = []
-            for (let i = 0;i !== 6;i++){
-                cardsArray.push(<div className={cl['battlecards-card']}>
-                    
+        {toJS(myRootStore.gameWithYourself.batleCards).map((cart: Cart | null, index:number) => {
+            if (!cart){
+                return (<div
+                    className={cl['battlecards-card']}
+                    key={index}
+                    data-type='battlecard'
+                    data-index={index}
+                    draggable
+                >
                 </div>)
+            } else {
+                return (<img
+                    src={`/src/assets/images/carts/${cart.level}${cart.suit}.png`}
+                    alt="100"
+                    key={index}
+                    className={cl['battlecards-cardshow']}
+                    draggable
+                />)
             }
-            return cardsArray
-        })()}
+        })
+        }
     </div>)
-}
+})
