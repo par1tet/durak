@@ -42,4 +42,8 @@ export class gameWithYourselfStore{
                         [null,null,null,
                         null,null,null]
     }
+
+    changeBatleCards(indexOfBatleCard: number, cart: Cart){
+        this.batleCards[indexOfBatleCard] = cart
+    }
 }

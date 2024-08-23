@@ -9,7 +9,6 @@ export class PlayerR extends Player{
     }
 
     removeCart(cart: Cart): void {
-        this.carts.filter(cartPl => `${cartPl.level}:${cartPl.suit}` !== `${cart.level}:${cart.suit}`)
         this.carts = this.carts.filter(cartPl => `${cartPl.level}:${cartPl.suit}` !== `${cart.level}:${cart.suit}`)
     }
 }

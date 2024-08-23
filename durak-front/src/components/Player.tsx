@@ -7,6 +7,7 @@ import { useStore } from "../hooks/useStore"
 import { rootStore } from "../store/rootStore"
 import { toJS } from "mobx"
 import { Cart } from "../utils/abstractClasses/cart"
+import { useEffect, useState } from "react"
 
 type propsPlayer = {
     player: Player,
@@ -15,23 +16,22 @@ type propsPlayer = {
 
 export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
     const myRootStore: rootStore = useStore()
+    const [rerender, setRerender] = useState(1)
 
-    function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): number | void{
+    function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined{
         const elementFromPoint = document.elementFromPoint(e.clientX, e.clientY)
 
-        if (elementFromPoint === null) { return 0 }
-
-        // СУКА, Я СДЕЛАЛ ЕГО ANY, ТАК КАК ВЫДАЕТЬСЯ ЕБАНАЯ БЛЯТЬ ОШИБКА
-        // Я СДЕЛАЛ МИЛЛИОН ПРОВЕРОК, А ЕМУ ПОХУЙ, КАРОЧЕ ПОШЕЛ ЭТОТ ТАЙПСКРИПТ НАХУЙ!!!!11
+        if (elementFromPoint === null) { return undefined }
 
         const indexOfCartBuild: number = +((elementFromPoint.attributes as any).getNamedItem('data-index').value)
 
-        myRootStore.gameWithYourself.batleCards[indexOfCartBuild] = cart
-        console.log(toJS(myRootStore.gameWithYourself.players[0].carts))
+        myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart)
         player.removeCart(cart)
+        
+        setRerender(prev => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 
-    return (<div className={cl['player']}>
+    return (<div className={cl['player']} key={rerender}>
         <div className={cl['player-nickname']}>
             <span>
                 {player.nickName}
@@ -42,7 +42,8 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
                         <img
                             className={cl['moveindicator']}
                             src={moveIndicator}
-                            alt="move" />
+                            alt="move"
+                        />
                     )
                 }
             })()}

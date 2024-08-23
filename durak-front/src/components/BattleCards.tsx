@@ -9,6 +9,8 @@ import { toJS } from 'mobx'
 export const BattleCards = observer(({}) => {
     const myRootStore: rootStore = useStore()
 
+    console.log(324)
+
     return (<div className={cl['battlecards']}>
         {toJS(myRootStore.gameWithYourself.batleCards).map((cart: Cart | null, index:number) => {
             if (!cart){

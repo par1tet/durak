@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { SettingsPanel } from "./components/SettingsPanel.tsx";
 import { Game } from "./components/Game.tsx";
 import { toJS } from "mobx";
+import { observer } from "mobx-react-lite";
 
 export const GameWithUSelf = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -35,5 +36,4 @@ export const GameWithUSelf = () => {
             Неверный запрос
         </>)
     }
-
 }
