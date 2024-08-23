@@ -5,9 +5,8 @@ import moveIndicator from './../assets/images/moveIndicator.png'
 import { observer } from "mobx-react-lite"
 import { useStore } from "../hooks/useStore"
 import { rootStore } from "../store/rootStore"
-import { toJS } from "mobx"
 import { Cart } from "../utils/abstractClasses/cart"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 type propsPlayer = {
     player: Player,
@@ -27,7 +26,7 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
 
         myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart)
         player.removeCart(cart)
-        
+
         setRerender(prev => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 

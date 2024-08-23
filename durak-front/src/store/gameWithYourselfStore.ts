@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 import { Cart } from "../utils/abstractClasses/cart";
-import { CartR } from "../utils/classes/cart";
 import { Player } from "../utils/abstractClasses/player";
 import { Suit } from "../utils/enums/suit.ts";
 

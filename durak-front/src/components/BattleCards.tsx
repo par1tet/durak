@@ -1,4 +1,3 @@
-import { ReactNode, useEffect } from 'react'
 import cl from './BattleCards.module.css'
 import { useStore } from '../hooks/useStore'
 import { rootStore } from '../store/rootStore'

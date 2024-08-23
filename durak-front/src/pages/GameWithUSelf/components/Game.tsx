@@ -5,7 +5,6 @@ import cl from './../GameWithUSelf.module.css';
 import { toJS } from "mobx"
 import { TrumpElement } from "../../../components/TrumpElement";
 import { BattleCards } from "../../../components/BattleCards";
-import { observer } from "mobx-react-lite";
 
 export const Game = ({}) => {
     const myRootStore: rootStore = useStore()

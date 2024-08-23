@@ -1,5 +1,4 @@
 import cl from './DeckOfCarts.module.css'
-import { Player } from '../utils/abstractClasses/player'
 import { Cart } from '../utils/abstractClasses/cart'
 import { observer } from 'mobx-react-lite'
 
