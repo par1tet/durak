@@ -1,6 +1,8 @@
 .player {
     display: flex;
 
+    box-sizing: border-box1;
+
     flex-direction: column;
 }
 

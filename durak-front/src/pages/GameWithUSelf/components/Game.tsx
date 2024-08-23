@@ -4,12 +4,14 @@ import { PlayerElement } from "../../../components/Player"
 import cl from './../GameWithUSelf.module.css';
 import { toJS } from "mobx"
 import { TrumpElement } from "../../../components/TrumpElement";
+import { BattleCards } from "../../../components/BattleCards";
 
 export const Game = ({}) => {
     const myRootStore: rootStore = useStore()
 
     return (<>
         <TrumpElement></TrumpElement>
+        <BattleCards></BattleCards>
         <div className={cl["otherplayers"]}>
             {toJS(myRootStore.gameWithYourself.players).map((player, index) => {
                 if (index === 0){
