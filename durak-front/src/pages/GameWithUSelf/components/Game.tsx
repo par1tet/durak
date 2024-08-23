@@ -19,6 +19,7 @@ export const Game = ({}) => {
                         <PlayerElement
                             key={`${player.carts}`}
                             player={player}
+                            isMove={toJS(myRootStore.gameWithYourself.whoMove) === index}
                         ></PlayerElement>
                     )
                 }
@@ -27,6 +28,7 @@ export const Game = ({}) => {
         <div className={cl["mainplayer"]}>
             <PlayerElement
                 player={toJS(myRootStore.gameWithYourself.players[0])}
+                isMove={toJS(myRootStore.gameWithYourself.whoMove) === 0}
             ></PlayerElement>
         </div>
     </>)

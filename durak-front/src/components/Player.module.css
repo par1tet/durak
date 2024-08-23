@@ -5,7 +5,17 @@
 }
 
 .player-nickname {
+    display: flex;
+
     font-weight: 700;
     font-size: 1rem;
     color: rgb(0, 0, 0);
+
+    gap: 4px;
+
+    align-items: center;
+}
+
+.moveindicator {
+    width: 10px;
 }
