@@ -12,9 +12,7 @@ export const DeckOfCarts = observer(({carts, onDragEnd}: propsDeck) => {
     //     console.log(cart.level)
     //     console.log(cart.suit)
     // })
-
-    console.log(324)
-
+    
     return (
         <div className={cl.deck}>
             {carts.map((cart: Cart) =>

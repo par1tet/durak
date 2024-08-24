@@ -21,7 +21,7 @@ export const Game = observer(({}) => {
                 }else{
                     return (
                         <PlayerElement
-                            key={`${player.carts}`}
+                            key={index}
                             player={player}
                             isMove={(()=>{
                                 if (toJS(myRootStore.gameWithYourself.whoMove) === index){

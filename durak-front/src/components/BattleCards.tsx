@@ -8,11 +8,9 @@ import { toJS } from 'mobx'
 export const BattleCards = observer(({}) => {
     const myRootStore: rootStore = useStore()
 
-    console.log(324)
-
     return (<div className={cl['battlecards']}>
-        {toJS(myRootStore.gameWithYourself.batleCards).map((cart: Cart | null, index:number) => {
-            if (!cart){
+        {toJS(myRootStore.gameWithYourself.batleCards).map((carts: Cart[] | null, index:number) => {
+            if (!carts){
                 return (<div
                     className={cl['battlecards-card']}
                     key={index}
@@ -22,13 +20,31 @@ export const BattleCards = observer(({}) => {
                 >
                 </div>)
             } else {
-                return (<img
-                    src={`/src/assets/images/carts/${cart.level}${cart.suit}.png`}
-                    alt="100"
-                    key={index}
-                    className={cl['battlecards-cardshow']}
-                    draggable
-                />)
+                if(carts.length === 1){
+                    return (<div key={index} className={cl['battlecard-cards']}>
+                        <img
+                        src={`/src/assets/images/carts/${carts[0].level}${carts[0].suit}.png`}
+                        data-type='battlecard'
+                        data-index={index}
+                        className={cl['battlecards-cardattack']}
+                        draggable
+                        />
+                    </div>)
+                }else{
+                    return (<div key={index} className={cl['battlecard-cards']}>
+                        <img
+                            src={`/src/assets/images/carts/${carts[0].level}${carts[0].suit}.png`}
+                            className={cl['battlecards-cardattack']}
+                            draggable
+                        />
+                        <img
+                            src={`/src/assets/images/carts/${carts[1].level}${carts[1].suit}.png`}
+                            className={cl['battlecards-carddef']}
+                            draggable
+                        />
+                    </div>)
+                }
+
             }
         })
         }

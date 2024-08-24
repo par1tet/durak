@@ -6,7 +6,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    gap: 12px;
+    gap: 30px;
 
     grid-template-columns: repeat(3, 1fr);
 }
@@ -21,8 +21,25 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.battlecards-cardshow {
+.battlecards-cardattack {
     width: 80px;
 
     transition: margin 0.25s;
+}
+
+.battlecards-carddef {
+    width: 80px;
+
+    margin-top: -78px;
+
+    transition: margin 0.25s;
+}
+
+.battlecard-cards {
+    display: flex;
+
+    width: 80px;
+    height: 108px;
+
+    flex-direction: column;
 }

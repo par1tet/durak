@@ -20,19 +20,37 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
 
     function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined{
         const elementFromPoint = document.elementFromPoint(e.clientX, e.clientY)
-
         if (elementFromPoint === null) { return undefined }
+        const indexOfCartBuild: number = +((elementFromPoint.attributes as any)['data-index'].value)
+        console.log(indexOfCartBuild)
 
-        if(!(myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.whoMove] === player)){
+        if(myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.whoMove] === player){
+            myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart)
+            player.removeCart(cart)
+
+        }else if(myRootStore.gameWithYourself.whoMove + 1 < myRootStore.gameWithYourself.players.length){
+            if(myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.whoMove+1] === player){
+                if(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart) === 0){
+                    player.removeCart(cart)
+                }
+            }else{
+                return
+            }
+        }else if(myRootStore.gameWithYourself.whoMove + 1 === myRootStore.gameWithYourself.players.length){
+            if(myRootStore.gameWithYourself.players[0] === player){
+                if(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart) === 0){
+                    player.removeCart(cart)
+                }
+            }else{
+                return
+            }
+        }else{
             return
         }
 
-        const indexOfCartBuild: number = +((elementFromPoint.attributes as any).getNamedItem('data-index').value)
 
-        myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart)
-        player.removeCart(cart)
 
-        myRootStore.gameWithYourself.setWhoMove(prev => prev+1)
+        // myRootStore.gameWithYourself.setWhoMove(prev => prev+1)
         setRerender(prev => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 
