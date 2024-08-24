@@ -78,8 +78,9 @@ export class gameWithYourselfStore{
 
     changeDefCards(indexOfBatleCard: number, cart: Cart): number{
         if (this.batleCards[indexOfBatleCard] === null) return -1
-        if (this.batleCards[indexOfBatleCard][0].suit !== cart.suit) return -1
+        if (this.batleCards[indexOfBatleCard][0].suit !== cart.suit && this.trump !== cart.suit) return -1
         if (this.batleCards[indexOfBatleCard][0].level > cart.level) return -1
+
         this.batleCards[indexOfBatleCard][1] = cart
         return 0
     }
