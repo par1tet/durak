@@ -42,9 +42,32 @@ export class gameWithYourselfStore{
                         null,null,null]
     }
 
-    changeBatleCards(indexOfBatleCard: number, cart: Cart){
-        this.batleCards[indexOfBatleCard] = []
-        this.batleCards[indexOfBatleCard][0] = cart
+    changeBatleCards(indexOfBatleCard: number, cart: Cart): number{
+        let isEmptyBatleCards: boolean = true;
+        this.batleCards.forEach(cartBatle => {if(cartBatle !== null){isEmptyBatleCards = false}})
+
+        if(isEmptyBatleCards){
+            this.batleCards[indexOfBatleCard] = []
+            this.batleCards[indexOfBatleCard][0] = cart
+
+            return 0;
+        }else{
+            let isCanMove: boolean = false;
+            this.batleCards.forEach((cartBatle: Cart[] | null) => {
+                if(cartBatle === null) return 0
+                if(cartBatle[0].level === cart.level || cartBatle[0].suit === cart.suit){
+                    isCanMove = true
+                }
+            })
+            if(isCanMove){
+                this.batleCards[indexOfBatleCard] = []
+                this.batleCards[indexOfBatleCard][0] = cart
+
+                return 0;
+            }else {
+                return -1;
+            }
+        }
     }
 
     changeDefCards(indexOfBatleCard: number, cart: Cart): number{
