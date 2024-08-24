@@ -56,11 +56,11 @@ export class gameWithYourselfStore{
 
             this.batleCards.forEach((cartBatle: Cart[] | null) => {
                 if(cartBatle === null) return 0
-                if(cartBatle[0].level === cart.level || cartBatle[0].suit === cart.suit){
+                if(cartBatle[0].level === cart.level){
                     isCanMove = true
                 }
                 if(cartBatle.length === 2){
-                    if(cartBatle[1].level === cart.level || cartBatle[1].suit === cart.suit){
+                    if(cartBatle[1].level === cart.level){
                         isCanMove = true
                     }
                 }
@@ -78,8 +78,7 @@ export class gameWithYourselfStore{
 
     changeDefCards(indexOfBatleCard: number, cart: Cart): number{
         if (this.batleCards[indexOfBatleCard] === null) return -1
-        if (this.batleCards[indexOfBatleCard][0].suit !== cart.suit && this.trump !== cart.suit) return -1
-        if (this.batleCards[indexOfBatleCard][0].level > cart.level) return -1
+        if (this.batleCards[indexOfBatleCard][0].level > cart.level && this.trump !== cart.suit) return -1
 
         this.batleCards[indexOfBatleCard][1] = cart
         return 0

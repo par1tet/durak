@@ -34,6 +34,9 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
                     player.removeCart(cart)
                 }
             }else{
+                if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
+                    player.removeCart(cart)
+                }
                 return
             }
         }else if(myRootStore.gameWithYourself.whoMove + 1 === myRootStore.gameWithYourself.players.length){
@@ -44,8 +47,6 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
             }else{
                 return
             }
-        }else{
-            return
         }
 
 
