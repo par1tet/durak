@@ -64,14 +64,31 @@
     gap: 100px;
 }
 
+.otherplayers > div {
+    display: flex;
+    flex-direction: column;
+
+    position:relative;
+}
+
 .mpbuttonaction {
     position: fixed;
 
     left: 50%;
     top: 70%;
+
     transform: translate(-50%, -50%);
 }
 
 .buttonaction-notactive {
     display: none;
+}
+
+.otbuttonaction {
+    position: absolute;
+
+    top: 130%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
 }

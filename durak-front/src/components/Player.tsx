@@ -8,13 +8,13 @@ import { rootStore } from "../store/rootStore"
 import { Cart } from "../utils/abstractClasses/cart"
 import { useState } from "react"
 import { stateOfPlayer } from "../utils/enums/stateOfPlayer"
+import { forwardRef } from "react"
 
 type propsPlayer = {
     player: Player,
     isMove: stateOfPlayer
 }
-
-export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
+export const PlayerElement = observer(forwardRef(({player, isMove}: propsPlayer, ref:React.ForwardedRef<HTMLDivElement>) => {
     const myRootStore: rootStore = useStore()
     const [rerender, setRerender] = useState(1)
 
@@ -52,7 +52,7 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
         setRerender(prev => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 
-    return (<div className={cl['player']} key={rerender}>
+    return (<div className={cl['player']} key={rerender} ref={ref}>
         <div className={cl['player-nickname']}>
             <span>
                 {player.nickName}
@@ -91,4 +91,4 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
         </div>
         <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd}></DeckOfCarts>
     </div>)
-})
+}))
