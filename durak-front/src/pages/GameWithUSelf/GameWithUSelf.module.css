@@ -63,3 +63,15 @@
 
     gap: 100px;
 }
+
+.mpbuttonaction {
+    position: fixed;
+
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -50%);
+}
+
+.buttonaction-notactive {
+    display: none;
+}

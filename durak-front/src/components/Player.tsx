@@ -22,7 +22,6 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
         const elementFromPoint = document.elementFromPoint(e.clientX, e.clientY)
         if (elementFromPoint === null) { return undefined }
         const indexOfCartBuild: number = +((elementFromPoint.attributes as any)['data-index'].value)
-        console.log(indexOfCartBuild)
 
         if(myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.whoMove] === player){
             if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
@@ -48,8 +47,6 @@ export const PlayerElement = observer(({player, isMove}: propsPlayer) => {
                 return
             }
         }
-
-
 
         // myRootStore.gameWithYourself.setWhoMove(prev => prev+1)
         setRerender(prev => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
