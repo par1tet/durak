@@ -57,7 +57,7 @@ export const SettingsPanel = ({}) => {
         }
 
         // создаем массив карт
-        const cartsArray: Cart[] = createCartsArray(+((settingsRef.current.children[0].children[1] as HTMLInputElement).value))
+        let cartsArray: Cart[] = createCartsArray(+((settingsRef.current.children[0].children[1] as HTMLInputElement).value))
         shuffle(cartsArray)
 
         // получаем козырную карту
@@ -65,6 +65,9 @@ export const SettingsPanel = ({}) => {
 
         if (cartsArray.length / countPlayers !== countPlayers){
             trumpCart = cartsArray.filter(cart => cart.suit === trump)[0]
+
+            // удаляем козырную карту из колоды
+            cartsArray = cartsArray.filter(cart => cart !== trumpCart)
         }
 
         // создаем массив игроков

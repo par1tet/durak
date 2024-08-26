@@ -119,9 +119,26 @@ export class gameWithYourselfStore{
                 if(this.carts.length){
                     this.players[playerIndex].carts.push((this.carts.pop() as any))
                 }else{
+                    if(this.trumpCart){
+                        this.players[playerIndex].carts.push(this.trumpCart)
+                        this.trumpCart = null
+                    }
                     break
                 }
             }
         }
+    }
+
+    isBeaten(): boolean{
+        if(this.isCleanBatleCards()) return false
+        let isClean: boolean = true
+        for(let i = 0;i !== this.batleCards.length;i++) {
+            if (this.batleCards[i]){
+                if (this.batleCards[i]?.length === 1){
+                    isClean = false
+                }
+            }
+        }
+        return isClean
     }
 }

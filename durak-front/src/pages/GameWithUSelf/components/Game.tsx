@@ -24,6 +24,7 @@ export const Game = observer(({}) => {
             ||
             (myRootStore.gameWithYourself.whoMove === myRootStore.gameWithYourself.players.length - 1 && playerIndex === 0))
         {
+            // если защищающийся игрок
             // передаем карты со стола, игроку
             for(let i = 0;i !== myRootStore.gameWithYourself.batleCards.length;i++) {
                 if (myRootStore.gameWithYourself.batleCards[i]) {
@@ -39,10 +40,10 @@ export const Game = observer(({}) => {
             // очищаем стол
             myRootStore.gameWithYourself.clearBatleCarts()
 
-            // передаем карты главному игроку
+            // передаем карты атакаущиему игроку
             myRootStore.gameWithYourself.replenishCards(toJS(myRootStore.gameWithYourself.whoMove))
 
-            // передаю карты остальным игрокам
+            // передаем карты остальным игрокам
             for (let i: number = 0;i !== toJS(myRootStore.gameWithYourself.players.length);i++){
                 console.log((!(i === toJS(myRootStore.gameWithYourself.whoMove) || i - 1 === toJS(myRootStore.gameWithYourself.whoMove))))
                 console.log(i)
@@ -54,12 +55,29 @@ export const Game = observer(({}) => {
                 }
             }
 
-            console.log(toJS(myRootStore.gameWithYourself.players))
-
             // передаем очередь
             myRootStore.gameWithYourself.setWhoMove(prev => prev + 2)
 
-            // обновляем игрока
+            // обновляем игроков
+            setPlayerRerenderKey(prev => prev + 1)
+        } else if(myRootStore.gameWithYourself.whoMove === playerIndex){
+            // если нажал атакующий игрок
+
+            // очищаем стол
+            myRootStore.gameWithYourself.clearBatleCarts()
+
+            // передаем карты атакаущиему игроку
+            myRootStore.gameWithYourself.replenishCards(toJS(myRootStore.gameWithYourself.whoMove))
+
+            // передаем карты остальным игрокам
+            for (let i: number = 0;i !== toJS(myRootStore.gameWithYourself.players.length);i++){
+                myRootStore.gameWithYourself.replenishCards(i)
+            }
+
+            // передаем очередь
+            myRootStore.gameWithYourself.setWhoMove(prev => prev + 1)
+
+            // обновляем игроков
             setPlayerRerenderKey(prev => prev + 1)
         }
     }
@@ -92,21 +110,9 @@ export const Game = observer(({}) => {
                 }
             }else if (toJS(myRootStore.gameWithYourself.whoMove) === i){
                 // если атакующий игрок
-                let isBatleCarts:boolean = false;
-
-                for(let i = 0;i !== myRootStore.gameWithYourself.batleCards.length;i++) {
-                    if (myRootStore.gameWithYourself.batleCards[i]) {
-                        if((myRootStore.gameWithYourself.batleCards[i] as any).length === 2){
-                            isBatleCarts = true
-                        }else{
-                            isBatleCarts = false
-                            break
-                        }
-                    }
-                }
-        
-                if (isBatleCarts){
-                    (actionButtonRefs[i].current as any).classList.remove(cl['buttonaction-notactive'])
+                if (myRootStore.gameWithYourself.isBeaten()){
+                    (actionButtonRefs[i].current as any).classList.remove(cl['buttonaction-notactive']);
+                    (actionButtonRefs[i].current as any).innerHTML = 'Бито';
                 }else{
                     (actionButtonRefs[i].current as any).classList.add(cl['buttonaction-notactive'])
                 }

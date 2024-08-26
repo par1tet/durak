@@ -4,8 +4,6 @@ import { Suit } from "../enums/suit"
 export function createCartsArray(countCarts: number): CartR[] {
     const carts: CartR[] = []
 
-
-
     for(let i = 14;i !== (14 - countCarts / 4);i--){
         for (let j = 0;j !== 4;j++){
             let currentSuit: string = Suit[j]
