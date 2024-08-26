@@ -8,7 +8,7 @@ import { BattleCards } from "../../../components/BattleCards";
 import { stateOfPlayer } from "../../../utils/enums/stateOfPlayer";
 import { observer } from "mobx-react-lite";
 import { ButtonAction } from "../../../components/UI/button/ButtonAction/ButtonAction";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { createArrayRefs } from "../../../utils/functions/createArrayRefs";
 import { useState } from "react";
 
@@ -42,6 +42,20 @@ export const Game = observer(({}) => {
             // передаем карты главному игроку
             myRootStore.gameWithYourself.replenishCards(toJS(myRootStore.gameWithYourself.whoMove))
 
+            // передаю карты остальным игрокам
+            for (let i: number = 0;i !== toJS(myRootStore.gameWithYourself.players.length);i++){
+                console.log((!(i === toJS(myRootStore.gameWithYourself.whoMove) || i - 1 === toJS(myRootStore.gameWithYourself.whoMove))))
+                console.log(i)
+                if(toJS(myRootStore.gameWithYourself.whoMove) === i){
+                }else if(toJS(myRootStore.gameWithYourself.whoMove) + 1 === i){
+                }else{
+                    console.log('ye')
+                    myRootStore.gameWithYourself.replenishCards(i)
+                }
+            }
+
+            console.log(toJS(myRootStore.gameWithYourself.players))
+
             // передаем очередь
             myRootStore.gameWithYourself.setWhoMove(prev => prev + 2)
 
@@ -51,7 +65,6 @@ export const Game = observer(({}) => {
     }
 
     useEffect(() => {
-        console.log(toJS(myRootStore.gameWithYourself.whoMove))
         for (let i = 0;i !== actionButtonRefs.length;i++){
             if  (myRootStore.gameWithYourself.whoMove + 1 === i
                 ||

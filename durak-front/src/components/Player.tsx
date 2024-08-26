@@ -6,9 +6,9 @@ import { observer } from "mobx-react-lite"
 import { useStore } from "../hooks/useStore"
 import { rootStore } from "../store/rootStore"
 import { Cart } from "../utils/abstractClasses/cart"
-import { useState } from "react"
 import { stateOfPlayer } from "../utils/enums/stateOfPlayer"
 import { forwardRef } from "react"
+import { toJS } from "mobx"
 
 type propsPlayer = {
     player: Player,
@@ -22,26 +22,29 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
     function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined{
         const elementFromPoint = document.elementFromPoint(e.clientX, e.clientY)
         if (elementFromPoint === null) { return undefined }
+        if ((elementFromPoint.attributes as any)['data-index'] === undefined) return undefined
         const indexOfCartBuild: number = +((elementFromPoint.attributes as any)['data-index'].value)
 
-        if(myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.whoMove] === player){
+        if(toJS(myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.whoMove]) === player){
+            // если главный игрок
+            console.log('a')
             if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
                 player.removeCart(cart)
             }
-        }else if(myRootStore.gameWithYourself.whoMove + 1 < myRootStore.gameWithYourself.players.length){
-            if(myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.whoMove+1] === player){
-                if(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart) === 0){
-                    player.removeCart(cart)
-                }
-            }else{
-                if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
-                    player.removeCart(cart)
-                }
-                return
+        }else if(
+                toJS(myRootStore.gameWithYourself.players[toJS(myRootStore.gameWithYourself.whoMove) + 1]) === player ||
+                toJS(myRootStore.gameWithYourself.whoMove) + 1 === toJS(myRootStore.gameWithYourself.players.length)){
+            // если защищающийся игрок
+            console.log('def')
+            if(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart) === 0){
+                player.removeCart(cart)
             }
-        }else if(myRootStore.gameWithYourself.whoMove + 1 === myRootStore.gameWithYourself.players.length){
-            if(myRootStore.gameWithYourself.players[0] === player){
-                if(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart) === 0){
+        }else{
+            // если подкидывающий игрок
+            console.log('f')
+
+            if(!(myRootStore.gameWithYourself.isCleanBatleCards())){
+                if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
                     player.removeCart(cart)
                 }
             }else{

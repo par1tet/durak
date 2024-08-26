@@ -95,18 +95,29 @@ export class gameWithYourselfStore{
         this.whoMove = newValue
     }
 
-    clearBatleCarts(): void{
+    clearBatleCarts(): void {
         for(let i = 0;i !== this.batleCards.length;i++) {
             this.batleCards[i] = null
         }
     }
 
+    isCleanBatleCards(): boolean {
+        let isClean: boolean = true
+        for(let i = 0;i !== this.batleCards.length;i++) {
+            if (this.batleCards[i]){
+                isClean = false
+            }
+        }
+        return isClean
+    }
+
     replenishCards(playerIndex: number): void{
         if (this.players[playerIndex].carts.length < 6) {
             const countCartMissing = (6 - this.players[playerIndex].carts.length)
+            console.log(countCartMissing)
             for (let i:number = 0;i !== countCartMissing;i++){
                 if(this.carts.length){
-                    this.players[this.whoMove].carts.push((this.carts.pop() as any))
+                    this.players[playerIndex].carts.push((this.carts.pop() as any))
                 }else{
                     break
                 }
