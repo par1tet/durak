@@ -84,14 +84,33 @@ export class gameWithYourselfStore{
         return 0
     }
 
-    setWhoMove(prevFunc: (prev:number) => number){
+    setWhoMove(prevFunc: (prev:number) => number): void{
         const newValue = prevFunc(this.whoMove)
 
         if(newValue >= this.players.length || newValue < 0){
-            this.whoMove = 0
+            this.whoMove = newValue - this.players.length
             return
         }
 
         this.whoMove = newValue
+    }
+
+    clearBatleCarts(): void{
+        for(let i = 0;i !== this.batleCards.length;i++) {
+            this.batleCards[i] = null
+        }
+    }
+
+    replenishCards(playerIndex: number): void{
+        if (this.players[playerIndex].carts.length < 6) {
+            const countCartMissing = (6 - this.players[playerIndex].carts.length)
+            for (let i:number = 0;i !== countCartMissing;i++){
+                if(this.carts.length){
+                    this.players[this.whoMove].carts.push((this.carts.pop() as any))
+                }else{
+                    break
+                }
+            }
+        }
     }
 }

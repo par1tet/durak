@@ -12,11 +12,12 @@ import { forwardRef } from "react"
 
 type propsPlayer = {
     player: Player,
-    isMove: stateOfPlayer
+    isMove: stateOfPlayer,
+    rerenderKey: any,
+    setRerenderKey: any
 }
-export const PlayerElement = observer(forwardRef(({player, isMove}: propsPlayer, ref:React.ForwardedRef<HTMLDivElement>) => {
+export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, setRerenderKey}: propsPlayer, ref:React.ForwardedRef<HTMLDivElement>) => {
     const myRootStore: rootStore = useStore()
-    const [rerender, setRerender] = useState(1)
 
     function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined{
         const elementFromPoint = document.elementFromPoint(e.clientX, e.clientY)
@@ -49,10 +50,10 @@ export const PlayerElement = observer(forwardRef(({player, isMove}: propsPlayer,
         }
 
         // myRootStore.gameWithYourself.setWhoMove(prev => prev+1)
-        setRerender(prev => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
+        setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 
-    return (<div className={cl['player']} key={rerender} ref={ref}>
+    return (<div className={cl['player']} key={rerenderKey} ref={ref}>
         <div className={cl['player-nickname']}>
             <span>
                 {player.nickName}
