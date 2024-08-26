@@ -70,6 +70,7 @@ export const Game = observer(({}) => {
                 ||
                 (myRootStore.gameWithYourself.whoMove === myRootStore.gameWithYourself.players.length - 1 && i === 0))
             {
+                // если защищаюшийся игрок
                 let isGetAction:boolean = false;
 
                 for(let i = 0;i !== myRootStore.gameWithYourself.batleCards.length;i++) {
@@ -89,25 +90,28 @@ export const Game = observer(({}) => {
                 }else{
                     (actionButtonRefs[i].current as any).classList.add(cl['buttonaction-notactive'])
                 }
+            }else if (toJS(myRootStore.gameWithYourself.whoMove) === i){
+                // если атакующий игрок
+                let isBatleCarts:boolean = false;
 
-                return
-            }
-            let isBatleCarts:boolean = false;
-
-            for(let i = 0;i !== myRootStore.gameWithYourself.batleCards.length;i++) {
-                if (myRootStore.gameWithYourself.batleCards[i]) {
-                    if((myRootStore.gameWithYourself.batleCards[i] as any).length === 2){
-                        isBatleCarts = true
-                    }else{
-                        isBatleCarts = false
-                        break
+                for(let i = 0;i !== myRootStore.gameWithYourself.batleCards.length;i++) {
+                    if (myRootStore.gameWithYourself.batleCards[i]) {
+                        if((myRootStore.gameWithYourself.batleCards[i] as any).length === 2){
+                            isBatleCarts = true
+                        }else{
+                            isBatleCarts = false
+                            break
+                        }
                     }
                 }
-            }
-    
-            if (isBatleCarts){
-                (actionButtonRefs[i].current as any).classList.remove(cl['buttonaction-notactive'])
+        
+                if (isBatleCarts){
+                    (actionButtonRefs[i].current as any).classList.remove(cl['buttonaction-notactive'])
+                }else{
+                    (actionButtonRefs[i].current as any).classList.add(cl['buttonaction-notactive'])
+                }
             }else{
+                // если подкидывающий игрок
                 (actionButtonRefs[i].current as any).classList.add(cl['buttonaction-notactive'])
             }
         }
