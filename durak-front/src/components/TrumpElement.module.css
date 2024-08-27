@@ -32,6 +32,10 @@
     border-radius: 6px;
 }
 
+.trump-cards_opacity0 {
+    opacity: 0;
+}
+
 .trump-trumpcard {
     position: absolute;
 

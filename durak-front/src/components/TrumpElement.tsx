@@ -10,17 +10,31 @@ export const TrumpElement = observer(({}) => {
     const trumpCart: Cart | null = myRootStore.gameWithYourself.trumpCart
 
     if (trumpCart){
-        return (<div className={cl['trump']}>
-            <div className={cl['trump-cards']}>
-                <img src={`/src/assets/images/carts/shirt.png`} alt="" />
-                <span>{toJS(myRootStore.gameWithYourself.carts.length)}</span>
-            </div>
-            <img
-                className={cl['trump-trumpcard']}
-                src={`/src/assets/images/carts/${trumpCart.level}${trumpCart.suit}.png`}
-                alt=""
-            />
-        </div>)
+        if (myRootStore.gameWithYourself.carts.length === 0){
+            return (<div className={cl['trump']}>
+                <div className={`${cl['trump-cards']} ${cl['trump-cards_opacity0']}`}>
+                    <img src={`/src/assets/images/carts/shirt.png`} alt="" />
+                    <span>{toJS(myRootStore.gameWithYourself.carts.length)}</span>
+                </div>
+                <img
+                    className={cl['trump-trumpcard']}
+                    src={`/src/assets/images/carts/${trumpCart.level}${trumpCart.suit}.png`}
+                    alt=""
+                />
+            </div>)
+        }else{
+            return (<div className={cl['trump']}>
+                <div className={cl['trump-cards']}>
+                    <img src={`/src/assets/images/carts/shirt.png`} alt="" />
+                    <span>{toJS(myRootStore.gameWithYourself.carts.length)}</span>
+                </div>
+                <img
+                    className={cl['trump-trumpcard']}
+                    src={`/src/assets/images/carts/${trumpCart.level}${trumpCart.suit}.png`}
+                    alt=""
+                />
+            </div>)
+        }
     } else {
         return (<div className={cl['trumpicon']}>
             {(()=>{
@@ -34,7 +48,6 @@ export const TrumpElement = observer(({}) => {
                     case 3:
                         return (<img src='/src/assets/images/clubs.webp' />)
                 }
-                return null
             })()}
         </div>)
     }
