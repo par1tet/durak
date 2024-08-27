@@ -22,6 +22,20 @@ export const TrumpElement = observer(({}) => {
             />
         </div>)
     } else {
-        
+        return (<div className={cl['trumpicon']}>
+            {(()=>{
+                switch(toJS(myRootStore.gameWithYourself.trump)){
+                    case 0:
+                        return (<img src='/src/assets/images/diamonds.webp' />)
+                    case 1:
+                        return (<img src='/src/assets/images/hearts.webp' />)
+                    case 2:
+                        return (<img src='/src/assets/images/spades.webp' />)
+                    case 3:
+                        return (<img src='/src/assets/images/clubs.webp' />)
+                }
+                return null
+            })()}
+        </div>)
     }
 })

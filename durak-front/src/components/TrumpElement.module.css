@@ -44,3 +44,16 @@
     transform: rotate(90deg);
     z-index: 1;
 }
+
+.trumpicon {
+    position: fixed;
+
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+}
+
+.trumpicon > img {
+    width: 80px;
+    height: 80px;
+}
