@@ -1,4 +1,5 @@
 import { Cart } from "./cart.ts"
+import { Suit } from "../enums/suit.ts"
 
 export abstract class Player{
     carts: Cart[] = []
@@ -6,4 +7,5 @@ export abstract class Player{
     nickName: string = ''
 
     removeCart(cart: Cart): void {}
+    sortCarts(trump: Suit): void{}
 }

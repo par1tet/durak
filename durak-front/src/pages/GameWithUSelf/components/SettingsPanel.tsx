@@ -73,7 +73,8 @@ export const SettingsPanel = ({}) => {
         // создаем массив игроков
         const playersArray = createPlayersArray(
             countPlayers,
-            cartsArray
+            cartsArray,
+            trump
         )
 
         // получаем время на ход
