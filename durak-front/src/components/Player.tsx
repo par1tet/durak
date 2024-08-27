@@ -25,30 +25,34 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
         if ((elementFromPoint.attributes as any)['data-index'] === undefined) return undefined
         const indexOfCartBuild: number = +((elementFromPoint.attributes as any)['data-index'].value)
 
-        if(toJS(myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.whoMove]) === player){
-            // если главный игрок
-            console.log('a')
-            if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
-                player.removeCart(cart)
-            }
-        }else if(
-                toJS(myRootStore.gameWithYourself.players[toJS(myRootStore.gameWithYourself.whoMove) + 1]) === player ||
-                toJS(myRootStore.gameWithYourself.whoMove) + 1 === toJS(myRootStore.gameWithYourself.players.length)){
-            // если защищающийся игрок
-            console.log('def')
-            if(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart) === 0){
-                player.removeCart(cart)
-            }
-        }else{
-            // если подкидывающий игрок
-            console.log('f')
-
-            if(!(myRootStore.gameWithYourself.isCleanBatleCards())){
+        switch (isMove){
+            case stateOfPlayer['move']:{
+                // если главный игрок
+                console.log('a')
                 if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
                     player.removeCart(cart)
                 }
-            }else{
-                return
+                break;
+            }
+            case stateOfPlayer['def']:{
+                // если защищающийся игрок
+                console.log('def')
+                if(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart) === 0){
+                    player.removeCart(cart)
+                }
+                break;
+            }
+            case stateOfPlayer['retr']:{
+                // если подкидывающий игрок
+                console.log('f')
+                if(!(myRootStore.gameWithYourself.isCleanBatleCards())){
+                    if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
+                        player.removeCart(cart)
+                    }
+                }else{
+                    return
+                }
+                break;
             }
         }
 
