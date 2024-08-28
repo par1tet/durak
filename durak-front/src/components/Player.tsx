@@ -58,6 +58,9 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
 
         // myRootStore.gameWithYourself.setWhoMove(prev => prev+1)
         setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
+
+        myRootStore.gameWithYourself.checkWinners()
+        console.log(toJS(myRootStore.gameWithYourself.winners))
     }
 
     return (<div className={cl['player']} key={rerenderKey} ref={ref}>

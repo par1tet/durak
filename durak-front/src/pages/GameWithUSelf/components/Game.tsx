@@ -45,12 +45,9 @@ export const Game = observer(({}) => {
 
             // передаем карты остальным игрокам
             for (let i: number = 0;i !== toJS(myRootStore.gameWithYourself.players.length);i++){
-                console.log((!(i === toJS(myRootStore.gameWithYourself.whoMove) || i - 1 === toJS(myRootStore.gameWithYourself.whoMove))))
-                console.log(i)
                 if(toJS(myRootStore.gameWithYourself.whoMove) === i){
                 }else if(toJS(myRootStore.gameWithYourself.whoMove) + 1 === i){
                 }else{
-                    console.log('ye')
                     myRootStore.gameWithYourself.replenishCards(i)
                 }
             }

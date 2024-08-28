@@ -13,6 +13,7 @@ export class gameWithYourselfStore{
     typeGame: string = ''
     trumpCart: Cart | null = null
     batleCards: (Cart[] | null)[] = []
+    winners: Player[] = []
 
     constructor(){
         makeAutoObservable(this)
@@ -140,5 +141,27 @@ export class gameWithYourselfStore{
             }
         }
         return isClean
+    }
+
+    checkWinners() {
+        this.players.forEach((player: Player, index: number) => {
+            if(player.carts.length === 0 && this.carts.length === 0 && !(this.trumpCart) && !(player.isWin)){
+                player.isWin = true
+                this.winners.push(player)
+            }
+        })
+    }
+
+    isWinner(player: Player): boolean{
+        if(this.winners.length === 0){
+            return false
+        }
+        let result: boolean = false;
+
+        if(this.winners.filter((playerW: Player) => playerW === player).length === 1){
+            result = true
+        }
+
+        return result
     }
 }

@@ -29,7 +29,5 @@ export class PlayerR extends Player{
             }
             return cartB.level - cartA.level
         })
-
-        console.log('test')
     }
 }
