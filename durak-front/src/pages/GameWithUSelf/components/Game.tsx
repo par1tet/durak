@@ -20,9 +20,7 @@ export const Game = observer(({}) => {
 
     function handleAction(e: React.MouseEvent<HTMLButtonElement>){
         const playerIndex:number = +(e.target as any).attributes.getNamedItem('data-playerindex').value
-        if  (myRootStore.gameWithYourself.whoMove + 1 === playerIndex
-            ||
-            (myRootStore.gameWithYourself.whoMove === myRootStore.gameWithYourself.players.length - 1 && playerIndex === 0))
+        if  (myRootStore.gameWithYourself.getDefPlayerIndex() === playerIndex)
         {
             // если защищающийся игрок
             // передаем карты со стола, игроку
@@ -93,9 +91,7 @@ export const Game = observer(({}) => {
 
     useEffect(() => {
         for (let i = 0;i !== actionButtonRefs.length;i++){
-            if  (myRootStore.gameWithYourself.whoMove + 1 === i
-                ||
-                (myRootStore.gameWithYourself.whoMove === myRootStore.gameWithYourself.players.length - 1 && i === 0))
+            if  (myRootStore.gameWithYourself.getDefPlayerIndex() === i)
             {
                 // если защищаюшийся игрок
                 let isGetAction:boolean = false;
@@ -147,7 +143,7 @@ export const Game = observer(({}) => {
                                 isMove={(()=>{
                                     if (toJS(myRootStore.gameWithYourself.whoMove) === index){
                                         return stateOfPlayer['move']
-                                    }else if(toJS(myRootStore.gameWithYourself.whoMove) === index - 1){
+                                    }else if(toJS(myRootStore.gameWithYourself.getDefPlayerIndex()) === index){
                                         return stateOfPlayer['def']
                                     }else {
                                         return stateOfPlayer['retr']

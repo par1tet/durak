@@ -173,4 +173,12 @@ export class gameWithYourselfStore{
 
         return result
     }
+
+    getDefPlayerIndex(): number{
+        for(let i = 1;;i++){
+            if (!(this.players[this.nextWhoMove(prev => prev + i)].isWin)){
+                return this.nextWhoMove(prev => prev + i)
+            }
+        }
+    }
 }
