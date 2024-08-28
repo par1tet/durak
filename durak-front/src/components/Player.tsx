@@ -28,7 +28,6 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
         switch (isMove){
             case stateOfPlayer['move']:{
                 // если главный игрок
-                console.log('a')
                 if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
                     player.removeCart(cart)
                 }
@@ -36,7 +35,6 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
             }
             case stateOfPlayer['def']:{
                 // если защищающийся игрок
-                console.log('def')
                 if(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart) === 0){
                     player.removeCart(cart)
                 }
@@ -44,7 +42,6 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
             }
             case stateOfPlayer['retr']:{
                 // если подкидывающий игрок
-                console.log('f')
                 if(!(myRootStore.gameWithYourself.isCleanBatleCards())){
                     if(myRootStore.gameWithYourself.changeBatleCards(indexOfCartBuild, cart) === 0){
                         player.removeCart(cart)
@@ -56,14 +53,24 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
             }
         }
 
-        // myRootStore.gameWithYourself.setWhoMove(prev => prev+1)
         setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
 
         myRootStore.gameWithYourself.checkWinners()
-        console.log(toJS(myRootStore.gameWithYourself.winners))
     }
 
-    return (<div className={cl['player']} key={rerenderKey} ref={ref}>
+    if(player.isWin){
+        return (<div className={cl['player']} key={rerenderKey} ref={ref}>
+        <div className={cl['player-nickname']}>
+            <span>
+                {player.nickName}
+            </span>
+            <span>
+                Выиграл
+            </span>
+        </div>
+        </div>)
+    }else{
+        return (<div className={cl['player']} key={rerenderKey} ref={ref}>
         <div className={cl['player-nickname']}>
             <span>
                 {player.nickName}
@@ -102,4 +109,5 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
         </div>
         <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd}></DeckOfCarts>
     </div>)
+    }
 }))

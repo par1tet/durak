@@ -53,7 +53,13 @@ export const Game = observer(({}) => {
             }
 
             // передаем очередь
-            myRootStore.gameWithYourself.setWhoMove(prev => prev + 2)
+            for(let i = 2;;i++){
+                if (myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.nextWhoMove(prev => prev + i)].isWin){
+                }else{
+                    myRootStore.gameWithYourself.setWhoMove(prev => prev + i)
+                    break
+                }
+            }
 
             // обновляем игроков
             setPlayerRerenderKey(prev => prev + 1)
@@ -72,7 +78,13 @@ export const Game = observer(({}) => {
             }
 
             // передаем очередь
-            myRootStore.gameWithYourself.setWhoMove(prev => prev + 1)
+            for(let i = 1;;i++){
+                if (myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.nextWhoMove(prev => prev + i)].isWin){
+                }else{
+                    myRootStore.gameWithYourself.setWhoMove(prev => prev + i)
+                    break
+                }
+            }
 
             // обновляем игроков
             setPlayerRerenderKey(prev => prev + 1)
