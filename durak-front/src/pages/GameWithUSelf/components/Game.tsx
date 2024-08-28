@@ -90,6 +90,9 @@ export const Game = observer(({}) => {
     }
 
     useEffect(() => {
+        if(myRootStore.gameWithYourself.winners.length === (myRootStore.gameWithYourself.players.length - 1)){
+            return undefined
+        }
         for (let i = 0;i !== actionButtonRefs.length;i++){
             if  (myRootStore.gameWithYourself.getDefPlayerIndex() === i)
             {

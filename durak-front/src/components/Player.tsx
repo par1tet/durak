@@ -20,6 +20,9 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
     const myRootStore: rootStore = useStore()
 
     function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined{
+        if(myRootStore.gameWithYourself.winners.length === (myRootStore.gameWithYourself.players.length - 1)){
+            return undefined
+        }
         const elementFromPoint = document.elementFromPoint(e.clientX, e.clientY)
         if (elementFromPoint === null) { return undefined }
         if ((elementFromPoint.attributes as any)['data-index'] === undefined) return undefined
@@ -52,10 +55,8 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
                 break;
             }
         }
-
-        setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
-
         myRootStore.gameWithYourself.checkWinners()
+        setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 
     if(player.isWin){
@@ -68,6 +69,18 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
                 Выиграл
             </span>
         </div>
+        </div>)
+    }else if(myRootStore.gameWithYourself.winners.length === (myRootStore.gameWithYourself.players.length - 1)){
+        return (<div className={cl['player']} key={rerenderKey} ref={ref}>
+        <div className={cl['player-nickname']}>
+            <span>
+                {player.nickName}
+            </span>
+            <span>
+                Дурак
+            </span>
+        </div>
+        <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd}></DeckOfCarts>
         </div>)
     }else{
         return (<div className={cl['player']} key={rerenderKey} ref={ref}>
