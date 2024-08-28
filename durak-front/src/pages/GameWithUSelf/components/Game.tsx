@@ -58,9 +58,6 @@ export const Game = observer(({}) => {
                     break
                 }
             }
-
-            // обновляем игроков
-            setPlayerRerenderKey(prev => prev + 1)
         } else if(myRootStore.gameWithYourself.whoMove === playerIndex){
             // если нажал атакующий игрок
 
@@ -83,10 +80,10 @@ export const Game = observer(({}) => {
                     break
                 }
             }
-
-            // обновляем игроков
-            setPlayerRerenderKey(prev => prev + 1)
         }
+        // обновляем игроков
+        myRootStore.gameWithYourself.players[playerIndex].sortCarts(myRootStore.gameWithYourself.trump)
+        setPlayerRerenderKey(prev => prev + 1)
     }
 
     useEffect(() => {

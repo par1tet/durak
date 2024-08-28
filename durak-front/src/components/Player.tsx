@@ -56,6 +56,7 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
             }
         }
         myRootStore.gameWithYourself.checkWinners()
+        player.sortCarts(myRootStore.gameWithYourself.trump)
         setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 
