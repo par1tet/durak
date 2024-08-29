@@ -78,11 +78,32 @@ export class gameWithYourselfStore{
     }
 
     changeDefCards(indexOfBatleCard: number, cart: Cart): number{
-        if (this.batleCards[indexOfBatleCard] === null) return -1
-        if (this.batleCards[indexOfBatleCard][0].level > cart.level && this.trump !== cart.suit) return -1
+        if (this.typeGame !== 'translating'){
+            if (this.batleCards[indexOfBatleCard] === null) return -1
+            if (this.batleCards[indexOfBatleCard][0].level > cart.level && this.trump !== cart.suit) return -1
+    
+            this.batleCards[indexOfBatleCard][1] = cart
+            return 0
+        }else{
+            if (this.batleCards[indexOfBatleCard] === null) {
+                for (let i = 0;i !== this.batleCards.length;i++) {
+                    if (!(this.batleCards[i])) {continue}
+                    if (this.batleCards[i]?.length === 2) return -1
 
-        this.batleCards[indexOfBatleCard][1] = cart
-        return 0
+                    if ((this.batleCards[i] as any)[0].level === cart.level){
+                        (this.batleCards[indexOfBatleCard] as any) = [cart]
+                        return 1
+                    }
+                }
+                return -1
+            }else{
+                if (this.batleCards[indexOfBatleCard][0].level > cart.level && this.trump !== cart.suit) return -1
+    
+                this.batleCards[indexOfBatleCard][1] = cart
+                return 0
+            }
+        }
+
     }
 
     setWhoMove(prevFunc: (prev:number) => number): void{

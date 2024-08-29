@@ -40,6 +40,7 @@ export const Game = observer(({}) => {
 
             // передаем карты атакаущиему игроку
             myRootStore.gameWithYourself.replenishCards(toJS(myRootStore.gameWithYourself.whoMove))
+            myRootStore.gameWithYourself.players[toJS(myRootStore.gameWithYourself.whoMove)].sortCarts(myRootStore.gameWithYourself.trump)
 
             // передаем карты остальным игрокам
             for (let i: number = 0;i !== toJS(myRootStore.gameWithYourself.players.length);i++){
@@ -47,6 +48,7 @@ export const Game = observer(({}) => {
                 }else if(toJS(myRootStore.gameWithYourself.whoMove) + 1 === i){
                 }else{
                     myRootStore.gameWithYourself.replenishCards(i)
+                    myRootStore.gameWithYourself.players[i].sortCarts(myRootStore.gameWithYourself.trump)
                 }
             }
 

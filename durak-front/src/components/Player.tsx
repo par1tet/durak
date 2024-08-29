@@ -38,8 +38,14 @@ export const PlayerElement = observer(forwardRef(({player, isMove, rerenderKey, 
             }
             case stateOfPlayer['def']:{
                 // если защищающийся игрок
-                if(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart) === 0){
-                    player.removeCart(cart)
+                switch(myRootStore.gameWithYourself.changeDefCards(indexOfCartBuild, cart)){
+                    case 0:
+                        player.removeCart(cart)
+                    break;
+                    case 1:
+                        player.removeCart(cart)
+                        myRootStore.gameWithYourself.setWhoMove(prev => prev + 1)
+                    break;
                 }
                 break;
             }
