@@ -132,21 +132,17 @@ export const SettingsPanel = ({}) => {
                         {title: 'Трефы ♣️', valueName: 'clubs'},
                     ]}
                 /></Setting>
-                <Setting title='Время на ход:'><SelectOption
-                    options={[
-                        {title: '10 минут', valueName: '10m'},
-                        {title: '5 минут', valueName: '5m'},
-                        {title: '3 минуты', valueName: '3m'},
-                        {title: '1 минута', valueName: '1m'},
-                        {title: '30 секунд', valueName: '30s'},
-                        {title: '15 секунд', valueName: '15s'},
-                        {title: '10 секунд', valueName: '10s'},
-                    ]}
-                /></Setting>
                 <Setting title='Тип:'><SelectOption
                     options={[
                         {title: 'Переводной', valueName: 'translating'},
                         {title: 'Обычный', valueName: 'standart'},
+                    ]}
+                /></Setting>
+                <Setting title='Время на ход:'><SelectOption
+                    options={[
+                        {title: '1 минута', valueName: '1m'},
+                        {title: '30 секунд', valueName: '30s'},
+                        {title: '10 секунд', valueName: '10s'},
                     ]}
                 /></Setting>
                 <Setting title='Жульничевство:'><SelectOption
