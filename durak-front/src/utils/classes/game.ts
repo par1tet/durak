@@ -46,7 +46,6 @@ export class GameR extends Game {
     changeBatleCards(indexOfBatleCard: number, cart: Cart): number{
         let isEmptyBatleCards: boolean = true;
         this.batleCards.forEach(cartBatle => {if(cartBatle !== null){isEmptyBatleCards = false}})
-        console.log('test')
 
         if(isEmptyBatleCards){
             this.batleCards[indexOfBatleCard] = []

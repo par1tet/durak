@@ -3,6 +3,8 @@ import { Game } from '../utils/abstractClasses/game'
 import { stateOfPlayer } from '../utils/enums/stateOfPlayer'
 import cl from './BotElement.module.css'
 import moveIndicator from './../assets/images/moveIndicator.png'
+import { useEffect } from 'react'
+import { BotR } from '../utils/classes/bot'
 
 type propsBot = {
     player: Player,
@@ -11,6 +13,19 @@ type propsBot = {
 }
 
 export const BotElement = ({player, store, isMove}: propsBot) => {
+    const botController = new BotR()
+
+    switch (isMove){
+        case stateOfPlayer['def']:
+            botController.def(player, store)
+            break;
+        case stateOfPlayer['move']:
+            botController.move(player, store)
+            break;
+        case stateOfPlayer['retr']:
+            botController.retr(player, store)
+            break;
+    }
 
     if(player.isWin){
         return (<div className={cl['player']}>
