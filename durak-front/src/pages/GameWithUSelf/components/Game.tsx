@@ -1,16 +1,15 @@
-import { useStore } from "../../../hooks/useStore"
-import { rootStore } from "../../../store/rootStore"
-import { PlayerElement } from "../../../components/Player"
-import cl from './../GameWithUSelf.module.css';
-import { toJS } from "mobx"
-import { TrumpElement } from "../../../components/TrumpElement";
-import { BattleCards } from "../../../components/BattleCards";
-import { stateOfPlayer } from "../../../utils/enums/stateOfPlayer";
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
+import { BattleCards } from "../../../components/BattleCards";
+import { PlayerElement } from "../../../components/Player";
+import { TrumpElement } from "../../../components/TrumpElement";
 import { ButtonAction } from "../../../components/UI/button/ButtonAction/ButtonAction";
-import { useEffect } from "react";
+import { useStore } from "../../../hooks/useStore";
+import { rootStore } from "../../../store/rootStore";
+import { stateOfPlayer } from "../../../utils/enums/stateOfPlayer";
 import { createArrayRefs } from "../../../utils/functions/createArrayRefs";
-import { useState } from "react";
+import cl from './../GameWithUSelf.module.css';
 
 export const Game = observer(({}) => {
     const myRootStore: rootStore = useStore()
@@ -54,7 +53,7 @@ export const Game = observer(({}) => {
 
             // передаем очередь
             for(let i = 2;;i++){
-                if (myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.nextWhoMove(prev => prev + i)].isWin){
+                if (myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.getNextWhoMove(prev => prev + i)].isWin){
                 }else{
                     myRootStore.gameWithYourself.setWhoMove(prev => prev + i)
                     break
@@ -76,7 +75,7 @@ export const Game = observer(({}) => {
 
             // передаем очередь
             for(let i = 1;;i++){
-                if (myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.nextWhoMove(prev => prev + i)].isWin){
+                if (myRootStore.gameWithYourself.players[myRootStore.gameWithYourself.getNextWhoMove(prev => prev + i)].isWin){
                 }else{
                     myRootStore.gameWithYourself.setWhoMove(prev => prev + i)
                     break

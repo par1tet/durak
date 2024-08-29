@@ -90,7 +90,7 @@ export const SettingsPanel = ({}) => {
         }
 
         // добавляем в стор
-        myRootStore.gameWithYourself.createGameWithYourself(
+        myRootStore.gameWithYourself.createGame(
             cartsArray,
             playersArray,
             trump,
@@ -138,7 +138,7 @@ export const SettingsPanel = ({}) => {
                         {title: 'Обычный', valueName: 'standart'},
                     ]}
                 /></Setting>
-                <Setting title='Время на ход:'><SelectOption
+                {/* <Setting title='Время на ход:'><SelectOption
                     options={[
                         {title: '1 минута', valueName: '1m'},
                         {title: '30 секунд', valueName: '30s'},
@@ -150,7 +150,7 @@ export const SettingsPanel = ({}) => {
                         {title: 'Есть', valueName: 'true'},
                         {title: 'Нету', valueName: 'false'},
                     ]}
-                /></Setting>
+                /></Setting> */}
             </div>
             <div>
                 <ButtonPlay onClick={handleStart}>
