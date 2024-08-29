@@ -3,13 +3,10 @@ import { DeckOfCarts } from "./DeckOfCarts"
 import cl from './Player.module.css'
 import moveIndicator from './../assets/images/moveIndicator.png'
 import { observer } from "mobx-react-lite"
-import { useStore } from "../hooks/useStore"
-import { rootStore } from "../store/rootStore"
 import { Game } from "../utils/abstractClasses/game"
 import { Cart } from "../utils/abstractClasses/cart"
 import { stateOfPlayer } from "../utils/enums/stateOfPlayer"
 import { forwardRef } from "react"
-import { toJS } from "mobx"
 
 type propsPlayer = {
     player: Player,

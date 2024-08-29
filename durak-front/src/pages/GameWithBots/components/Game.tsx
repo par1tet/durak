@@ -10,6 +10,7 @@ import { rootStore } from "../../../store/rootStore";
 import { stateOfPlayer } from "../../../utils/enums/stateOfPlayer";
 import { createArrayRefs } from "../../../utils/functions/createArrayRefs";
 import cl from './../GameWithBots.module.css';
+import { BotElement } from "../../../components/BotElement";
 
 export const Game = observer(({}) => {
     const myRootStore: rootStore = useStore()
@@ -143,7 +144,7 @@ export const Game = observer(({}) => {
                 }else{
                     return (
                         <div key={index}>
-                            <PlayerElement
+                            <BotElement
                                 player={player}
                                 isMove={(()=>{
                                     if (toJS(myRootStore.gameWithBots.whoMove) === index){
@@ -154,11 +155,8 @@ export const Game = observer(({}) => {
                                         return stateOfPlayer['retr']
                                     }
                                 })()}
-                                ref={playersRefs[index]}
-                                rerenderKey={playerRerenderKey}
-                                setRerenderKey={setPlayerRerenderKey}
                                 store={myRootStore.gameWithBots}
-                            ></PlayerElement>
+                            ></BotElement>
                             <ButtonAction
                                 title="Бито"
                                 className={cl['otbuttonaction']}

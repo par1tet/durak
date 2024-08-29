@@ -20,13 +20,13 @@ export const TrumpElement = observer(({carts, trumpCart, trump}: propsTrumpEleme
                 <img
                     className={cl['trump-trumpcard']}
                     src={`/src/assets/images/carts/${trumpCart.level}${trumpCart.suit}.png`}
-                    alt=""
+                    alt={`${trumpCart.level}${trumpCart.suit}`}
                 />
             </div>)
         }else{
             return (<div className={cl['trump']}>
                 <div className={cl['trump-cards']}>
-                    <img src={`/src/assets/images/carts/shirt.png`} alt="" />
+                    <img src={`/src/assets/images/carts/shirt.png`} alt="shirt" />
                     <span>{carts.length}</span>
                 </div>
                 <img
