@@ -1,6 +1,7 @@
 import { createContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { GameWithUSelf } from './pages/GameWithUSelf/GameWithUSelf.tsx'
+import { GameWithBots } from './pages/GameWithBots/GameWithBots.tsx'
 import { MainPage } from './pages/MainPage/MainPage.tsx'
 import { rootStore } from './store/rootStore.ts'
 
@@ -14,6 +15,7 @@ function App() {
 				<Routes>
 					<Route path='/' element={<MainPage />} />
 					<Route path='/gamewithuself' element={<GameWithUSelf />} />
+					<Route path='/gamewithbots' element={<GameWithBots />} />
 				</Routes>
 			</main>
 		</rootContext.Provider>

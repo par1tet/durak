@@ -1,15 +1,14 @@
 import cl from './BattleCards.module.css'
-import { useStore } from '../hooks/useStore'
-import { rootStore } from '../store/rootStore'
 import { Cart } from '../utils/abstractClasses/cart'
 import { observer } from 'mobx-react-lite'
-import { toJS } from 'mobx'
 
-export const BattleCards = observer(({}) => {
-    const myRootStore: rootStore = useStore()
+type propsBattleCards = {
+    batleCards: (Cart[] | null)[]
+}
 
+export const BattleCards = observer(({batleCards}: propsBattleCards) => {
     return (<div className={cl['battlecards']}>
-        {toJS(myRootStore.gameWithYourself.batleCards).map((carts: Cart[] | null, index:number) => {
+        {batleCards.map((carts: Cart[] | null, index:number) => {
             if (!carts){
                 return (<div
                     className={cl['battlecards-card']}

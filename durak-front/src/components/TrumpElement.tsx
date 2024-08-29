@@ -1,20 +1,21 @@
 import cl from './TrumpElement.module.css'
-import { toJS } from 'mobx'
-import { useStore } from '../hooks/useStore'
-import { rootStore } from '../store/rootStore'
 import { observer } from 'mobx-react-lite'
 import { Cart } from '../utils/abstractClasses/cart'
+import { Suit } from '../utils/enums/suit'
 
-export const TrumpElement = observer(({}) => {
-    const myRootStore: rootStore = useStore()
-    const trumpCart: Cart | null = myRootStore.gameWithYourself.trumpCart
+type propsTrumpElement = {
+    carts: Cart[],
+    trumpCart: Cart | null,
+    trump: Suit
+}
 
+export const TrumpElement = observer(({carts, trumpCart, trump}: propsTrumpElement) => {
     if (trumpCart){
-        if (myRootStore.gameWithYourself.carts.length === 0){
+        if (carts.length === 0){
             return (<div className={cl['trump']}>
                 <div className={`${cl['trump-cards']} ${cl['trump-cards_opacity0']}`}>
                     <img src={`/src/assets/images/carts/shirt.png`} alt="" />
-                    <span>{toJS(myRootStore.gameWithYourself.carts.length)}</span>
+                    <span>{carts.length}</span>
                 </div>
                 <img
                     className={cl['trump-trumpcard']}
@@ -26,7 +27,7 @@ export const TrumpElement = observer(({}) => {
             return (<div className={cl['trump']}>
                 <div className={cl['trump-cards']}>
                     <img src={`/src/assets/images/carts/shirt.png`} alt="" />
-                    <span>{toJS(myRootStore.gameWithYourself.carts.length)}</span>
+                    <span>{carts.length}</span>
                 </div>
                 <img
                     className={cl['trump-trumpcard']}
@@ -38,7 +39,7 @@ export const TrumpElement = observer(({}) => {
     } else {
         return (<div className={cl['trumpicon']}>
             {(()=>{
-                switch(toJS(myRootStore.gameWithYourself.trump)){
+                switch(trump){
                     case 0:
                         return (<img src='/src/assets/images/diamonds.webp' />)
                     case 1:

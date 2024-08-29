@@ -10,7 +10,7 @@ import { Suit } from "../../../utils/enums/suit.ts";
 import { createCartsArray } from "../../../utils/functions/createCartsArray.ts";
 import { createPlayersArray } from "../../../utils/functions/createPlayersArray.ts";
 import { shuffle } from "../../../utils/functions/shuffle.ts";
-import cl from './../GameWithUSelf.module.css';
+import cl from './../GameWithBots.module.css';
 import { Setting } from "./Setting.tsx";
 
 export const SettingsPanel = ({}) => {
@@ -90,7 +90,7 @@ export const SettingsPanel = ({}) => {
         // }
 
         // добавляем в стор
-        myRootStore.gameWithYourself.createGame(
+        myRootStore.gameWithBots.createGame(
             cartsArray,
             playersArray,
             trump,

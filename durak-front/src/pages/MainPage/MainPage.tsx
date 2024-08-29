@@ -18,7 +18,9 @@ export const MainPage = ({}) => {
                 },
                 {
                     title:'Игра с ботами',
-                    onClick: () => console.log('еще нет')
+                    onClick: () => {
+                        navigate('/gamewithbots?isSetting=true')
+                    }
                 },
                 {
                     title:'Игра с самим собой',
