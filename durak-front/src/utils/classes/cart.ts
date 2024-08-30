@@ -7,4 +7,16 @@ export class CartR extends Cart {
         this.suit = suit
         this.level = level
     }
+
+    canBeat(cart: Cart, trump: Suit): number{
+        console.log(cart)
+        console.log(this)
+        if (cart.level >= this.level || cart.suit !== this.suit){
+            if(cart.suit !== trump && this.suit === trump)
+                {return 0}
+            else{return -1}
+        }
+        else
+            {return 0}
+    }
 }

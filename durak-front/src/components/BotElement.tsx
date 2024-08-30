@@ -3,8 +3,9 @@ import { Game } from '../utils/abstractClasses/game'
 import { stateOfPlayer } from '../utils/enums/stateOfPlayer'
 import cl from './BotElement.module.css'
 import moveIndicator from './../assets/images/moveIndicator.png'
-import { useEffect } from 'react'
 import { BotR } from '../utils/classes/bot'
+import { useState } from 'react'
+import { observer } from 'mobx-react-lite'
 
 type propsBot = {
     player: Player,
@@ -12,8 +13,8 @@ type propsBot = {
     isMove: stateOfPlayer
 }
 
-export const BotElement = ({player, store, isMove}: propsBot) => {
-    const botController = new BotR()
+export const BotElement = observer(({player, store, isMove}: propsBot) => {
+    const [botController, setBotController] = useState(new BotR())
 
     switch (isMove){
         case stateOfPlayer['def']:
@@ -93,4 +94,4 @@ export const BotElement = ({player, store, isMove}: propsBot) => {
         </div>
     </div>)
     }
-}
+})

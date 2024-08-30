@@ -47,4 +47,6 @@ export abstract class Game{
     isWinner(player: Player): boolean{return false}
     // get def player
     getDefPlayerIndex(): number{ return 1 }
+    // add def carts for battle cart
+    addDefCart(indexOfBatleCard: number, cart: Cart){}
 }

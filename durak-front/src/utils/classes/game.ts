@@ -202,4 +202,10 @@ export class GameR extends Game {
             }
         }
     }
+
+    addDefCart(indexOfBatleCard: number, cart: Cart): void {
+        if(this.batleCards[indexOfBatleCard] === null || this.batleCards[indexOfBatleCard]?.length === 2) return;
+        
+        this.batleCards[indexOfBatleCard][1] = cart;
+    }
 }
