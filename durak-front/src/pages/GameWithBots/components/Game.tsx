@@ -1,6 +1,6 @@
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BattleCards } from "../../../components/BattleCards";
 import { PlayerElement } from "../../../components/Player";
 import { TrumpElement } from "../../../components/TrumpElement";
@@ -14,8 +14,8 @@ import { BotElement } from "../../../components/BotElement";
 
 export const Game = observer(({}) => {
     const myRootStore: rootStore = useStore()
-    const actionButtonRefs = createArrayRefs(toJS(myRootStore.gameWithBots.players.length))
-    const playersRefs = createArrayRefs(toJS(myRootStore.gameWithBots.players.length))
+    const actionButtonRefs = [useRef(null)]
+    const playersRefs = [useRef(null)]
     const [playerRerenderKey, setPlayerRerenderKey] = useState(1)
 
     function handleAction(e: React.MouseEvent<HTMLButtonElement>){
@@ -85,11 +85,15 @@ export const Game = observer(({}) => {
         }
         // обновляем игроков
         myRootStore.gameWithBots.players[playerIndex].sortCarts(myRootStore.gameWithBots.trump)
+        myRootStore.gameWithBots.checkWinners()
         setPlayerRerenderKey(prev => prev + 1)
     }
 
     useEffect(() => {
         if(myRootStore.gameWithBots.winners.length === (myRootStore.gameWithBots.players.length - 1)){
+            for (let i = 0;i !== actionButtonRefs.length;i++){
+                (actionButtonRefs[i].current as any).classList.add(cl['buttonaction-notactive'])
+            }
             return undefined
         }
         for (let i = 0;i !== actionButtonRefs.length;i++){
@@ -156,16 +160,9 @@ export const Game = observer(({}) => {
                                     }
                                 })()}
                                 store={myRootStore.gameWithBots}
+                                key={playerRerenderKey}
                             ></BotElement>
-                            <ButtonAction
-                                title="Бито"
-                                className={cl['otbuttonaction']}
-                                onClick={handleAction}
-                                ref={actionButtonRefs[index]}
-                                dataPlayerindex={index}
-                            ></ButtonAction>
                         </div>
-
                     )
                 }
             })}

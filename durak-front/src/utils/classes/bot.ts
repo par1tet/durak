@@ -8,26 +8,32 @@ export class BotR extends Bot{
         super()
     }
 
-    def(player: Player, game: Game){
-        console.log(player, game)
+    def(player: Player, game: Game, getCarts: () => void){
         for(let i = 0;i !== game.batleCards.length;i++){
-            if(game.batleCards[i] === null || game.batleCards[i]?.length === 2) continue
-            console.log(game.batleCards[i])
+            if(game.batleCards[i] == null || game.batleCards[i]?.length === 2) continue
             for(let j = player.carts.length - 1;j > -1;j--){
-                console.log(j)
-                console.log(player.carts[j])
                 if(player.carts[j].canBeat((game.batleCards[i] as any)[0], game.trump) === 0){
-                    console.log(player.carts[j])
-                    setTimeout(() => game.addDefCart(i, player.carts[j]), 3000)
-                    // player.removeCart(player.carts[i])
+                    game.addDefCart(i, player.carts[j])
+                    player.removeCart(player.carts[j])
                     break;
+                }
+                if (j === 0){
+                    getCarts()
                 }
             }
             break;
         }
     }
-    move(player: Player, game: Game){
-        console.log(player, game)
+    move(player: Player, game: Game, beaten:() => void){
+        if(game.isCleanBatleCards()){
+            if(game.changeBatleCards(0, player.carts[player.carts.length-1]) === 0){
+                player.removeCart(player.carts[player.carts.length - 1])
+            }
+        }else{
+            if(game.isBeaten()){
+                beaten()
+            }
+        }
     }
     retr(player: Player, game: Game){
         console.log(player, game)

@@ -25,6 +25,7 @@ export class gameWithYourselfStore extends GameR{
             checkWinners: action,
             isWinner: action,
             getDefPlayerIndex: action,
+            addDefCart: action
         })
     }
 }

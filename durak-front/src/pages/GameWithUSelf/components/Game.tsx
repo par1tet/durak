@@ -127,7 +127,7 @@ export const Game = observer(({}) => {
                 (actionButtonRefs[i].current as any).classList.add(cl['buttonaction-notactive'])
             }
         }
-    }, [toJS(myRootStore.gameWithYourself.batleCards)])
+    }, [toJS(myRootStore.gameWithBots.batleCards)])
 
     return (<>
         <TrumpElement
