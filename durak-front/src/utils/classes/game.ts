@@ -97,7 +97,7 @@ export class GameR extends Game {
                 }
                 return -1
             }else{
-                if (this.batleCards[indexOfBatleCard][0].level > cart.level && this.trump !== cart.suit) return -1
+                if (this.batleCards[indexOfBatleCard][0].level > cart.level && this.trump !== cart.suit || cart.suit !== this.batleCards[indexOfBatleCard][0].suit) return -1
     
                 this.batleCards[indexOfBatleCard][1] = cart
                 return 0
