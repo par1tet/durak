@@ -42,13 +42,26 @@ export const PlayerElement = observer(forwardRef(({
             }
             case stateOfPlayer['def']:{
                 // если защищающийся игрок
+                console.log('def player')
                 switch(store.changeDefCards(indexOfCartBuild, cart)){
                     case 0:
+                        console.log('wata')
                         player.removeCart(cart)
-                    break;
+                        break;
                     case 1:
                         player.removeCart(cart)
-                        store.setWhoMove(prev => prev + 1)
+                        // передаем очередь
+                        for(let i = 1;;i++){
+                            if (store.players[store.getNextWhoMove(prev => prev + i)].isWin){
+                            }else{
+                                store.setWhoMove(prev => prev + i)
+                                break
+                            }
+                        }
+                        console.log('trans')
+                        break
+                    default:
+                        console.log('dont beaten')
                     break;
                 }
                 break;

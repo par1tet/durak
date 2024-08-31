@@ -116,7 +116,7 @@ export const SettingsPanel = ({}) => {
                     heigth={20}
                 ></InputNumber></Setting>
                 <Setting title='Количество игроков:'><InputNumber
-                    max={6}
+                    max={2}
                     min={2}
                     startNumber={2}
                     step={1}

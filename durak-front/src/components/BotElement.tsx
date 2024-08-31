@@ -7,6 +7,7 @@ import { BotR } from '../utils/classes/bot'
 import { useState, useEffect } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
+import { botController } from '../utils/specific/botController'
 
 type propsBot = {
     player: Player,
@@ -15,9 +16,8 @@ type propsBot = {
 }
 
 export const BotElement = observer(({player, store, isMove}: propsBot) => {
-    const [botController] = useState(new BotR())
-
     if(player.carts.length !== 0){
+        console.log(isMove)
         switch (isMove){
             case stateOfPlayer['def']:
                 botController.def(player, store, () => {
@@ -63,6 +63,10 @@ export const BotElement = observer(({player, store, isMove}: propsBot) => {
                 break;
             case stateOfPlayer['move']:
                 botController.move(player, store, () => {
+                    botController.canMove = false;
+                    setTimeout(() => {
+                        botController.canMove = true;
+                    }, 0)
                     // очищаем стол
                     store.clearBatleCarts()
 
