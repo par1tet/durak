@@ -7,8 +7,6 @@ export class GameR extends Game {
     carts: Cart[] = []
     players: Player[] = []
     trump: Suit = Suit['rand']
-    timeForMove: string = '10m'
-    scam: boolean = true
     whoMove: number = 0
     typeGame: string = ''
     trumpCart: Cart | null = null
@@ -23,8 +21,6 @@ export class GameR extends Game {
             carts: Cart[],
             players: Player[],
             trump: Suit,
-            timeForMove: string,
-            scam: boolean,
             whoMove: number,
             typeGame: string,
             trumpCart: Cart | null
@@ -33,8 +29,6 @@ export class GameR extends Game {
         this.carts = carts
         this.players = players
         this.trump = trump
-        this.timeForMove = timeForMove
-        this.scam = scam
         this.whoMove = whoMove
         this.typeGame = typeGame
         this.trumpCart = trumpCart

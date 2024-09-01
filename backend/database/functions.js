@@ -14,8 +14,26 @@ export async function initDB(){
     console.log(sequelize.models.Game)
 }
 
-export async function createGame(token){
-    sequelize.models.Game.create({token:token})
+export async function createGame(
+    token,
+    carts,
+    players,
+    trump,
+    whoMove,
+    typeGame,
+    trumpCart
+){
+    sequelize.models.Game.create({
+        token: token,
+        carts: carts,
+        players, players,
+        trump: trump,
+        whoMove: whoMove,
+        typeGame: typeGame,
+        trumpCart: trumpCart,
+        batleCarts: "0/0/0/0/0/0",
+        winners: ""
+    })
 }
 
 export async function getGames(token){

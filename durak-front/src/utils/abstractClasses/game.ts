@@ -6,8 +6,6 @@ export abstract class Game{
     carts: Cart[] = []
     players: Player[] = []
     trump: Suit = Suit['rand']
-    timeForMove: string = '10m'
-    scam: boolean = true
     whoMove: number = 0
     typeGame: string = ''
     trumpCart: Cart | null = null
@@ -19,8 +17,6 @@ export abstract class Game{
         carts: Cart[],
         players: Player[],
         trump: Suit,
-        timeForMove: string,
-        scam: boolean,
         whoMove: number,
         typeGame: string,
         trumpCart: Cart | null

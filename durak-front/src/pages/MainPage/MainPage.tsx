@@ -1,7 +1,6 @@
 // import cl from './MainPage.module.css'
 import { useNavigate } from 'react-router-dom'
 import { Buttons } from '../../components/Buttons.tsx'
-import axios from 'axios'
 
 export const MainPage = ({}) => {
     const navigate = useNavigate()
@@ -16,10 +15,7 @@ export const MainPage = ({}) => {
                 {
                     title:'Создать игру',
                     onClick: () => {
-                        axios.get('http://localhost:5000/test')
-                        .then(r => {
-                            console.log(r.data)
-                        })
+                        navigate('/onlinegame?isSetting=true')
                     }
                 },
                 {

@@ -8,8 +8,6 @@ export class gameWithYourselfStore extends GameR{
             carts: observable,
             players: observable,
             trump: observable,
-            timeForMove: observable,
-            scam: observable,
             whoMove: observable,
             typeGame: observable,
             trumpCart: observable,

@@ -1,7 +1,7 @@
-import { makeObservable, observable, action} from "mobx";
+import { makeObservable, observable, action, override } from "mobx";
 import { GameR } from "../utils/classes/game.ts";
 
-export class gameWithBotsStore extends GameR{
+export class onlineGameStore extends GameR{
     constructor(){
         super()
         makeObservable(this, {

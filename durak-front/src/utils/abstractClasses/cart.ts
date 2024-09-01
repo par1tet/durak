@@ -5,4 +5,6 @@ export abstract class Cart{
     level: number = 6
 
     canBeat(cart: Cart, trump: Suit): number{return 0}
+
+    toString?(): string
 }

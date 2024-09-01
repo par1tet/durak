@@ -17,4 +17,8 @@ export class CartR extends Cart {
         else
             {return 0}
     }
+
+    toString(): string {
+        return `${this.level}:${this.suit}`
+    }
 }

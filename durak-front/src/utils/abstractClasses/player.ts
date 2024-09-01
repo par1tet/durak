@@ -9,4 +9,6 @@ export abstract class Player{
 
     removeCart(cart: Cart): void {}
     sortCarts(trump: Suit): void{}
+
+    toString?(): string
 }

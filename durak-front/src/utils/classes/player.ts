@@ -30,4 +30,8 @@ export class PlayerR extends Player{
             return cartB.level - cartA.level
         })
     }
+
+    toString(): string {
+        return this.carts.join('/')
+    }
 }
