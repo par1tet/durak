@@ -1,7 +1,5 @@
 import { useRef } from "react";
-import { useSearchParams } from "react-router-dom";
 import { ButtonPlay } from "../../../components/UI/button/ButtonPlay/ButtonPlay.tsx";
-import { InputNumber } from "../../../components/UI/input/InputNumber/InputNumber.tsx";
 import { useStore } from "../../../hooks/useStore.ts";
 import { rootStore } from "../../../store/rootStore.ts";
 import cl from './../JoinGame.module.css';

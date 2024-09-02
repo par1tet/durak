@@ -1,7 +1,13 @@
 import axios from "axios";
+import { Cart } from "../abstractClasses/cart";
+import { CartR } from "../classes/cart";
+import { Suit } from "../enums/suit";
+import { fromNumberSuitToSuit } from "../functions/fromNumberSuitToSuit.ts";
+import { Player } from "../abstractClasses/player.ts";
+import { PlayerR } from "../classes/player.ts";
 
 export async function getGameData(token: string){
-    let result = {}
+    let result: any = {}
 
     await axios.post('http://localhost:5000/getgame', {
         token: token
@@ -9,7 +15,66 @@ export async function getGameData(token: string){
         result = r.data
     })
 
-    console.log(result)
+    const parseBatleCards: (Cart | null)[] = []
+
+    for (let i = 0;i !== result.batleCarts.split('/').length;i++){
+        if(result.batleCarts.split('/')[i]){
+            parseBatleCards.push(null)
+        }else{
+            parseBatleCards.push(
+                new CartR(+result.batleCarts[i].split('/').split(':')[0],
+                fromNumberSuitToSuit(+result.batleCarts.split('/')[i].split(':')[1])
+            ))
+        }
+    }
+
+    result.batleCarts = parseBatleCards
+
+    const parseCarts: Cart[] = []
+    
+    for (let i = 0;i !== result.carts.split('/').length;i++){
+        parseCarts.push(
+            new CartR(+result.carts.split('/')[i].split(':')[0],
+            fromNumberSuitToSuit(+result.carts.split('/')[i].split(':')[1])
+        ))
+    }
+
+    result.carts = parseCarts
+
+    result.batleCarts = parseBatleCards
+
+    const parsePlayers: Player[] = []
+
+    console.log(result.players.split('|').length)
+    console.log(result.players.split('|'))
+
+    if(result.players.split('|').length === 1){
+        const playerCarts: Cart[] = []
+
+        for (let i = 0;i !== result.players.split('/').length;i++){
+            playerCarts.push(
+                new CartR(+result.players.split('/')[i].split(':')[0],
+                fromNumberSuitToSuit(+result.players.split('/')[i].split(':')[1])
+            ))
+        }
+
+        parsePlayers.push(new PlayerR(playerCarts, 'Игрок 1', fromNumberSuitToSuit(+result.trump)))
+    }else{
+        for (let i = 0;i !== result.players.split('|').length;i++){
+            const playerCarts: Cart[] = []
+
+            for (let i = 0;i !== result.players.split('|').split('/').length;i++){
+                playerCarts.push(
+                    new CartR(+result.players.split('|').split('/')[i].split(':')[0],
+                    fromNumberSuitToSuit(+result.players.split('|').split('/')[i].split(':')[1])
+                ))
+            }
+    
+            parsePlayers.push(new PlayerR(playerCarts, 'Игрок 1', fromNumberSuitToSuit(+result.trump)))
+        }
+    }
+
+    result.players = parsePlayers
 
     return result
 }

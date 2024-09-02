@@ -67,8 +67,8 @@ export async function getDataGame(token){
         trump: gamesWithToken.trump,
         whoMove: gamesWithToken.whoMove,
         typeGame: gamesWithToken.typeGame,
-        batleCarts: gamesWithToken.carts,
-        winners: gamesWithToken.carts,
+        batleCarts: gamesWithToken.batleCarts,
+        winners: gamesWithToken.winners,
         maxPlayers: gamesWithToken.maxPlayers,
     }
 }
