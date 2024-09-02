@@ -46,10 +46,6 @@ export async function canToJoinToGame(token){
     const gamesWithToken = (await sequelize.models.Game.findAll({where: {
         token: token
     }}))[0]
-
-    console.log(gamesWithToken)
-    console.log(gamesWithToken.players.split('|').length)
-    console.log(gamesWithToken.maxPlayers)
     
     if (gamesWithToken ||
         gamesWithToken.players.split('|').length !== gamesWithToken.maxPlayers
@@ -57,5 +53,22 @@ export async function canToJoinToGame(token){
         return true;
     }else{
         return false
+    }
+}
+
+export async function getDataGame(token){
+    const gamesWithToken = (await sequelize.models.Game.findAll({where: {
+        token: token
+    }}))[0]
+
+    return {
+        carts: gamesWithToken.carts,
+        players: gamesWithToken.players,
+        trump: gamesWithToken.trump,
+        whoMove: gamesWithToken.whoMove,
+        typeGame: gamesWithToken.typeGame,
+        batleCarts: gamesWithToken.carts,
+        winners: gamesWithToken.carts,
+        maxPlayers: gamesWithToken.maxPlayers,
     }
 }

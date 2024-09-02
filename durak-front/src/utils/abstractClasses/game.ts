@@ -19,7 +19,8 @@ export abstract class Game{
         trump: Suit,
         whoMove: number,
         typeGame: string,
-        trumpCart: Cart | null
+        trumpCart: Cart | null,
+        batleCards: (Cart | null)[]
     ){}
     // change batle cards
     changeBatleCards(indexOfBatleCard: number, cart: Cart): number {return -1}

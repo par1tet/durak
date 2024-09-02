@@ -23,7 +23,7 @@ export class GameR extends Game {
             trump: Suit,
             whoMove: number,
             typeGame: string,
-            trumpCart: Cart | null
+            trumpCart: Cart | null,
         )
     {
         this.carts = carts

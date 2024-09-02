@@ -5,6 +5,7 @@ import  bodyParser  from 'body-parser'
 import { createServer } from 'http'
 import { Server } from "socket.io";
 import { onConnection } from '../socketio/onConnection.js'
+import { joinToGame } from '../socketio/handlers/joinToGame.js'
 
 const app = new express()
 const PORT = 5000
@@ -21,6 +22,9 @@ httpServer.listen(5001);
 
 io.on('connection', socket => {
     onConnection(io, socket)
+    socket.on('add_player', data => {
+        joinToGame(data)
+    })
 })
 
 const corsOptions = {
