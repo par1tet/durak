@@ -21,7 +21,7 @@ export const SettingsPanel = ({}) => {
     return (<>
         <div className={cl['creategame']}>
             <div className={cl['creategame__settings']} ref={settingsRef}>
-                <Input width={100} height={200}></Input>
+                <Input width={320} height={120} center={true}></Input>
             </div>
             <div>
                 <ButtonPlay onClick={(handleStart as any)}>
