@@ -41,3 +41,18 @@ export async function createGame(
 export async function getGames(token){
     return (await sequelize.models.Game.findAll())
 }
+
+export async function canToJoinToGame(token){
+    const gamesWithToken = (await sequelize.models.Game.findAll()).filter(game => game.token === token)
+
+    console.log(gamesWithToken[0].players.split('|').length)
+    console.log(gamesWithToken[0].maxPlayers)
+    
+    if (gamesWithToken.length === 0 ||
+        gamesWithToken[0].players.split('|').length === gamesWithToken[0].maxPlayers
+    ){
+        return false;
+    }else{
+        return true
+    }
+}

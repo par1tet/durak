@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createGame, getGames } from "../../database/functions.js";
+import { createGame, getGames, canToJoinToGame } from "../../database/functions.js";
 import crypto from 'crypto'
 
 export const router = new Router()
@@ -31,4 +31,10 @@ router.post('/creategame', async (req, res) => {
     //     console.log(game.winners)
     // })
     res.send({'token':token})
+})
+
+router.post('/jointogame', async (req, res) => {
+    console.log('token', req.body.token)
+
+    res.send({'token':(await canToJoinToGame(req.body.token))})
 })
