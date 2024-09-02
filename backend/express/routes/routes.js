@@ -18,7 +18,7 @@ router.post('/creategame', async (req, res) => {
         req.body.whoMove,
         req.body.typeGame,
         req.body.trumpCart,
-        req.body.body
+        req.body.maxPlayers
     )
     // await (await getGames()).forEach(game => {
     //     console.log(game.id)
@@ -36,5 +36,5 @@ router.post('/creategame', async (req, res) => {
 router.post('/jointogame', async (req, res) => {
     console.log('token', req.body.token)
 
-    res.send({'token':(await canToJoinToGame(req.body.token))})
+    res.send({'result':(await canToJoinToGame(req.body.token))})
 })

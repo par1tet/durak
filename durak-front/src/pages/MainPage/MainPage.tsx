@@ -10,7 +10,9 @@ export const MainPage = ({}) => {
             <Buttons buttons={[
                 {
                     title:'Присоединиться к игре',
-                    onClick: () => console.log('еще нет')
+                    onClick: () => {
+                        navigate('/joingame')
+                    }
                 },
                 {
                     title:'Создать игру',

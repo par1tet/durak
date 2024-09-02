@@ -90,6 +90,9 @@ export const SettingsPanel = ({}) => {
         //     isScam = true
         // }
 
+
+        console.log(countPlayers)
+
         // добавляем в стор
         myRootStore.onlineGame.createOnlineGame(
             cartsArray,
