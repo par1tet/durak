@@ -9,14 +9,16 @@ router.get('/', (req, res) => {
 })
 
 router.post('/creategame', async (req, res) => {
+    const token = crypto.randomBytes(8).toString('hex').toUpperCase()
     await createGame(
-        crypto.randomBytes(8).toString('hex').toUpperCase(),
+        token,
         req.body.carts,
         req.body.players,
         req.body.trump,
         req.body.whoMove,
         req.body.typeGame,
-        req.trumpCart,
+        req.body.trumpCart,
+        req.body.body
     )
     // await (await getGames()).forEach(game => {
     //     console.log(game.id)
@@ -28,5 +30,5 @@ router.post('/creategame', async (req, res) => {
     //     console.log(game.batleCarts)
     //     console.log(game.winners)
     // })
-    res.send({'test':'helo world'})
+    res.send({'token':token})
 })

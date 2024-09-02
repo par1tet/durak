@@ -21,7 +21,8 @@ export async function createGame(
     trump,
     whoMove,
     typeGame,
-    trumpCart
+    trumpCart,
+    maxPlayers
 ){
     sequelize.models.Game.create({
         token: token,
@@ -32,7 +33,8 @@ export async function createGame(
         typeGame: typeGame,
         trumpCart: trumpCart,
         batleCarts: "0/0/0/0/0/0",
-        winners: ""
+        winners: "",
+        maxPlayers: maxPlayers
     })
 }
 

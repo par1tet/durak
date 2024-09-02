@@ -25,6 +25,9 @@ export default sequelize => sequelize.define(
         },
         winners: {
             type: DataTypes.STRING
+        },
+        maxPlayers: {
+            type: DataTypes.INTEGER
         }
     }, {
         timestamps: false,

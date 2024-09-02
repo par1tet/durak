@@ -1,7 +1,11 @@
 import { makeObservable, observable, action, override } from "mobx";
 import { GameR } from "../utils/classes/game.ts";
+import { Suit } from "../utils/enums/suit.ts";
+import { Player } from "../utils/abstractClasses/player.ts";
+import { Cart } from "../utils/abstractClasses/cart.ts";
 
 export class onlineGameStore extends GameR{
+    token: string = '';
     constructor(){
         super()
         makeObservable(this, {
@@ -12,6 +16,7 @@ export class onlineGameStore extends GameR{
             typeGame: observable,
             trumpCart: observable,
             batleCards: observable,
+            token: observable,
             changeBatleCards: action,
             changeDefCards: action,
             setWhoMove: action,
@@ -25,5 +30,25 @@ export class onlineGameStore extends GameR{
             getDefPlayerIndex: action,
             addDefCart: action
         })
+    }
+    createOnlineGame(
+        carts: Cart[],
+        players: Player[],
+        trump: Suit,
+        whoMove: number,
+        typeGame: string,
+        trumpCart: Cart | null,
+        token: string
+    ){
+        this.carts = carts
+        this.players = players
+        this.trump = trump
+        this.whoMove = whoMove
+        this.typeGame = typeGame
+        this.trumpCart = trumpCart
+        this.batleCards =
+                        [null,null,null,
+                        null,null,null]
+        this.token = token
     }
 }

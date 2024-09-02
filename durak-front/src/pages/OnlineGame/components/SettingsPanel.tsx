@@ -19,7 +19,7 @@ export const SettingsPanel = ({}) => {
     const myRootStore: rootStore = useStore()
     const settingsRef = useRef<HTMLDivElement>(null)
 
-    function handleStart(): undefined {
+    async function handleStart(): Promise<undefined> {
         if (!settingsRef.current) return undefined;// проверка что ref не null
 
         const countPlayers: number = +((settingsRef.current.children[1].children[1] as HTMLInputElement).value)
@@ -73,7 +73,7 @@ export const SettingsPanel = ({}) => {
 
         // создаем массив игроков
         const playersArray = createPlayersArray(
-            countPlayers,
+            1,
             cartsArray,
             trump
         )
@@ -91,20 +91,21 @@ export const SettingsPanel = ({}) => {
         // }
 
         // добавляем в стор
-        myRootStore.onlineGame.createGame(
+        myRootStore.onlineGame.createOnlineGame(
             cartsArray,
             playersArray,
             trump,
             0,
             typeGame,
-            trumpCart
-        )
-        createGame(cartsArray,
-            playersArray,
-            trump,
-            0,
-            typeGame,
-            trumpCart
+            trumpCart,
+            await createGame(cartsArray,
+                playersArray,
+                trump,
+                0,
+                typeGame,
+                trumpCart,
+                countPlayers
+            )
         )
 
         setSearchParams({isSetting:'false'})
@@ -146,7 +147,7 @@ export const SettingsPanel = ({}) => {
                 /></Setting>
             </div>
             <div>
-                <ButtonPlay onClick={handleStart}>
+                <ButtonPlay onClick={(handleStart as any)}>
                     Запустить
                 </ButtonPlay>
             </div>
