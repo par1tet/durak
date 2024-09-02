@@ -13,6 +13,7 @@ import { shuffle } from "../../../utils/functions/shuffle.ts";
 import cl from './../OnlineGame.module.css';
 import { Setting } from "./Setting.tsx";
 import { createGame } from "../../../utils/api/createGame.ts";
+import { socket } from "../../../socket/socket.ts";
 
 export const SettingsPanel = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -93,6 +94,20 @@ export const SettingsPanel = ({}) => {
 
         console.log(countPlayers)
 
+        const gameToken = await createGame(cartsArray,
+            playersArray,
+            trump,
+            0,
+            typeGame,
+            trumpCart,
+            countPlayers
+        )
+
+        socket.connect()
+
+        localStorage.setItem('gameToken', (gameToken as any).token)
+        localStorage.setItem('playerCarts', playersArray[0].carts.toString())
+
         // добавляем в стор
         myRootStore.onlineGame.createOnlineGame(
             cartsArray,
@@ -101,14 +116,7 @@ export const SettingsPanel = ({}) => {
             0,
             typeGame,
             trumpCart,
-            await createGame(cartsArray,
-                playersArray,
-                trump,
-                0,
-                typeGame,
-                trumpCart,
-                countPlayers
-            )
+            gameToken
         )
 
         setSearchParams({isSetting:'false'})

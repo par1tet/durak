@@ -31,7 +31,5 @@ export async function createGame(
         token = r.data
     )
 
-    console.log(token)
-
     return token
 }

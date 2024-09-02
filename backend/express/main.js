@@ -2,12 +2,29 @@ import express from 'express'
 import { router } from './routes/routes.js'
 import cors from 'cors'
 import  bodyParser  from 'body-parser'
+import { createServer } from 'http'
+import { Server } from "socket.io";
+import { onConnection } from '../socketio/onConnection.js'
 
 const app = new express()
 const PORT = 5000
 
-var corsOptions = {
-    origins: ['http://localhost:5173/'],
+const ALLOWED_ORIGIN = ['http://localhost:5173/']
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
+    cors: ALLOWED_ORIGIN[0],
+    serveClient: false
+});
+
+httpServer.listen(5001);
+
+io.on('connection', socket => {
+    onConnection(io, socket)
+})
+
+const corsOptions = {
+    origins: [ALLOWED_ORIGIN],
 }
 
 function logger(req, res, next){

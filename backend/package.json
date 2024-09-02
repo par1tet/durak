@@ -16,6 +16,8 @@
     "crypto": "^1.0.1",
     "express": "^4.19.2",
     "sequelize": "^6.37.3",
+    "socket.io": "^4.7.5",
+    "socketio": "^1.0.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
