@@ -92,3 +92,23 @@
 
     transform: translate(-50%, -50%);
 }
+
+.tokengame {
+    display: flex;
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    
+    flex-direction: column;
+    text-align: center;
+
+    background-color: rgb(3, 173, 3);
+    border-radius: 6px;
+
+    font-size: 1.1rem;
+    font-weight: 800;
+    
+    padding: 4px;
+}

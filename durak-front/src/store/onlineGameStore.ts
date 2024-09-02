@@ -6,6 +6,7 @@ import { Cart } from "../utils/abstractClasses/cart.ts";
 
 export class onlineGameStore extends GameR{
     token: string = '';
+    maxPlayers: number = 2;
     constructor(){
         super()
         makeObservable(this, {
@@ -17,6 +18,7 @@ export class onlineGameStore extends GameR{
             trumpCart: observable,
             batleCards: observable,
             token: observable,
+            maxPlayers: observable,
             changeBatleCards: action,
             changeDefCards: action,
             setWhoMove: action,
@@ -38,7 +40,8 @@ export class onlineGameStore extends GameR{
         whoMove: number,
         typeGame: string,
         trumpCart: Cart | null,
-        token: string
+        token: string,
+        maxPlayers: number
     ){
         this.carts = carts
         this.players = players
@@ -50,5 +53,6 @@ export class onlineGameStore extends GameR{
                         [null,null,null,
                         null,null,null]
         this.token = token
+        this.maxPlayers = maxPlayers
     }
 }

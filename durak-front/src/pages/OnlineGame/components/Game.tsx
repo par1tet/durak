@@ -27,53 +27,28 @@ export const Game = observer(({}) => {
         console.log(socket.connected)
     }
 
-    useEffect(() => {
-        // if(myRootStore.onlineGame.winners.length === (myRootStore.onlineGame.players.length - 1)){
-        //     return undefined
-        // }
-        // if  (myRootStore.onlineGame.getDefPlayerIndex() === i)
-        // {
-        //     // если защищаюшийся игрок
-        //     let isGetAction:boolean = false;
-
-        //     for(let i = 0;i !== myRootStore.onlineGame.batleCards.length;i++) {
-        //         if (myRootStore.onlineGame.batleCards[i]) {
-        //             if((myRootStore.onlineGame.batleCards[i] as any).length === 1){
-        //                 isGetAction = true
-        //                 break
-        //             }else{
-        //                 isGetAction = false
-        //             }
-        //         }
-        //     }
-
-        //     if (isGetAction){
-        //         (actionButtonRef.current as any).classList.remove(cl['buttonaction-notactive']);
-        //         (actionButtonRef.current as any).innerHTML = 'Взять';
-        //     }else{
-        //         (actionButtonRef.current as any).classList.add(cl['buttonaction-notactive'])
-        //     }
-        // }else if (toJS(myRootStore.onlineGame.whoMove) === i){
-        //     // если атакующий игрок
-        //     if (myRootStore.onlineGame.isBeaten()){
-        //         (actionButtonRef.current as any).classList.remove(cl['buttonaction-notactive']);
-        //         (actionButtonRef.current as any).innerHTML = 'Бито';
-        //     }else{
-        //         (actionButtonRef.current as any).classList.add(cl['buttonaction-notactive'])
-        //     }
-        // }else{
-        //     // если подкидывающий игрок
-        //     (actionButtonRef.current as any).classList.add(cl['buttonaction-notactive'])
-        // }
-    }, [toJS(myRootStore.gameWithBots.batleCards)])
-
     return (<>
         <TrumpElement
             carts={toJS(myRootStore.onlineGame.carts)}
             trumpCart={toJS(myRootStore.onlineGame.trumpCart)}
             trump={toJS(myRootStore.onlineGame.trump)}
         ></TrumpElement>
-        <BattleCards batleCards={toJS(myRootStore.onlineGame.batleCards)}></BattleCards>
+        {(()=>{
+            if (myRootStore.onlineGame.players.length !== myRootStore.onlineGame.maxPlayers){
+                return (<div className={cl['tokengame']}>
+                    <span>
+                        Токен комнаты для присоеденения
+                    </span>
+                    <span>
+                        {toJS(myRootStore.onlineGame.token)}
+                    </span>
+                </div>)
+            }else{
+                return (
+                    <BattleCards batleCards={toJS(myRootStore.onlineGame.batleCards)}></BattleCards>
+                )
+            }
+        })()}
         <div className={cl["otherplayers"]}>
             {toJS(myRootStore.onlineGame.players).map((player, index) => {
                 if (index === 0){

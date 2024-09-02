@@ -94,18 +94,18 @@ export const SettingsPanel = ({}) => {
 
         console.log(countPlayers)
 
-        const gameToken = await createGame(cartsArray,
+        const gameToken = ((await createGame(cartsArray,
             playersArray,
             trump,
             0,
             typeGame,
             trumpCart,
             countPlayers
-        )
+        )) as any).token
 
         socket.connect()
 
-        localStorage.setItem('gameToken', (gameToken as any).token)
+        localStorage.setItem('gameToken', gameToken)
         localStorage.setItem('playerCarts', playersArray[0].carts.toString())
 
         // добавляем в стор
@@ -116,7 +116,8 @@ export const SettingsPanel = ({}) => {
             0,
             typeGame,
             trumpCart,
-            gameToken
+            gameToken,
+            countPlayers
         )
 
         setSearchParams({isSetting:'false'})
