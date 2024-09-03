@@ -22,8 +22,8 @@ httpServer.listen(5001);
 
 io.on('connection', socket => {
     onConnection(io, socket)
-    socket.on('add_player', data => {
-        joinToGame(data)
+    socket.on('joinGame', data => {
+        joinToGame(data, socket, io)
     })
 })
 

@@ -28,6 +28,9 @@ export default sequelize => sequelize.define(
         },
         maxPlayers: {
             type: DataTypes.INTEGER
+        },
+        trumpCart: {
+            type: DataTypes.STRING
         }
     }, {
         timestamps: false,

@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
 
 router.post('/creategame', async (req, res) => {
     const token = crypto.randomBytes(8).toString('hex').toUpperCase()
+    console.log(req.body.trumpCart)
     await createGame(
         token,
         req.body.carts,

@@ -53,9 +53,9 @@ export async function getGameData(token: string){
 
         for (let i = 0;i !== result.players.split('/').length;i++){
             playerCarts.push(
-                new CartR(+result.players.split('/')[i].split(':')[0],
-                fromNumberSuitToSuit(+result.players.split('/')[i].split(':')[1])
-            ))
+                new CartR(fromNumberSuitToSuit(+result.players.split('/')[i].split(':')[1]),
+                +result.players.split('/')[i].split(':')[0])
+            )
         }
 
         parsePlayers.push(new PlayerR(playerCarts, 'Игрок 1', fromNumberSuitToSuit(+result.trump)))
@@ -63,18 +63,22 @@ export async function getGameData(token: string){
         for (let i = 0;i !== result.players.split('|').length;i++){
             const playerCarts: Cart[] = []
 
-            for (let i = 0;i !== result.players.split('|').split('/').length;i++){
+            for (let j = 0;j !== result.players.split('|')[i].split('/').length;j++){
                 playerCarts.push(
-                    new CartR(+result.players.split('|').split('/')[i].split(':')[0],
-                    fromNumberSuitToSuit(+result.players.split('|').split('/')[i].split(':')[1])
+                    new CartR(fromNumberSuitToSuit(+result.players.split('|')[i].split('/')[j].split(':')[1]),
+                    +result.players.split('|')[i].split('/')[j].split(':')[0]
                 ))
             }
     
-            parsePlayers.push(new PlayerR(playerCarts, 'Игрок 1', fromNumberSuitToSuit(+result.trump)))
+            parsePlayers.push(new PlayerR(playerCarts, `Игрок ${i+1}`, fromNumberSuitToSuit(+result.trump)))
         }
     }
 
     result.players = parsePlayers
+    console.log(result)
+    result.trump = fromNumberSuitToSuit((+result.trump))
+    result.trumpCart = new CartR(fromNumberSuitToSuit(+result.trumpCart.split(':')[1]),
+    +result.trumpCart.split(':')[0])
 
     return result
 }

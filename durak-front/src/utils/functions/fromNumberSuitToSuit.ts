@@ -7,9 +7,9 @@ export function fromNumberSuitToSuit(numberSuit: number): Suit{
         case 1:
             return Suit['hearts']
         case 2:
-            return Suit['clubs']
-        case 3:
             return Suit['spades']
+        case 3:
+            return Suit['clubs']
         default:
             return Suit['rand']
     }

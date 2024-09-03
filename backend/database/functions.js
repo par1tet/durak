@@ -47,8 +47,7 @@ export async function canToJoinToGame(token){
         token: token
     }}))[0]
     
-    if (gamesWithToken ||
-        gamesWithToken.players.split('|').length !== gamesWithToken.maxPlayers
+    if (gamesWithToken.players.split('|').length !== gamesWithToken.maxPlayers
     ){
         return true;
     }else{
@@ -70,5 +69,21 @@ export async function getDataGame(token){
         batleCarts: gamesWithToken.batleCarts,
         winners: gamesWithToken.winners,
         maxPlayers: gamesWithToken.maxPlayers,
+        trumpCart: gamesWithToken.trumpCart,
     }
+}
+
+export async function updateGame(token, carts, players, trumpCart, whoMove){
+    const gamesWithToken = (await sequelize.models.Game.findAll({where: {
+        token: token
+    }}))[0]
+
+    console.log('123')
+
+    gamesWithToken.carts = carts;
+    gamesWithToken.players = players;
+    gamesWithToken.trumpCart = trumpCart;
+    gamesWithToken.whoMove = whoMove
+    await gamesWithToken.save()
+
 }

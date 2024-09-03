@@ -10,6 +10,7 @@ import { rootStore } from "../../../store/rootStore";
 import { stateOfPlayer } from "../../../utils/enums/stateOfPlayer";
 import cl from './../OnlineGame.module.css';
 import { socket } from "../../../socket/socket";
+import { getGameData } from "../../../utils/api/getGameData";
 
 export const Game = observer(({}) => {
     const myRootStore: rootStore = useStore()
@@ -19,6 +20,15 @@ export const Game = observer(({}) => {
 
     console.log(localStorage.getItem('gameToken'))
     console.log(localStorage.getItem('playerCarts'))
+    console.log(myRootStore.onlineGame.carts)
+    console.log(myRootStore.onlineGame.trumpCart)
+
+    useEffect(() => {
+        socket.on('joinNewPlayer', async data => {
+            console.log(await getGameData(myRootStore.onlineGame.token))
+        })
+    }, [socket])
+
 
     function handleAction(e: React.MouseEvent<HTMLButtonElement>){
         console.log(localStorage.getItem('gameToken'))

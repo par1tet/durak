@@ -62,6 +62,13 @@ export const SettingsPanel = ({}) => {
         let cartsArray: Cart[] = createCartsArray(+((settingsRef.current.children[0].children[1] as HTMLInputElement).value))
         shuffle(cartsArray)
 
+        // создаем массив игроков
+        const playersArray = createPlayersArray(
+            1,
+            cartsArray,
+            trump
+        )
+
         // получаем козырную карту
         let trumpCart: Cart | null = null
 
@@ -71,13 +78,6 @@ export const SettingsPanel = ({}) => {
             // удаляем козырную карту из колоды
             cartsArray = cartsArray.filter(cart => cart !== trumpCart)
         }
-
-        // создаем массив игроков
-        const playersArray = createPlayersArray(
-            1,
-            cartsArray,
-            trump
-        )
 
         // // получаем время на ход
         // const timeForMove = (settingsRef.current.children[3].children[1] as HTMLInputElement).value
@@ -103,7 +103,11 @@ export const SettingsPanel = ({}) => {
             countPlayers
         )) as any).token
 
-        socket.connect()
+        // подключаемся к игре
+        await socket.connect()
+        await socket.emit('joinGame', {
+            token: gameToken,
+        })
 
         localStorage.setItem('gameToken', gameToken)
         localStorage.setItem('playerCarts', playersArray[0].carts.toString())
