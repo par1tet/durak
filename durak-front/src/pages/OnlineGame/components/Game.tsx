@@ -12,6 +12,7 @@ import cl from './../OnlineGame.module.css';
 import { socket } from "../../../socket/socket";
 import { getGameData } from "../../../utils/api/getGameData";
 import { OnlineAnotherPlayer } from "../../../components/OnlineAnotherPlayer";
+import { Cart } from "../../../utils/abstractClasses/cart";
 
 export const Game = observer(({}) => {
     const myRootStore: rootStore = useStore()
@@ -23,6 +24,62 @@ export const Game = observer(({}) => {
     console.log(localStorage.getItem('playerCarts'))
     console.log(myRootStore.onlineGame.carts)
     console.log(myRootStore.onlineGame.trumpCart)
+
+    function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined{
+        if(myRootStore.onlineGame.winners.length === (myRootStore.onlineGame.players.length - 1)){
+            return undefined
+        }
+
+        const elementFromPoint = document.elementFromPoint(e.clientX, e.clientY)
+        if (elementFromPoint === null) { return undefined }
+        if ((elementFromPoint.attributes as any)['data-index'] === undefined) return undefined
+        const indexOfCartBuild: number = +((elementFromPoint.attributes as any)['data-index'].value)
+
+        const isMove = (()=>{
+            if (toJS(myRootStore.onlineGame.whoMove) === 0){
+                return stateOfPlayer['move']
+            }else if(0 === myRootStore.onlineGame.getDefPlayerIndex()){
+                return stateOfPlayer['def']
+            }else {
+                return stateOfPlayer['retr']
+            }
+        })()
+        switch (isMove){
+            case stateOfPlayer['move']:{
+                // если главный игрок
+                
+                break;
+            }
+            case stateOfPlayer['def']:{
+                // если защищающийся игрок
+                console.log('def player')
+                switch(myRootStore.onlineGame.changeDefCards(indexOfCartBuild, cart)){
+                    case 0:
+                        // если защищает
+
+                        break;
+                    case 1:
+                        // если переводит
+
+                        break
+                    default:
+                        console.log('dont beaten')
+                        break;
+                }
+                break;
+            }
+            case stateOfPlayer['retr']:{
+                // если подкидывающий игрок
+
+                break;
+            }
+        }
+        socket.emit('attackMove',{
+            token:myRootStore.onlineGame.token,
+            indexOfCartBuild:indexOfCartBuild,
+            cart: (cart as any).toString()
+        })
+    }
 
     useEffect(() => {
         socket.on('joinNewPlayer', async data => {
@@ -41,6 +98,50 @@ export const Game = observer(({}) => {
             )
         })
     }, [socket])
+
+    useEffect(() => {
+        if(myRootStore.onlineGame.maxPlayers !== myRootStore.onlineGame.players.length){
+            (actionButtonRef.current as any).classList.add(cl['buttonaction-notactive'])
+            return undefined
+        }
+        if(myRootStore.onlineGame.winners.length === (myRootStore.onlineGame.players.length - 1)){
+            return undefined
+        }
+        if  (myRootStore.onlineGame.getDefPlayerIndex() === 0)
+        {
+            // если защищаюшийся игрок
+            let isGetAction:boolean = false;
+
+            for(let i = 0;i !== myRootStore.onlineGame.batleCards.length;i++) {
+                if (myRootStore.onlineGame.batleCards[i]) {
+                    if((myRootStore.onlineGame.batleCards[i] as any).length === 1){
+                        isGetAction = true
+                        break
+                    }else{
+                        isGetAction = false
+                    }
+                }
+            }
+
+            if (isGetAction){
+                (actionButtonRef.current as any).classList.remove(cl['buttonaction-notactive']);
+                (actionButtonRef.current as any).innerHTML = 'Взять';
+            }else{
+                (actionButtonRef.current as any).classList.add(cl['buttonaction-notactive'])
+            }
+        }else if (toJS(myRootStore.onlineGame.whoMove) === 0){
+            // если атакующий игрок
+            if (myRootStore.onlineGame.isBeaten()){
+                (actionButtonRef.current as any).classList.remove(cl['buttonaction-notactive']);
+                (actionButtonRef.current as any).innerHTML = 'Бито';
+            }else{
+                (actionButtonRef.current as any).classList.add(cl['buttonaction-notactive'])
+            }
+        }else{
+            // если подкидывающий игрок
+            (actionButtonRef.current as any).classList.add(cl['buttonaction-notactive'])
+        }
+    }, [myRootStore.onlineGame.batleCards])
 
     function handleAction(e: React.MouseEvent<HTMLButtonElement>){
         console.log(localStorage.getItem('gameToken'))
@@ -81,9 +182,9 @@ export const Game = observer(({}) => {
                             <OnlineAnotherPlayer
                                 player={player}
                                 isMove={(()=>{
-                                    if (toJS(myRootStore.onlineGame.whoMove) === 0){
+                                    if (myRootStore.onlineGame.whoMove === index){
                                         return stateOfPlayer['move']
-                                    }else if(toJS(myRootStore.onlineGame.whoMove) === toJS(myRootStore.onlineGame.players.length)-1){
+                                    }else if(index === myRootStore.onlineGame.getDefPlayerIndex()){
                                         return stateOfPlayer['def']
                                     }else {
                                         return stateOfPlayer['retr']
@@ -119,6 +220,7 @@ export const Game = observer(({}) => {
                     rerenderKey={playerRerenderKey}
                     setRerenderKey={setPlayerRerenderKey}
                     store={myRootStore.onlineGame}
+                    handleDragEnd={handleDragEnd}
                 ></PlayerElement>
             </div>
         </div>

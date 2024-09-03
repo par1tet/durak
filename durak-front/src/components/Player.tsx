@@ -7,23 +7,23 @@ import { Game } from "../utils/abstractClasses/game"
 import { Cart } from "../utils/abstractClasses/cart"
 import { stateOfPlayer } from "../utils/enums/stateOfPlayer"
 import { forwardRef } from "react"
+import { onlineGameStore } from "../store/onlineGameStore"
 
 type propsPlayer = {
     player: Player,
     isMove: stateOfPlayer,
     store: Game,
     rerenderKey: any,
-    setRerenderKey: any
+    setRerenderKey: any,
+    handleDragEnd?: (e: React.DragEvent<HTMLImageElement>, cart: Cart) => undefined
 }
 export const PlayerElement = observer(forwardRef(({
     player,
     isMove,
     rerenderKey,
     setRerenderKey,
-    store
-}: propsPlayer, ref:React.ForwardedRef<HTMLDivElement>) => {
-
-    function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined{
+    store,
+    handleDragEnd = (e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined => {
         if(store.winners.length === (store.players.length - 1)){
             return undefined
         }
@@ -82,7 +82,22 @@ export const PlayerElement = observer(forwardRef(({
         player.sortCarts(store.trump)
         setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
-
+}: propsPlayer, ref:React.ForwardedRef<HTMLDivElement>) => {
+    if(store instanceof onlineGameStore){
+        if(store.maxPlayers !== store.players.length){
+            return (<div className={cl['player']} key={rerenderKey} ref={ref}>
+            <div className={cl['player-nickname']}>
+                <span>
+                    {player.nickName}
+                </span>
+                <span>
+                    Ожидает
+                </span>
+            </div>
+            <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd}></DeckOfCarts>
+            </div>)
+        }
+    }
     if(player.isWin){
         return (<div className={cl['player']} key={rerenderKey} ref={ref}>
         <div className={cl['player-nickname']}>
