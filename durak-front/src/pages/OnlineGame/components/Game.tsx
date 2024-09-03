@@ -11,6 +11,7 @@ import { stateOfPlayer } from "../../../utils/enums/stateOfPlayer";
 import cl from './../OnlineGame.module.css';
 import { socket } from "../../../socket/socket";
 import { getGameData } from "../../../utils/api/getGameData";
+import { OnlineAnotherPlayer } from "../../../components/OnlineAnotherPlayer";
 
 export const Game = observer(({}) => {
     const myRootStore: rootStore = useStore()
@@ -25,10 +26,21 @@ export const Game = observer(({}) => {
 
     useEffect(() => {
         socket.on('joinNewPlayer', async data => {
-            console.log(await getGameData(myRootStore.onlineGame.token))
+            const newData = (await getGameData(myRootStore.onlineGame.token))
+
+            // обновляем стейт когда получаешь обновленые данные
+            myRootStore.onlineGame.createOnlineGame(
+                newData.carts,
+                newData.players,
+                newData.trump,
+                newData.whoMove,
+                newData.typeGame,
+                newData.trumpCart,
+                myRootStore.onlineGame.token,
+                newData.maxPlayers
+            )
         })
     }, [socket])
-
 
     function handleAction(e: React.MouseEvent<HTMLButtonElement>){
         console.log(localStorage.getItem('gameToken'))
@@ -60,15 +72,25 @@ export const Game = observer(({}) => {
             }
         })()}
         <div className={cl["otherplayers"]}>
-            {toJS(myRootStore.onlineGame.players).map((player, index) => {
+            {myRootStore.onlineGame.players.map((player, index) => {
                 if (index === 0){
                     return null
                 }else{
                     return (
                         <div key={index}>
-                            
+                            <OnlineAnotherPlayer
+                                player={player}
+                                isMove={(()=>{
+                                    if (toJS(myRootStore.onlineGame.whoMove) === 0){
+                                        return stateOfPlayer['move']
+                                    }else if(toJS(myRootStore.onlineGame.whoMove) === toJS(myRootStore.onlineGame.players.length)-1){
+                                        return stateOfPlayer['def']
+                                    }else {
+                                        return stateOfPlayer['retr']
+                                    }
+                                })()}
+                            ></OnlineAnotherPlayer>
                         </div>
-
                     )
                 }
             })}
