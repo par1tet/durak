@@ -130,7 +130,9 @@ export class GameR extends Game {
     isCleanBatleCards(): boolean {
         let isClean: boolean = true
         for(let i = 0;i !== this.batleCards.length;i++) {
+            console.log(this.batleCards[i])
             if (this.batleCards[i]){
+                console.log('sfd')
                 isClean = false
             }
         }

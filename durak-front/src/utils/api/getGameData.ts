@@ -30,8 +30,8 @@ export async function getGameData(token: string){
                 parseBatleCards.push([
                     new CartR(fromNumberSuitToSuit(+result.batleCarts.split('/')[i].split('|')[0].split(':')[1]),
                     +result.batleCarts.split('/')[i].split('|')[0].split(':')[0]),
-                    new CartR(fromNumberSuitToSuit(+result.batleCarts.split('/')[i].split('|')[0].split(':')[1]),
-                    +result.batleCarts.split('/')[i].split('|')[0].split(':')[0])
+                    new CartR(fromNumberSuitToSuit(+result.batleCarts.split('/')[i].split('|')[1].split(':')[1]),
+                    +result.batleCarts.split('/')[i].split('|')[1].split(':')[0])
                 ])
             }
         }

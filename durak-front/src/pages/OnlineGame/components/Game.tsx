@@ -33,12 +33,13 @@ export const Game = observer(({}) => {
         const isMove = (()=>{
             if (toJS(myRootStore.onlineGame.whoMove) === myRootStore.onlineGame.pointOfView){
                 return stateOfPlayer['move']
-            }else if(0 === myRootStore.onlineGame.getDefPlayerIndex()){
+            }else if(myRootStore.onlineGame.pointOfView === myRootStore.onlineGame.getDefPlayerIndex()){
                 return stateOfPlayer['def']
             }else {
                 return stateOfPlayer['retr']
             }
         })()
+        console.log(isMove)
         switch (isMove){
             case stateOfPlayer['move']:{
                 // если атакующий игрок
@@ -50,9 +51,13 @@ export const Game = observer(({}) => {
                 socket.emit('movePlayer', {
                     token: myRootStore.onlineGame.token,
                     batleCarts: myRootStore.onlineGame.batleCards
-                    .map(cart => {
+                    .map((cart: Cart[] | null) => {
                         if(cart){
-                            return cart.toString()
+                            if((cart as any).length === 1){
+                                return (cart as any).toString()
+                            }else{
+                                return (cart as any)[0].toString() + '|' + (cart as any)[0].toString()
+                            }
                         }else{
                             return '0'
                         }
@@ -67,25 +72,81 @@ export const Game = observer(({}) => {
             }
             case stateOfPlayer['def']:{
                 // если защищающийся игрок
-                console.log('def player')
+                console.log('fsad')
                 switch(myRootStore.onlineGame.changeDefCards(indexOfCartBuild, cart)){
                     case 0:
-                        // если защищает
-
+                        console.log('wata')
+                        myRootStore.onlineGame.players[myRootStore.onlineGame.pointOfView].removeCart(cart)
                         break;
                     case 1:
-                        // если переводит
-
+                        myRootStore.onlineGame.players[myRootStore.onlineGame.pointOfView].removeCart(cart)
+                        // передаем очередь
+                        for(let i = 1;;i++){
+                            if (myRootStore.onlineGame.players[myRootStore.onlineGame.getNextWhoMove(prev => prev + i)].isWin){
+                            }else{
+                                myRootStore.onlineGame.setWhoMove(prev => prev + i)
+                                break
+                            }
+                        }
+                        console.log('trans')
                         break
                     default:
                         console.log('dont beaten')
-                        break;
+                    break;
                 }
+                socket.emit('movePlayer', {
+                    token: myRootStore.onlineGame.token,
+                    batleCarts: myRootStore.onlineGame.batleCards
+                    .map((cart: Cart[] | null) => {
+                        if(cart){
+                            if((cart as any).length === 1){
+                                return (cart as any).toString()
+                            }else{
+                                return (cart as any)[0].toString() + '|' + (cart as any)[1].toString()
+                            }
+                        }else{
+                            return '0'
+                        }
+                    }).join('/'),
+                    carts: myRootStore.onlineGame.carts.join('/'),
+                    players: myRootStore.onlineGame.players.join('|'),
+                    whoMove: myRootStore.onlineGame.whoMove,
+                    winners: myRootStore.onlineGame.winners.join('|'),
+                    trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+                })
                 break;
             }
             case stateOfPlayer['retr']:{
                 // если подкидывающий игрок
+                console.log('trest')
+                console.log(myRootStore.onlineGame.isCleanBatleCards())
+                if(myRootStore.onlineGame.isCleanBatleCards()){
+                    return;
+                }
+                if(myRootStore.onlineGame.changeBatleCards(indexOfCartBuild, cart) === 0){
+                    myRootStore.onlineGame.players[0].removeCart(cart)
+                }
 
+                socket.emit('movePlayer', {
+                    token: myRootStore.onlineGame.token,
+                    batleCarts: myRootStore.onlineGame.batleCards
+                    .map((cart: Cart[] | null) => {
+                        if(cart){
+                            if((cart as any).length === 1){
+                                return (cart as any).toString()
+                            }else{
+                                return (cart as any)[0].toString() + '|' + (cart as any)[0].toString()
+                            }
+                        }else{
+                            return '0'
+                        }
+                    }).join('/'),
+                    carts: myRootStore.onlineGame.carts.join('/'),
+                    players: myRootStore.onlineGame.players.join('|'),
+                    whoMove: myRootStore.onlineGame.whoMove,
+                    winners: myRootStore.onlineGame.winners.join('|'),
+                    trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+                })
                 break;
             }
         }
