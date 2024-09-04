@@ -83,6 +83,7 @@ export const PlayerElement = observer(forwardRef(({
         setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 }: propsPlayer, ref:React.ForwardedRef<HTMLDivElement>) => {
+    console.log(player)
     if(store instanceof onlineGameStore){
         if(store.maxPlayers !== store.players.length){
             return (<div className={cl['player']} key={rerenderKey} ref={ref}>

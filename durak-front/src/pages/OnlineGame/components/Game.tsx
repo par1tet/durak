@@ -20,11 +20,6 @@ export const Game = observer(({}) => {
     const playersRef = useRef(null)
     const [playerRerenderKey, setPlayerRerenderKey] = useState(1)
 
-    console.log(localStorage.getItem('gameToken'))
-    console.log(localStorage.getItem('playerCarts'))
-    console.log(myRootStore.onlineGame.carts)
-    console.log(myRootStore.onlineGame.batleCards)
-
     function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined{
         if(myRootStore.onlineGame.winners.length === (myRootStore.onlineGame.players.length - 1)){
             return undefined
@@ -36,7 +31,7 @@ export const Game = observer(({}) => {
         const indexOfCartBuild: number = +((elementFromPoint.attributes as any)['data-index'].value)
 
         const isMove = (()=>{
-            if (toJS(myRootStore.onlineGame.whoMove) === 0){
+            if (toJS(myRootStore.onlineGame.whoMove) === myRootStore.onlineGame.pointOfView){
                 return stateOfPlayer['move']
             }else if(0 === myRootStore.onlineGame.getDefPlayerIndex()){
                 return stateOfPlayer['def']
@@ -100,9 +95,6 @@ export const Game = observer(({}) => {
         socket.on('moveOfPlayer', async data => {
             const newData = (await getGameData(myRootStore.onlineGame.token))
 
-            console.log('ЕБИ МЕНЯ ЕБИ НОЧЬЮ И ДНЕМ АГРОМНОМ ХУЕМ ОЧКО РАЗРЫВАААЯЯЯЯЯЯ')
-            console.log(newData)
-
             myRootStore.onlineGame.createOnlineGame(
                 newData.carts,
                 newData.players,
@@ -141,7 +133,7 @@ export const Game = observer(({}) => {
         if(myRootStore.onlineGame.winners.length === (myRootStore.onlineGame.players.length - 1)){
             return undefined
         }
-        if  (myRootStore.onlineGame.getDefPlayerIndex() === 0)
+        if  (myRootStore.onlineGame.getDefPlayerIndex() === myRootStore.onlineGame.pointOfView)
         {
             // если защищаюшийся игрок
             let isGetAction:boolean = false;
@@ -163,7 +155,7 @@ export const Game = observer(({}) => {
             }else{
                 (actionButtonRef.current as any).classList.add(cl['buttonaction-notactive'])
             }
-        }else if (toJS(myRootStore.onlineGame.whoMove) === 0){
+        }else if (myRootStore.onlineGame.whoMove === myRootStore.onlineGame.pointOfView){
             // если атакующий игрок
             if (myRootStore.onlineGame.isBeaten()){
                 (actionButtonRef.current as any).classList.remove(cl['buttonaction-notactive']);
@@ -183,7 +175,7 @@ export const Game = observer(({}) => {
 
         console.log(socket.connected)
     }
-
+    console.log(toJS(myRootStore.onlineGame.players[toJS(myRootStore.onlineGame.pointOfView)]))
     return (<>
         <TrumpElement
             carts={toJS(myRootStore.onlineGame.carts)}
@@ -208,7 +200,7 @@ export const Game = observer(({}) => {
         })()}
         <div className={cl["otherplayers"]}>
             {myRootStore.onlineGame.players.map((player, index) => {
-                if (index === 0){
+                if (index === myRootStore.onlineGame.pointOfView){
                     return null
                 }else{
                     return (
@@ -240,11 +232,11 @@ export const Game = observer(({}) => {
             ></ButtonAction>
             <div className={cl["mainplayer"]}>
                 <PlayerElement
-                    player={myRootStore.onlineGame.players[0]}
+                    player={myRootStore.onlineGame.players[myRootStore.onlineGame.pointOfView]}
                     isMove={(()=>{
-                        if (toJS(myRootStore.onlineGame.whoMove) === 0){
+                        if (myRootStore.onlineGame.whoMove === myRootStore.onlineGame.pointOfView){
                             return stateOfPlayer['move']
-                        }else if(toJS(myRootStore.onlineGame.whoMove) === toJS(myRootStore.onlineGame.players.length)-1){
+                        }else if(myRootStore.onlineGame.getDefPlayerIndex() === myRootStore.onlineGame.pointOfView){
                             return stateOfPlayer['def']
                         }else {
                             return stateOfPlayer['retr']

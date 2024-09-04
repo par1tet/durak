@@ -7,6 +7,8 @@ import { Cart } from "../utils/abstractClasses/cart.ts";
 export class onlineGameStore extends GameR{
     token: string = '';
     maxPlayers: number = 2;
+    pointOfView: number = 0;
+
     constructor(){
         super()
         makeObservable(this, {
@@ -44,7 +46,6 @@ export class onlineGameStore extends GameR{
         maxPlayers: number,
         batleCards?: (Cart[] | null)[]
     ){
-        console.log(batleCards)
         this.carts = carts
         this.players = players
         this.trump = trump
@@ -54,5 +55,9 @@ export class onlineGameStore extends GameR{
         this.batleCards = batleCards ?? [null,null,null,null,null,null]
         this.token = token
         this.maxPlayers = maxPlayers
+    }
+
+    setPointOfView(value: number){
+        this.pointOfView = value
     }
 }

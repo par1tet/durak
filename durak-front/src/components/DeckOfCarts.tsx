@@ -12,6 +12,8 @@ export const DeckOfCarts = observer(({carts, onDragEnd}: propsDeck) => {
     //     console.log(cart.level)
     //     console.log(cart.suit)
     // })
+
+    console.log(carts)
     
     return (
         <div className={cl.deck}>

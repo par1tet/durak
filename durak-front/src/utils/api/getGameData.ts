@@ -43,9 +43,9 @@ export async function getGameData(token: string){
     
     for (let i = 0;i !== result.carts.split('/').length;i++){
         parseCarts.push(
-            new CartR(+result.carts.split('/')[i].split(':')[0],
-            fromNumberSuitToSuit(+result.carts.split('/')[i].split(':')[1])
-        ))
+            new CartR(fromNumberSuitToSuit(+result.carts.split('/')[i].split(':')[1]),
+            +result.carts.split('/')[i].split(':')[0])
+        )
     }
 
     result.carts = parseCarts
@@ -58,28 +58,20 @@ export async function getGameData(token: string){
     console.log(result.players.split('|'))
 
     if(result.players.split('|').length === 1){
-        const playerCarts: Cart[] = []
-
-        for (let i = 0;i !== result.players.split('/').length;i++){
-            playerCarts.push(
-                new CartR(fromNumberSuitToSuit(+result.players.split('/')[i].split(':')[1]),
-                +result.players.split('/')[i].split(':')[0])
-            )
-        }
-
-        parsePlayers.push(new PlayerR(playerCarts, 'Игрок 1', fromNumberSuitToSuit(+result.trump)))
+        parsePlayers.push(new PlayerR(result.players.split('/').map((cart: string) => {
+            return (
+                new CartR(fromNumberSuitToSuit(+cart.split(':')[1]),
+                +(cart.split(':'))[0]
+            ))
+        }), 'Игрок 1', fromNumberSuitToSuit(+result.trump)))
     }else{
         for (let i = 0;i !== result.players.split('|').length;i++){
-            const playerCarts: Cart[] = []
-
-            for (let j = 0;j !== result.players.split('|')[i].split('/').length;j++){
-                playerCarts.push(
-                    new CartR(fromNumberSuitToSuit(+result.players.split('|')[i].split('/')[j].split(':')[1]),
-                    +result.players.split('|')[i].split('/')[j].split(':')[0]
+            parsePlayers.push(new PlayerR(result.players.split('|')[i].split('/').map((cart: string) => {
+                return (
+                    new CartR(fromNumberSuitToSuit(+cart.split(':')[1]),
+                    +(cart.split(':'))[0]
                 ))
-            }
-    
-            parsePlayers.push(new PlayerR(playerCarts, `Игрок ${i+1}`, fromNumberSuitToSuit(+result.trump)))
+            }), `Игрок ${i+1}`, fromNumberSuitToSuit(+result.trump)))
         }
     }
 

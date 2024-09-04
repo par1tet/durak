@@ -20,15 +20,12 @@ export const SettingsPanel = ({}) => {
 
         const token = (settingsRef.current.children[0] as HTMLInputElement).value
         const data = await canToJoinGame(token)
-        console.log(data)
         if(data){
-            console.log('test')
             await socket.connect()
             const gameData = (await getGameData(token))
 
-            console.log(gameData)
-
-            const newPlayer = createPlayersArray(1,gameData.carts,gameData.trump)[0]
+            const newPlayer = createPlayersArray(1, gameData.carts, gameData.trump)[0]
+            console.log(newPlayer)
 
             gameData.players.push(newPlayer)
 
@@ -42,8 +39,9 @@ export const SettingsPanel = ({}) => {
                 token,
                 gameData.maxPlayers
             )
+            console.log(gameData.players.length-1)
+            myRootStore.onlineGame.setPointOfView(gameData.players.length-1)
             
-
             await socket.emit("joinGame", {
                 token: token,
                 carts: gameData.carts.join('/'),

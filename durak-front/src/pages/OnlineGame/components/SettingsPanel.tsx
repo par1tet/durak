@@ -123,6 +123,7 @@ export const SettingsPanel = ({}) => {
             gameToken,
             countPlayers
         )
+        myRootStore.onlineGame.setPointOfView(0)
 
         setSearchParams({isSetting:'false'})
     }

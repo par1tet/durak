@@ -21,6 +21,8 @@ router.post('/creategame', async (req, res) => {
         req.body.trumpCart,
         req.body.maxPlayers
     )
+    console.log(req.body.players)
+
     // await (await getGames()).forEach(game => {
     //     console.log(game.id)
     //     console.log(game.token)
