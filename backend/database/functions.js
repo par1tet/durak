@@ -73,17 +73,27 @@ export async function getDataGame(token){
     }
 }
 
-export async function updateGame(token, carts, players, trumpCart, whoMove){
+export async function updateGame({token, carts, players, trumpCart, whoMove, batleCarts, winners}){
     const gamesWithToken = (await sequelize.models.Game.findAll({where: {
         token: token
     }}))[0]
 
-    console.log('123')
+    console.log(batleCarts)
 
-    gamesWithToken.carts = carts;
-    gamesWithToken.players = players;
-    gamesWithToken.trumpCart = trumpCart;
-    gamesWithToken.whoMove = whoMove
+    if(carts){
+        gamesWithToken.carts = carts;
+    }if(players){
+        gamesWithToken.players = players;
+    }if(trumpCart){
+        gamesWithToken.trumpCart = trumpCart;
+    }if(whoMove){
+        gamesWithToken.whoMove = whoMove;
+    }if(batleCarts){
+        gamesWithToken.batleCarts = batleCarts;
+    }if(winners){
+        gamesWithToken.winners = winners;
+    }
+
     await gamesWithToken.save()
 
 }

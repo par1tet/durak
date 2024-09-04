@@ -41,17 +41,17 @@ export class onlineGameStore extends GameR{
         typeGame: string,
         trumpCart: Cart | null,
         token: string,
-        maxPlayers: number
+        maxPlayers: number,
+        batleCards?: (Cart[] | null)[]
     ){
+        console.log(batleCards)
         this.carts = carts
         this.players = players
         this.trump = trump
         this.whoMove = whoMove
         this.typeGame = typeGame
         this.trumpCart = trumpCart
-        this.batleCards =
-                        [null,null,null,
-                        null,null,null]
+        this.batleCards = batleCards ?? [null,null,null,null,null,null]
         this.token = token
         this.maxPlayers = maxPlayers
     }

@@ -23,7 +23,7 @@ export const Game = observer(({}) => {
     console.log(localStorage.getItem('gameToken'))
     console.log(localStorage.getItem('playerCarts'))
     console.log(myRootStore.onlineGame.carts)
-    console.log(myRootStore.onlineGame.trumpCart)
+    console.log(myRootStore.onlineGame.batleCards)
 
     function handleDragEnd(e: React.DragEvent<HTMLImageElement>, cart: Cart): undefined{
         if(myRootStore.onlineGame.winners.length === (myRootStore.onlineGame.players.length - 1)){
@@ -46,8 +46,28 @@ export const Game = observer(({}) => {
         })()
         switch (isMove){
             case stateOfPlayer['move']:{
-                // если главный игрок
-                
+                // если атакующий игрок
+
+                if(myRootStore.onlineGame.changeBatleCards(indexOfCartBuild, cart) === 0){
+                    myRootStore.onlineGame.players[0].removeCart(cart)
+                }
+
+                socket.emit('movePlayer', {
+                    token: myRootStore.onlineGame.token,
+                    batleCarts: myRootStore.onlineGame.batleCards
+                    .map(cart => {
+                        if(cart){
+                            return cart.toString()
+                        }else{
+                            return '0'
+                        }
+                    }).join('/'),
+                    carts: myRootStore.onlineGame.carts.join('/'),
+                    players: myRootStore.onlineGame.players.join('|'),
+                    whoMove: myRootStore.onlineGame.whoMove,
+                    winners: myRootStore.onlineGame.winners.join('|'),
+                    trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+                })
                 break;
             }
             case stateOfPlayer['def']:{
@@ -74,14 +94,28 @@ export const Game = observer(({}) => {
                 break;
             }
         }
-        socket.emit('attackMove',{
-            token:myRootStore.onlineGame.token,
-            indexOfCartBuild:indexOfCartBuild,
-            cart: (cart as any).toString()
-        })
     }
 
     useEffect(() => {
+        socket.on('moveOfPlayer', async data => {
+            const newData = (await getGameData(myRootStore.onlineGame.token))
+
+            console.log('ЕБИ МЕНЯ ЕБИ НОЧЬЮ И ДНЕМ АГРОМНОМ ХУЕМ ОЧКО РАЗРЫВАААЯЯЯЯЯЯ')
+            console.log(newData)
+
+            myRootStore.onlineGame.createOnlineGame(
+                newData.carts,
+                newData.players,
+                newData.trump,
+                newData.whoMove,
+                newData.typeGame,
+                newData.trumpCart,
+                myRootStore.onlineGame.token,
+                newData.maxPlayers,
+                newData.batleCarts
+            )
+        })
+
         socket.on('joinNewPlayer', async data => {
             const newData = (await getGameData(myRootStore.onlineGame.token))
 
@@ -168,7 +202,7 @@ export const Game = observer(({}) => {
                 </div>)
             }else{
                 return (
-                    <BattleCards batleCards={toJS(myRootStore.onlineGame.batleCards)}></BattleCards>
+                    <BattleCards batleCards={myRootStore.onlineGame.batleCards}></BattleCards>
                 )
             }
         })()}
@@ -206,7 +240,7 @@ export const Game = observer(({}) => {
             ></ButtonAction>
             <div className={cl["mainplayer"]}>
                 <PlayerElement
-                    player={toJS(myRootStore.onlineGame.players[0])}
+                    player={myRootStore.onlineGame.players[0]}
                     isMove={(()=>{
                         if (toJS(myRootStore.onlineGame.whoMove) === 0){
                             return stateOfPlayer['move']

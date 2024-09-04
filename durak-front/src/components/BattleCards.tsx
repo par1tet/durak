@@ -7,6 +7,7 @@ type propsBattleCards = {
 }
 
 export const BattleCards = observer(({batleCards}: propsBattleCards) => {
+    console.log(batleCards)
     return (<div className={cl['battlecards']}>
         {batleCards.map((carts: Cart[] | null, index:number) => {
             if (!carts){

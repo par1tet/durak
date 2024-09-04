@@ -6,6 +6,7 @@ import { createServer } from 'http'
 import { Server } from "socket.io";
 import { onConnection } from '../socketio/onConnection.js'
 import { joinToGame } from '../socketio/handlers/joinToGame.js'
+import { movePlayer } from '../socketio/handlers/movePlayer.js'
 
 const app = new express()
 const PORT = 5000
@@ -22,8 +23,12 @@ httpServer.listen(5001);
 
 io.on('connection', socket => {
     onConnection(io, socket)
-    socket.on('joinGame', data => {
-        joinToGame(data, socket, io)
+    socket.on('joinGame', async data => {
+        await joinToGame(data, socket, io)
+    })
+
+    socket.on('movePlayer', async data => {
+        await movePlayer(data, socket, io)
     })
 })
 

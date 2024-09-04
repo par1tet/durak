@@ -15,16 +15,25 @@ export async function getGameData(token: string){
         result = r.data
     })
 
-    const parseBatleCards: (Cart | null)[] = []
+    const parseBatleCards: (Cart[] | null)[] = []
 
     for (let i = 0;i !== result.batleCarts.split('/').length;i++){
-        if(result.batleCarts.split('/')[i]){
+        if(result.batleCarts.split('/')[i] === '0'){
             parseBatleCards.push(null)
         }else{
-            parseBatleCards.push(
-                new CartR(+result.batleCarts[i].split('/').split(':')[0],
-                fromNumberSuitToSuit(+result.batleCarts.split('/')[i].split(':')[1])
-            ))
+            if(+result.batleCarts.split('/')[i].split('|').length === 1){
+                parseBatleCards.push([
+                    new CartR(fromNumberSuitToSuit(+result.batleCarts.split('/')[i].split(':')[1]),
+                    +result.batleCarts.split('/')[i].split(':')[0]
+                )])
+            }else{
+                parseBatleCards.push([
+                    new CartR(fromNumberSuitToSuit(+result.batleCarts.split('/')[i].split('|')[0].split(':')[1]),
+                    +result.batleCarts.split('/')[i].split('|')[0].split(':')[0]),
+                    new CartR(fromNumberSuitToSuit(+result.batleCarts.split('/')[i].split('|')[0].split(':')[1]),
+                    +result.batleCarts.split('/')[i].split('|')[0].split(':')[0])
+                ])
+            }
         }
     }
 

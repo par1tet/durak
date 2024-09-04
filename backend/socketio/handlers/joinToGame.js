@@ -3,12 +3,13 @@ import { updateGame } from "../../database/functions.js"
 export async function joinToGame(data, socket, io){
     await socket.join(data.token)
 
-    console.log(data.carts != null && data.players != null && data.trumpCart != null && data.whoMove != null)
-
-    if (data.carts != null && data.players != null && data.trumpCart != null && data.whoMove != null)
-    {
-        await updateGame(data.token, data.carts, data.players, data.trumpCart, data.whoMove)
-    }
+    await updateGame({
+        token: data.token,
+        carts: data.carts,
+        players: data.players,
+        trumpCart: data.trumpCart,
+        whoMove: data.whoMove
+    })
 
     await io.to(data.token).emit('joinNewPlayer', data)
 }
