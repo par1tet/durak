@@ -45,7 +45,7 @@ export const Game = observer(({}) => {
                 // если атакующий игрок
 
                 if(myRootStore.onlineGame.changeBatleCards(indexOfCartBuild, cart) === 0){
-                    myRootStore.onlineGame.players[0].removeCart(cart)
+                    myRootStore.onlineGame.players[myRootStore.onlineGame.pointOfView].removeCart(cart)
                 }
 
                 socket.emit('movePlayer', {
@@ -124,7 +124,7 @@ export const Game = observer(({}) => {
                     return;
                 }
                 if(myRootStore.onlineGame.changeBatleCards(indexOfCartBuild, cart) === 0){
-                    myRootStore.onlineGame.players[0].removeCart(cart)
+                    myRootStore.onlineGame.players[myRootStore.onlineGame.pointOfView].removeCart(cart)
                 }
 
                 socket.emit('movePlayer', {
@@ -231,12 +231,118 @@ export const Game = observer(({}) => {
     }, [myRootStore.onlineGame.batleCards])
 
     function handleAction(e: React.MouseEvent<HTMLButtonElement>){
-        console.log(localStorage.getItem('gameToken'))
-        console.log(localStorage.getItem('playerCarts'))
+        const playerIndex:number = +(e.target as any).attributes.getNamedItem('data-playerindex').value
+        console.log('test')
+        if  (myRootStore.onlineGame.getDefPlayerIndex() === myRootStore.onlineGame.pointOfView)
+        {
+            // если защищающийся игрок
+            // передаем карты со стола, игроку
+            for(let i = 0;i !== myRootStore.onlineGame.batleCards.length;i++) {
+                if (myRootStore.onlineGame.batleCards[i]) {
+                    if((myRootStore.onlineGame.batleCards[i] as any).length === 1){
+                        myRootStore.onlineGame.players[myRootStore.onlineGame.getDefPlayerIndex()].carts.push((myRootStore.onlineGame.batleCards[i] as any)[0])
+                    }else{
+                        myRootStore.onlineGame.players[myRootStore.onlineGame.getDefPlayerIndex()].carts.push((myRootStore.onlineGame.batleCards[i] as any)[0])
+                        myRootStore.onlineGame.players[myRootStore.onlineGame.getDefPlayerIndex()].carts.push((myRootStore.onlineGame.batleCards[i] as any)[1])
+                    }
+                }
+            }
 
-        console.log(socket.connected)
+            // очищаем стол
+            myRootStore.onlineGame.clearBatleCarts()
+
+            // передаем карты атакаущиему игроку
+            myRootStore.onlineGame.replenishCards(myRootStore.onlineGame.whoMove)
+            myRootStore.onlineGame.players[myRootStore.onlineGame.whoMove].sortCarts(myRootStore.onlineGame.trump)
+
+            // передаем карты остальным игрокам
+            for (let i: number = 0;i !== toJS(myRootStore.onlineGame.players.length);i++){
+                if(toJS(myRootStore.onlineGame.whoMove) === i){
+                }else if(myRootStore.onlineGame.getDefPlayerIndex() === i){
+                }else{
+                    myRootStore.onlineGame.replenishCards(i)
+                    myRootStore.onlineGame.players[i].sortCarts(myRootStore.onlineGame.trump)
+                }
+            }
+
+            // передаем очередь
+            for(let i = 2;;i++){
+                if (myRootStore.onlineGame.players[myRootStore.onlineGame.getNextWhoMove(prev => prev + i)].isWin){
+                }else{
+                    myRootStore.onlineGame.setWhoMove(prev => prev + i)
+                    break
+                }
+            }
+
+            // отправляем обнову на серв
+            socket.emit('movePlayer', {
+                token: myRootStore.onlineGame.token,
+                batleCarts: myRootStore.onlineGame.batleCards
+                .map((cart: Cart[] | null) => {
+                    if(cart){
+                        if((cart as any).length === 1){
+                            return (cart as any).toString()
+                        }else{
+                            return (cart as any)[0].toString() + '|' + (cart as any)[0].toString()
+                        }
+                    }else{
+                        return '0'
+                    }
+                }).join('/'),
+                carts: myRootStore.onlineGame.carts.join('/'),
+                players: myRootStore.onlineGame.players.join('|'),
+                whoMove: myRootStore.onlineGame.whoMove,
+                winners: myRootStore.onlineGame.winners.join('|'),
+                trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+            })
+        } else {
+            // если нажал атакующий игрок
+
+            // очищаем стол
+            myRootStore.onlineGame.clearBatleCarts()
+
+            // передаем карты атакаущиему игроку
+            myRootStore.onlineGame.replenishCards(toJS(myRootStore.onlineGame.whoMove))
+
+            // передаем карты остальным игрокам
+            for (let i: number = 0;i !== toJS(myRootStore.onlineGame.players.length);i++){
+                myRootStore.onlineGame.replenishCards(i)
+            }
+
+            // передаем очередь
+            for(let i = 1;;i++){
+                if (myRootStore.onlineGame.players[myRootStore.onlineGame.getNextWhoMove(prev => prev + i)].isWin){
+                }else{
+                    myRootStore.onlineGame.setWhoMove(prev => prev + i)
+                    break
+                }
+            }
+
+            // отправляем обнову на серв
+            socket.emit('movePlayer', {
+                token: myRootStore.onlineGame.token,
+                batleCarts: myRootStore.onlineGame.batleCards
+                .map((cart: Cart[] | null) => {
+                    if(cart){
+                        if((cart as any).length === 1){
+                            return (cart as any).toString()
+                        }else{
+                            return (cart as any)[0].toString() + '|' + (cart as any)[0].toString()
+                        }
+                    }else{
+                        return '0'
+                    }
+                }).join('/'),
+                carts: myRootStore.onlineGame.carts.join('/'),
+                players: myRootStore.onlineGame.players.join('|'),
+                whoMove: myRootStore.onlineGame.whoMove,
+                winners: myRootStore.onlineGame.winners.join('|'),
+                trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+            })
+        }
+        setPlayerRerenderKey(prev => prev + 1)
     }
-    console.log(toJS(myRootStore.onlineGame.players[toJS(myRootStore.onlineGame.pointOfView)]))
+
     return (<>
         <TrumpElement
             carts={toJS(myRootStore.onlineGame.carts)}
