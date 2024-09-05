@@ -13,6 +13,7 @@ import { socket } from "../../../socket/socket";
 import { getGameData } from "../../../utils/api/getGameData";
 import { OnlineAnotherPlayer } from "../../../components/OnlineAnotherPlayer";
 import { Cart } from "../../../utils/abstractClasses/cart";
+import { Player } from "../../../utils/abstractClasses/player";
 
 export const Game = observer(({}) => {
     const myRootStore: rootStore = useStore()
@@ -63,7 +64,13 @@ export const Game = observer(({}) => {
                         }
                     }).join('/'),
                     carts: myRootStore.onlineGame.carts.join('/'),
-                    players: myRootStore.onlineGame.players.join('|'),
+                    players: myRootStore.onlineGame.players.map((player: Player) => {
+                        if(player.carts.length === 0){
+                            return '0'
+                        }else{
+                            return player.carts.join('/')
+                        }
+                    }).join('|'),
                     whoMove: myRootStore.onlineGame.whoMove,
                     winners: myRootStore.onlineGame.winners.join('|'),
                     trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
@@ -109,7 +116,13 @@ export const Game = observer(({}) => {
                         }
                     }).join('/'),
                     carts: myRootStore.onlineGame.carts.join('/'),
-                    players: myRootStore.onlineGame.players.join('|'),
+                    players: myRootStore.onlineGame.players.map((player: Player) => {
+                        if(player.carts.length === 0){
+                            return '0'
+                        }else{
+                            return player.carts.join('/')
+                        }
+                    }).join('|'),
                     whoMove: myRootStore.onlineGame.whoMove,
                     winners: myRootStore.onlineGame.winners.join('|'),
                     trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
@@ -142,7 +155,13 @@ export const Game = observer(({}) => {
                         }
                     }).join('/'),
                     carts: myRootStore.onlineGame.carts.join('/'),
-                    players: myRootStore.onlineGame.players.join('|'),
+                    players: myRootStore.onlineGame.players.map((player: Player) => {
+                        if(player.carts.length === 0){
+                            return '0'
+                        }else{
+                            return player.carts.join('/')
+                        }
+                    }).join('|'),
                     whoMove: myRootStore.onlineGame.whoMove,
                     winners: myRootStore.onlineGame.winners.join('|'),
                     trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
@@ -155,7 +174,6 @@ export const Game = observer(({}) => {
     useEffect(() => {
         socket.on('moveOfPlayer', async data => {
             const newData = (await getGameData(myRootStore.onlineGame.token))
-
             myRootStore.onlineGame.createOnlineGame(
                 newData.carts,
                 newData.players,
@@ -290,7 +308,13 @@ export const Game = observer(({}) => {
                     }
                 }).join('/'),
                 carts: myRootStore.onlineGame.carts.join('/'),
-                players: myRootStore.onlineGame.players.join('|'),
+                players: myRootStore.onlineGame.players.map((player: Player) => {
+                    if(player.carts.length === 0){
+                        return '0'
+                    }else{
+                        return player.carts.join('/')
+                    }
+                }).join('|'),
                 whoMove: myRootStore.onlineGame.whoMove,
                 winners: myRootStore.onlineGame.winners.join('|'),
                 trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
@@ -334,7 +358,13 @@ export const Game = observer(({}) => {
                     }
                 }).join('/'),
                 carts: myRootStore.onlineGame.carts.join('/'),
-                players: myRootStore.onlineGame.players.join('|'),
+                players: myRootStore.onlineGame.players.map((player: Player) => {
+                    if(player.carts.length === 0){
+                        return '0'
+                    }else{
+                        return player.carts.join('/')
+                    }
+                }).join('|'),
                 whoMove: myRootStore.onlineGame.whoMove,
                 winners: myRootStore.onlineGame.winners.join('|'),
                 trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
@@ -398,6 +428,10 @@ export const Game = observer(({}) => {
                 dataPlayerindex={0}
             ></ButtonAction>
             <div className={cl["mainplayer"]}>
+                {(()=>{
+                    myRootStore.onlineGame.checkWinners()
+                    return null;
+                })()}
                 <PlayerElement
                     player={myRootStore.onlineGame.players[myRootStore.onlineGame.pointOfView]}
                     isMove={(()=>{

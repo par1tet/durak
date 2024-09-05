@@ -74,12 +74,16 @@ export async function getGameData(token: string){
         }), 'Игрок 1', fromNumberSuitToSuit(+result.trump)))
     }else{
         for (let i = 0;i !== result.players.split('|').length;i++){
-            parsePlayers.push(new PlayerR(result.players.split('|')[i].split('/').map((cart: string) => {
-                return (
-                    new CartR(fromNumberSuitToSuit(+cart.split(':')[1]),
-                    +(cart.split(':'))[0]
-                ))
-            }), `Игрок ${i+1}`, fromNumberSuitToSuit(+result.trump)))
+            if(result.players.split('|')[i] === '0'){
+                parsePlayers.push(new PlayerR([], `Игрок ${i+1}`, fromNumberSuitToSuit(+result.trump)))
+            }else{
+                parsePlayers.push(new PlayerR(result.players.split('|')[i].split('/').map((cart: string) => {
+                    return (
+                        new CartR(fromNumberSuitToSuit(+cart.split(':')[1]),
+                        +(cart.split(':'))[0]
+                    ))
+                }), `Игрок ${i+1}`, fromNumberSuitToSuit(+result.trump)))
+            }
         }
     }
 
@@ -90,6 +94,6 @@ export async function getGameData(token: string){
         result.trumpCart = new CartR(fromNumberSuitToSuit(+result.trumpCart.split(':')[1]),
         +result.trumpCart.split(':')[0])
     }
-    
+
     return result
 }

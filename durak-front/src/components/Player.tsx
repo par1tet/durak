@@ -84,6 +84,7 @@ export const PlayerElement = observer(forwardRef(({
     }
 }: propsPlayer, ref:React.ForwardedRef<HTMLDivElement>) => {
     console.log(player)
+    store.checkWinners()
     if(store instanceof onlineGameStore){
         if(store.maxPlayers !== store.players.length){
             return (<div className={cl['player']} key={rerenderKey} ref={ref}>

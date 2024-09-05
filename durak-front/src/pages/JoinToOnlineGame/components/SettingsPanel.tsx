@@ -24,10 +24,12 @@ export const SettingsPanel = ({}) => {
             await socket.connect()
             const gameData = (await getGameData(token))
 
-            const newPlayer = createPlayersArray(1, gameData.carts, gameData.trump)[0]
+            const newPlayer = createPlayersArray(1, gameData.carts, gameData.trump, gameData.trumpCart,
+                (newValue) => {gameData.trumpCart = newValue})[0]
             console.log(newPlayer)
 
             gameData.players.push(newPlayer)
+            console.log(gameData.trumpCart)
 
             await myRootStore.onlineGame.createOnlineGame(
                 gameData.carts,
@@ -47,7 +49,7 @@ export const SettingsPanel = ({}) => {
                 carts: gameData.carts.join('/'),
                 players: gameData.players.join('|'),
                 whoMove: gameData.whoMove,
-                trumpCart: gameData.trumpCart.toString(),
+                trumpCart: gameData.trumpCart != undefined ? (gameData.trumpCart as any).toString() : '',
             })
 
             navigate('/onlinegame?isSetting=false')

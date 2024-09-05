@@ -9,7 +9,19 @@ type onlineAnotherPlayerProps = {
 }
 
 export const OnlineAnotherPlayer = ({player, isMove}: onlineAnotherPlayerProps) => {
-    return (<div className={cl['player']}>
+    if(player.isWin){
+        return (<div className={cl['player']}>
+        <div className={cl['player-nickname']}>
+            <span>
+                {player.nickName}
+            </span>
+            <span>
+                Выиграл
+            </span>
+        </div>
+        </div>)
+    }else{
+        return (<div className={cl['player']}>
         <div className={cl['player-nickname']}>
             <span>
                 {player.nickName}
@@ -50,6 +62,6 @@ export const OnlineAnotherPlayer = ({player, isMove}: onlineAnotherPlayerProps) 
             <img src={`/src/assets/images/carts/shirt.png`} alt="shirt"/>
             <span>{player.carts.length}</span>
         </div>
-
     </div>)
+    }
 }

@@ -74,7 +74,9 @@ export const SettingsPanel = ({}) => {
         const playersArray = createPlayersArray(
             countPlayers,
             cartsArray,
-            trump
+            trump,
+            trumpCart,
+            (newValue) => {myRootStore.gameWithYourself.trumpCart = newValue}
         )
 
         // // получаем время на ход

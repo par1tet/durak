@@ -14,6 +14,7 @@ import cl from './../OnlineGame.module.css';
 import { Setting } from "./Setting.tsx";
 import { createGame } from "../../../utils/api/createGame.ts";
 import { socket } from "../../../socket/socket.ts";
+import { toJS } from "mobx";
 
 export const SettingsPanel = ({}) => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -66,7 +67,9 @@ export const SettingsPanel = ({}) => {
         const playersArray = createPlayersArray(
             1,
             cartsArray,
-            trump
+            trump,
+            myRootStore.onlineGame.trumpCart,
+            (newValue) => {myRootStore.onlineGame.trumpCart = newValue}
         )
 
         // получаем козырную карту
