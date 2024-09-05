@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
+import { SERVER_URL } from '../utils/api/serverUrl';
 
-// "undefined" means the URL will be computed from the `window.location` object
-const URL: string = 'http://localhost:5001';
+const URL: string = SERVER_URL('');
 
 export const socket = io(URL, {
     autoConnect: false

@@ -5,11 +5,12 @@ import { Suit } from "../enums/suit";
 import { fromNumberSuitToSuit } from "../functions/fromNumberSuitToSuit.ts";
 import { Player } from "../abstractClasses/player.ts";
 import { PlayerR } from "../classes/player.ts";
+import { SERVER_URL } from "./serverUrl.ts";
 
 export async function getGameData(token: string){
     let result: any = {}
 
-    await axios.post('http://localhost:5000/getgame', {
+    await axios.post(SERVER_URL('/getgame'), {
         token: token
     }).then(r => {
         result = r.data

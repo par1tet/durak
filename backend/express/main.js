@@ -7,19 +7,20 @@ import { Server } from "socket.io";
 import { onConnection } from '../socketio/onConnection.js'
 import { joinToGame } from '../socketio/handlers/joinToGame.js'
 import { movePlayer } from '../socketio/handlers/movePlayer.js'
+import 'dotenv/config.js'
+
+console.log(process.env.ORIGIN)
 
 const app = new express()
 const PORT = 5000
 
-const ALLOWED_ORIGIN = ['http://localhost:5173/']
+const ALLOWED_ORIGIN = [process.env.ORIGIN]
 
-const httpServer = createServer();
+const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: ALLOWED_ORIGIN[0],
     serveClient: false
 });
-
-httpServer.listen(5001);
 
 io.on('connection', socket => {
     onConnection(io, socket)
@@ -53,4 +54,4 @@ app.use(cors(corsOptions))
 app.use(logger)
 app.use('/', router)
 
-app.listen(PORT)
+httpServer.listen(PORT);

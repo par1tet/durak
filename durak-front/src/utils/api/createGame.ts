@@ -2,6 +2,7 @@ import { Cart } from "../abstractClasses/cart";
 import { Suit } from "../enums/suit";
 import { Player } from "../abstractClasses/player";
 import axios from "axios";
+import { SERVER_URL } from "./serverUrl";
 
 export async function createGame(
     carts: Cart[],
@@ -18,7 +19,7 @@ export async function createGame(
     console.log((trumpCart as any).toString())
     let token:string = ''
 
-    await axios.post('http://localhost:5000/creategame', {
+    await axios.post(SERVER_URL('/creategame'), {
         "carts": carts.join('/'),
         "players": players.join('|'),
         "trump": trump.toString(),
