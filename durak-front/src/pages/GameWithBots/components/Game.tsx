@@ -153,7 +153,7 @@ export const Game = observer(({}) => {
                                 isMove={(()=>{
                                     if (toJS(myRootStore.gameWithBots.whoMove) === index){
                                         return stateOfPlayer['move']
-                                    }else if(toJS(myRootStore.gameWithBots.getDefPlayerIndex()) === index){
+                                    }else if(myRootStore.gameWithBots.getDefPlayerIndex() === index){
                                         return stateOfPlayer['def']
                                     }else {
                                         return stateOfPlayer['retr']

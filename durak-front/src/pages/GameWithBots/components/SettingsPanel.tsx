@@ -94,8 +94,6 @@ export const SettingsPanel = ({}) => {
             cartsArray,
             playersArray,
             trump,
-            '1m',
-            false,
             0,
             typeGame,
             trumpCart
