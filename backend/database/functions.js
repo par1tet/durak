@@ -84,7 +84,7 @@ export async function updateGame({token, carts, players, trumpCart, whoMove, bat
         gamesWithToken.players = players;
     }if(trumpCart || trumpCart === ''){
         gamesWithToken.trumpCart = trumpCart;
-    }if(whoMove){
+    }if(whoMove || whoMove === 0){
         gamesWithToken.whoMove = whoMove;
     }if(batleCarts){
         gamesWithToken.batleCarts = batleCarts;

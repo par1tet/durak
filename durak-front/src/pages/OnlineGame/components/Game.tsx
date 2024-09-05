@@ -291,6 +291,7 @@ export const Game = observer(({}) => {
                     break
                 }
             }
+            console.log(myRootStore.onlineGame.whoMove)
 
             // отправляем обнову на серв
             socket.emit('movePlayer', {
