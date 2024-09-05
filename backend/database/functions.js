@@ -78,13 +78,11 @@ export async function updateGame({token, carts, players, trumpCart, whoMove, bat
         token: token
     }}))[0]
 
-    console.log(batleCarts)
-
-    if(carts){
+    if(carts || carts === ''){
         gamesWithToken.carts = carts;
     }if(players){
         gamesWithToken.players = players;
-    }if(trumpCart){
+    }if(trumpCart || trumpCart === ''){
         gamesWithToken.trumpCart = trumpCart;
     }if(whoMove){
         gamesWithToken.whoMove = whoMove;
@@ -95,5 +93,4 @@ export async function updateGame({token, carts, players, trumpCart, whoMove, bat
     }
 
     await gamesWithToken.save()
-
 }

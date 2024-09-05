@@ -40,15 +40,23 @@ export async function getGameData(token: string){
     result.batleCarts = parseBatleCards
 
     const parseCarts: Cart[] = []
+
+    console.log(result.carts.split('/')[0])
+    console.log(result.carts.split('/'))
+    console.log(result.carts)
     
-    for (let i = 0;i !== result.carts.split('/').length;i++){
-        parseCarts.push(
-            new CartR(fromNumberSuitToSuit(+result.carts.split('/')[i].split(':')[1]),
-            +result.carts.split('/')[i].split(':')[0])
-        )
+    if(result.carts.split('/')[0] !== ''){
+        for (let i = 0;i !== result.carts.split('/').length;i++){
+            parseCarts.push(
+                new CartR(fromNumberSuitToSuit(+result.carts.split('/')[i].split(':')[1]),
+                +result.carts.split('/')[i].split(':')[0])
+            )
+        }
     }
 
+
     result.carts = parseCarts
+    console.log(parseCarts)
 
     result.batleCarts = parseBatleCards
 
@@ -78,8 +86,10 @@ export async function getGameData(token: string){
     result.players = parsePlayers
     console.log(result)
     result.trump = fromNumberSuitToSuit((+result.trump))
-    result.trumpCart = new CartR(fromNumberSuitToSuit(+result.trumpCart.split(':')[1]),
-    +result.trumpCart.split(':')[0])
-
+    if(result.trumpCart){
+        result.trumpCart = new CartR(fromNumberSuitToSuit(+result.trumpCart.split(':')[1]),
+        +result.trumpCart.split(':')[0])
+    }
+    
     return result
 }

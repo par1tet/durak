@@ -24,7 +24,7 @@ export async function createGame(
         "trump": trump.toString(),
         "whoMove": whoMove,
         "typeGame": typeGame,
-        "trumpCart": trumpCart != null ? (trumpCart as any).toString() : "0",
+        "trumpCart": trumpCart == null ? "" : (trumpCart as any).toString(),
         "maxPlayers": maxPlayers
     })
     .then(r =>

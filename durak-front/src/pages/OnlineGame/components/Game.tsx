@@ -66,7 +66,7 @@ export const Game = observer(({}) => {
                     players: myRootStore.onlineGame.players.join('|'),
                     whoMove: myRootStore.onlineGame.whoMove,
                     winners: myRootStore.onlineGame.winners.join('|'),
-                    trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+                    trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
                 })
                 break;
             }
@@ -112,7 +112,7 @@ export const Game = observer(({}) => {
                     players: myRootStore.onlineGame.players.join('|'),
                     whoMove: myRootStore.onlineGame.whoMove,
                     winners: myRootStore.onlineGame.winners.join('|'),
-                    trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+                    trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
                 })
                 break;
             }
@@ -145,7 +145,7 @@ export const Game = observer(({}) => {
                     players: myRootStore.onlineGame.players.join('|'),
                     whoMove: myRootStore.onlineGame.whoMove,
                     winners: myRootStore.onlineGame.winners.join('|'),
-                    trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+                    trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
                 })
                 break;
             }
@@ -293,7 +293,7 @@ export const Game = observer(({}) => {
                 players: myRootStore.onlineGame.players.join('|'),
                 whoMove: myRootStore.onlineGame.whoMove,
                 winners: myRootStore.onlineGame.winners.join('|'),
-                trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+                trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
             })
         } else {
             // если нажал атакующий игрок
@@ -337,7 +337,7 @@ export const Game = observer(({}) => {
                 players: myRootStore.onlineGame.players.join('|'),
                 whoMove: myRootStore.onlineGame.whoMove,
                 winners: myRootStore.onlineGame.winners.join('|'),
-                trumpCart: myRootStore.onlineGame.trumpCart != null ? (myRootStore.onlineGame.trumpCart as any).toString() : "0",
+                trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
             })
         }
         setPlayerRerenderKey(prev => prev + 1)
