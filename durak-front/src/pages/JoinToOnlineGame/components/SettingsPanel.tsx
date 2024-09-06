@@ -69,7 +69,7 @@ export const SettingsPanel = ({}) => {
                 <span ref={errorTextRef}></span>
             </div>
             <div className={cl['creategame__settings']} ref={settingsRef}>
-                <Input width={320} height={120} center={true}></Input>
+                <Input width={320} height={120} center={true} placeholder='Ввидите токен комнаты'></Input>
             </div>
             <div>
                 <ButtonPlay onClick={(handleStart as any)}>
