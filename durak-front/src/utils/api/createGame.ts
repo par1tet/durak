@@ -17,7 +17,13 @@ export async function createGame(
 
     await axios.post(SERVER_URL('/creategame'), {
         "carts": carts.join('/'),
-        "players": players.join('|'),
+        "players": players.map((player: Player) => {
+            if(player.carts.length === 0){
+                return '0' + '(' + player.nickName
+            }else{
+                return player.carts.join('/') + '(' + player.nickName
+            }
+        }).join('|'),
         "trump": trump.toString(),
         "whoMove": whoMove,
         "typeGame": typeGame,

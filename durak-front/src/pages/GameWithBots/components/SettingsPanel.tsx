@@ -76,7 +76,8 @@ export const SettingsPanel = ({}) => {
             cartsArray,
             trump,
             myRootStore.gameWithBots.trumpCart,
-            (newValue) => {myRootStore.onlineGame.trumpCart = newValue}
+            (newValue) => {myRootStore.onlineGame.trumpCart = newValue},
+            [localStorage.getItem('nickname') ?? 'Эчпочмак']
         )
 
         // // получаем время на ход

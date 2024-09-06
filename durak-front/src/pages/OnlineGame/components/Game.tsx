@@ -65,9 +65,9 @@ export const Game = observer(({}) => {
                     carts: myRootStore.onlineGame.carts.join('/'),
                     players: myRootStore.onlineGame.players.map((player: Player) => {
                         if(player.carts.length === 0){
-                            return '0'
+                            return '0' + '(' + player.nickName
                         }else{
-                            return player.carts.join('/')
+                            return player.carts.join('/') + '(' + player.nickName
                         }
                     }).join('|'),
                     whoMove: myRootStore.onlineGame.whoMove,
@@ -113,9 +113,9 @@ export const Game = observer(({}) => {
                     carts: myRootStore.onlineGame.carts.join('/'),
                     players: myRootStore.onlineGame.players.map((player: Player) => {
                         if(player.carts.length === 0){
-                            return '0'
+                            return '0' + '(' + player.nickName
                         }else{
-                            return player.carts.join('/')
+                            return player.carts.join('/') + '(' + player.nickName
                         }
                     }).join('|'),
                     whoMove: myRootStore.onlineGame.whoMove,
@@ -150,9 +150,9 @@ export const Game = observer(({}) => {
                     carts: myRootStore.onlineGame.carts.join('/'),
                     players: myRootStore.onlineGame.players.map((player: Player) => {
                         if(player.carts.length === 0){
-                            return '0'
+                            return '0' + '(' + player.nickName
                         }else{
-                            return player.carts.join('/')
+                            return player.carts.join('/') + '(' + player.nickName
                         }
                     }).join('|'),
                     whoMove: myRootStore.onlineGame.whoMove,
@@ -303,9 +303,9 @@ export const Game = observer(({}) => {
                 carts: myRootStore.onlineGame.carts.join('/'),
                 players: myRootStore.onlineGame.players.map((player: Player) => {
                     if(player.carts.length === 0){
-                        return '0'
+                        return '0' + '(' + player.nickName
                     }else{
-                        return player.carts.join('/')
+                        return player.carts.join('/') + '(' + player.nickName
                     }
                 }).join('|'),
                 whoMove: myRootStore.onlineGame.whoMove,
@@ -353,9 +353,9 @@ export const Game = observer(({}) => {
                 carts: myRootStore.onlineGame.carts.join('/'),
                 players: myRootStore.onlineGame.players.map((player: Player) => {
                     if(player.carts.length === 0){
-                        return '0'
+                        return '0' + '(' + player.nickName
                     }else{
-                        return player.carts.join('/')
+                        return player.carts.join('/') + '(' + player.nickName
                     }
                 }).join('|'),
                 whoMove: myRootStore.onlineGame.whoMove,

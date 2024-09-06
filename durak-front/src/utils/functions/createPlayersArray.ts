@@ -26,7 +26,11 @@ export function createPlayersArray(countPlayrs: number, carts: Cart[], trump: Su
         if(nickNames === undefined){
             players.push(new PlayerR(cartsForPlayer, `Игрок ${i+1}`, trump))
         }else{
-            players.push(new PlayerR(cartsForPlayer, nickNames[i], trump))
+            if(nickNames[i]){
+                players.push(new PlayerR(cartsForPlayer, nickNames[i], trump))
+            }else{
+                players.push(new PlayerR(cartsForPlayer, `Игрок ${i+1}`, trump))
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import { socket } from "../../../socket/socket.ts";
 import { createPlayersArray } from "../../../utils/functions/createPlayersArray.ts";
 import { getGameData } from "../../../utils/api/getGameData.ts";
 import { useNavigate } from "react-router-dom";
+import { Player } from "../../../utils/abstractClasses/player.ts";
 
 export const SettingsPanel = ({}) => {
     const myRootStore: rootStore = useStore()
@@ -29,7 +30,8 @@ export const SettingsPanel = ({}) => {
             const gameData = (await getGameData(token))
 
             const newPlayer = createPlayersArray(1, gameData.carts, gameData.trump, gameData.trumpCart,
-                (newValue) => {gameData.trumpCart = newValue})[0]
+                (newValue) => {gameData.trumpCart = newValue},
+                [localStorage.getItem('nickname') ?? 'Эчпочмак'])[0]
 
             gameData.players.push(newPlayer)
 
@@ -48,7 +50,13 @@ export const SettingsPanel = ({}) => {
             await socket.emit("joinGame", {
                 token: token,
                 carts: gameData.carts.join('/'),
-                players: gameData.players.join('|'),
+                players: gameData.players.map((player: Player) => {
+                    if(player.carts.length === 0){
+                        return '0' + '(' + player.nickName
+                    }else{
+                        return player.carts.join('/') + '(' + player.nickName
+                    }
+                }).join('|'),
                 whoMove: gameData.whoMove,
                 trumpCart: gameData.trumpCart != undefined ? (gameData.trumpCart as any).toString() : '',
             })
