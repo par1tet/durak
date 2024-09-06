@@ -13,10 +13,6 @@ export async function createGame(
     trumpCart: Cart | null,
     maxPlayers: number
 ){
-    console.log(carts.join('/'))
-    console.log(players.join('|'))
-    console.log(trump.toString())
-    console.log((trumpCart as any).toString())
     let token:string = ''
 
     await axios.post(SERVER_URL('/creategame'), {

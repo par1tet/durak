@@ -24,8 +24,6 @@ router.post('/creategame', async (req, res) => {
 })
 
 router.post('/jointogame', async (req, res) => {
-    console.log('token', req.body.token)
-
     try{
         res.send({'result':(await canToJoinToGame(req.body.token))})
     }catch{

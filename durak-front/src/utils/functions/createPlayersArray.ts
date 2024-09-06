@@ -6,12 +6,6 @@ import { Suit } from "../enums/suit"
 export function createPlayersArray(countPlayrs: number, carts: Cart[], trump: Suit, trumpCart: Cart | null,setTrumpCart: (newValue:(Cart | null)) => void, nickNames?: string[]): Player[] {
     const players: Player[] = []
 
-    console.log(countPlayrs)
-    console.log(carts)
-    console.log(trump)
-
-    console.log(trumpCart)
-
     for(let i = 0;i !== countPlayrs;i++){
         const cartsForPlayer: Cart[] = []
 
@@ -35,8 +29,6 @@ export function createPlayersArray(countPlayrs: number, carts: Cart[], trump: Su
             players.push(new PlayerR(cartsForPlayer, nickNames[i], trump))
         }
     }
-
-    console.log(trumpCart)
 
     return players
 }

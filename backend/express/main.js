@@ -9,8 +9,6 @@ import { joinToGame } from '../socketio/handlers/joinToGame.js'
 import { movePlayer } from '../socketio/handlers/movePlayer.js'
 import 'dotenv/config.js'
 
-console.log(process.env.ORIGIN)
-
 const app = new express()
 const PORT = 5000
 
@@ -38,10 +36,7 @@ const corsOptions = {
 }
 
 function logger(req, res, next){
-    console.log(`Time: ${(new Date())}`)
     req.body ? console.log(req.body) : null
-    console.log(req.method)
-    console.log(req.url)
     next()
 }
 

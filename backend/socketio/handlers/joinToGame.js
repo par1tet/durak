@@ -2,7 +2,6 @@ import { updateGame } from "../../database/functions.js"
 
 export async function joinToGame(data, socket, io){
     await socket.join(data.token)
-    console.log(data.players)
 
     try{
         await updateGame({

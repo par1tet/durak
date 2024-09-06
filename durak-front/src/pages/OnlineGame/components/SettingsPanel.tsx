@@ -94,9 +94,6 @@ export const SettingsPanel = ({}) => {
         //     isScam = true
         // }
 
-
-        console.log(countPlayers)
-
         const gameToken = ((await createGame(cartsArray,
             playersArray,
             trump,

@@ -8,6 +8,5 @@ export async function canToJoinGame(token:string): Promise<boolean | string> {
     }).then(r => {
         returnResult = r.data.result
     })
-    console.log(returnResult)
     return returnResult
 }

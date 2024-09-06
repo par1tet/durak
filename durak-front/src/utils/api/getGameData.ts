@@ -41,10 +41,6 @@ export async function getGameData(token: string){
     result.batleCarts = parseBatleCards
 
     const parseCarts: Cart[] = []
-
-    console.log(result.carts.split('/')[0])
-    console.log(result.carts.split('/'))
-    console.log(result.carts)
     
     if(result.carts.split('/')[0] !== ''){
         for (let i = 0;i !== result.carts.split('/').length;i++){
@@ -57,14 +53,10 @@ export async function getGameData(token: string){
 
 
     result.carts = parseCarts
-    console.log(parseCarts)
 
     result.batleCarts = parseBatleCards
 
     const parsePlayers: Player[] = []
-
-    console.log(result.players.split('|').length)
-    console.log(result.players.split('|'))
 
     if(result.players.split('|').length === 1){
         parsePlayers.push(new PlayerR(result.players.split('/').map((cart: string) => {
@@ -89,7 +81,6 @@ export async function getGameData(token: string){
     }
 
     result.players = parsePlayers
-    console.log(result)
     result.trump = fromNumberSuitToSuit((+result.trump))
     if(result.trumpCart){
         result.trumpCart = new CartR(fromNumberSuitToSuit(+result.trumpCart.split(':')[1]),

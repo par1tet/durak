@@ -25,22 +25,16 @@ export class BotR extends Bot{
         }
     }
     move(player: Player, game: Game, beaten:() => void){
-        console.log(this.canMove)
         if (!this.canMove) return;
         if(game.isCleanBatleCards()){
-            console.log('move on attack')
             if(game.changeBatleCards(0, player.carts[player.carts.length-1]) === 0){
                 player.removeCart(player.carts[player.carts.length - 1])
             }
         }else{
-            console.log('move on beaten')
             if(game.isBeaten()){
-                console.log('move on beaten call function')
                 beaten()
             }
         }
     }
-    retr(player: Player, game: Game){
-        console.log(player, game)
-    }
+    retr(player: Player, game: Game){}
 }

@@ -17,7 +17,6 @@ type propsBot = {
 
 export const BotElement = observer(({player, store, isMove}: propsBot) => {
     if(player.carts.length !== 0){
-        console.log(isMove)
         switch (isMove){
             case stateOfPlayer['def']:
                 botController.def(player, store, () => {

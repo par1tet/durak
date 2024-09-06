@@ -42,10 +42,8 @@ export const PlayerElement = observer(forwardRef(({
             }
             case stateOfPlayer['def']:{
                 // если защищающийся игрок
-                console.log('def player')
                 switch(store.changeDefCards(indexOfCartBuild, cart)){
                     case 0:
-                        console.log('wata')
                         player.removeCart(cart)
                         break;
                     case 1:
@@ -58,10 +56,8 @@ export const PlayerElement = observer(forwardRef(({
                                 break
                             }
                         }
-                        console.log('trans')
                         break
                     default:
-                        console.log('dont beaten')
                     break;
                 }
                 break;
@@ -83,7 +79,6 @@ export const PlayerElement = observer(forwardRef(({
         setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
     }
 }: propsPlayer, ref:React.ForwardedRef<HTMLDivElement>) => {
-    console.log(player)
     store.checkWinners()
     if(store instanceof onlineGameStore){
         if(store.maxPlayers !== store.players.length){

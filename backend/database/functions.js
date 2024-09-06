@@ -10,10 +10,6 @@ createGames(sequelize)
 
 sequelize.sync()
 
-export async function initDB(){
-    console.log(sequelize.models.Game)
-}
-
 export async function createGame(
     token,
     carts,

@@ -40,7 +40,6 @@ export const Game = observer(({}) => {
                 return stateOfPlayer['retr']
             }
         })()
-        console.log(isMove)
         switch (isMove){
             case stateOfPlayer['move']:{
                 // если атакующий игрок
@@ -79,10 +78,8 @@ export const Game = observer(({}) => {
             }
             case stateOfPlayer['def']:{
                 // если защищающийся игрок
-                console.log('fsad')
                 switch(myRootStore.onlineGame.changeDefCards(indexOfCartBuild, cart)){
                     case 0:
-                        console.log('wata')
                         myRootStore.onlineGame.players[myRootStore.onlineGame.pointOfView].removeCart(cart)
                         break;
                     case 1:
@@ -95,10 +92,8 @@ export const Game = observer(({}) => {
                                 break
                             }
                         }
-                        console.log('trans')
                         break
                     default:
-                        console.log('dont beaten')
                     break;
                 }
                 socket.emit('movePlayer', {
@@ -131,8 +126,6 @@ export const Game = observer(({}) => {
             }
             case stateOfPlayer['retr']:{
                 // если подкидывающий игрок
-                console.log('trest')
-                console.log(myRootStore.onlineGame.isCleanBatleCards())
                 if(myRootStore.onlineGame.isCleanBatleCards()){
                     return;
                 }
@@ -250,7 +243,7 @@ export const Game = observer(({}) => {
 
     function handleAction(e: React.MouseEvent<HTMLButtonElement>){
         const playerIndex:number = +(e.target as any).attributes.getNamedItem('data-playerindex').value
-        console.log('test')
+
         if  (myRootStore.onlineGame.getDefPlayerIndex() === myRootStore.onlineGame.pointOfView)
         {
             // если защищающийся игрок
@@ -291,7 +284,6 @@ export const Game = observer(({}) => {
                     break
                 }
             }
-            console.log(myRootStore.onlineGame.whoMove)
 
             // отправляем обнову на серв
             socket.emit('movePlayer', {

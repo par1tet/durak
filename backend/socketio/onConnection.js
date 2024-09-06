@@ -1,3 +1,3 @@
 export function onConnection(io, socket){
-    console.log(socket.id)
+    // console.log(socket.id)
 }
