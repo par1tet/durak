@@ -21,11 +21,11 @@ export const SettingsPanel = ({}) => {
     function handleStart(): undefined {
         if (!settingsRef.current) return undefined;// проверка что ref не null
 
-        const countPlayers: number = +((settingsRef.current.children[1].children[1] as HTMLInputElement).value)
+        const countPlayers: number = 2
 
         // получаем козырь
         let trump: Suit = Suit['rand']
-        switch((settingsRef.current.children[2].children[1] as HTMLInputElement).value){
+        switch((settingsRef.current.children[1].children[1] as HTMLInputElement).value){
             case 'diamonds':
                 trump = Suit['diamonds']
                 break;
@@ -83,7 +83,7 @@ export const SettingsPanel = ({}) => {
         // const timeForMove = (settingsRef.current.children[3].children[1] as HTMLInputElement).value
 
         // получаем тип игры
-        const typeGame = (settingsRef.current.children[3].children[1] as HTMLInputElement).value
+        const typeGame = (settingsRef.current.children[2].children[1] as HTMLInputElement).value
 
         // // получаем жульничевство
         // let isScam:  boolean = false
@@ -112,15 +112,7 @@ export const SettingsPanel = ({}) => {
                     min={36}
                     startNumber={36}
                     step={4}
-                    width={100}
-                    heigth={20}
-                ></InputNumber></Setting>
-                <Setting title='Количество игроков:'><InputNumber
-                    max={2}
-                    min={2}
-                    startNumber={2}
-                    step={1}
-                    width={100}
+                    width={30}
                     heigth={20}
                 ></InputNumber></Setting>
                 <Setting title='Козырь:'><SelectOption

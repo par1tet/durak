@@ -13,10 +13,16 @@ type ButtonsProps = {
 
 export const Buttons = ({buttons, left, top}: ButtonsProps) => {
     const buttonsRef = useRef<HTMLDivElement>(null)
+
     useEffect(() => {
         if (buttonsRef.current === null) return undefined
-        buttonsRef.current.style.left = `${(left as number)}px`
-        buttonsRef.current.style.top = `${(top as number)}px`
+        
+        if(left || left === 0){
+            buttonsRef.current.style.left = `${(left as number)}px`
+        }
+        if (top || top === 0){
+            buttonsRef.current.style.top = `${(top as number)}px`
+        }
     }, [])
 
     return (<div

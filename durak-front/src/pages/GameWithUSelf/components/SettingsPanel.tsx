@@ -112,7 +112,7 @@ export const SettingsPanel = ({}) => {
                     min={36}
                     startNumber={36}
                     step={4}
-                    width={100}
+                    width={30}
                     heigth={20}
                 ></InputNumber></Setting>
                 <Setting title='Количество игроков:'><InputNumber
@@ -120,7 +120,7 @@ export const SettingsPanel = ({}) => {
                     min={2}
                     startNumber={2}
                     step={1}
-                    width={100}
+                    width={22}
                     heigth={20}
                 ></InputNumber></Setting>
                 <Setting title='Козырь:'><SelectOption

@@ -33,7 +33,6 @@ export const MainPage = ({}) => {
                     }
                 },
             ]}
-            left={200}
             top={(window.innerHeight / 2)-250}
             ></Buttons>
         </>
