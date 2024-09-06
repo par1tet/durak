@@ -40,3 +40,26 @@
 .creategame__settings > div > span {
     font-weight: 600;
 }
+
+.error-text {
+    position: relative;
+
+    background-color: rgba(53, 53, 53, 0.705);
+    border-radius: 6px;
+
+    color: rgb(102, 204, 110);
+    font-weight: 900;
+
+    top: 180px;
+}
+
+.error-text > span {
+    padding: 10px;
+
+}
+
+.error-text > span:empty {
+    opacity: 0;
+    background-color: rgba(255, 14, 14, 0.705);
+    padding: 0px;
+}

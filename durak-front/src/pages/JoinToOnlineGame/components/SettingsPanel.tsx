@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 export const SettingsPanel = ({}) => {
     const myRootStore: rootStore = useStore()
     const settingsRef = useRef<HTMLDivElement>(null)
+    const errorTextRef = useRef<HTMLSpanElement>(null)
     const navigate = useNavigate()
 
     async function handleStart(){
@@ -20,7 +21,10 @@ export const SettingsPanel = ({}) => {
 
         const token = (settingsRef.current.children[0] as HTMLInputElement).value
         const data = await canToJoinGame(token)
-        if(data){
+        if(data === 'not found'){
+            if(errorTextRef.current == undefined) return 0
+            errorTextRef.current.innerHTML = 'Такого токена не существует'
+        }else if(data){
             await socket.connect()
             const gameData = (await getGameData(token))
 
@@ -53,11 +57,17 @@ export const SettingsPanel = ({}) => {
             })
 
             navigate('/onlinegame?isSetting=false')
+        }else if(data === false){
+            if(errorTextRef.current == undefined) return 0
+            errorTextRef.current.innerHTML = 'Игра уже запущена'
         }
     }
 
     return (<>
         <div className={cl['creategame']}>
+            <div className={cl['error-text']}>
+                <span ref={errorTextRef}></span>
+            </div>
             <div className={cl['creategame__settings']} ref={settingsRef}>
                 <Input width={320} height={120} center={true}></Input>
             </div>

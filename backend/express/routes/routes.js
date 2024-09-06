@@ -10,7 +10,6 @@ router.get('/', (req, res) => {
 
 router.post('/creategame', async (req, res) => {
     const token = crypto.randomBytes(8).toString('hex').toUpperCase()
-    console.log(req.body.trumpCart)
     await createGame(
         token,
         req.body.carts,
@@ -21,25 +20,17 @@ router.post('/creategame', async (req, res) => {
         req.body.trumpCart,
         req.body.maxPlayers
     )
-    console.log(req.body.players)
-
-    // await (await getGames()).forEach(game => {
-    //     console.log(game.id)
-    //     console.log(game.token)
-    //     console.log(game.players)
-    //     console.log(game.trump)
-    //     console.log(game.whoMove)
-    //     console.log(game.typeGame)
-    //     console.log(game.batleCarts)
-    //     console.log(game.winners)
-    // })
     res.send({'token':token})
 })
 
 router.post('/jointogame', async (req, res) => {
     console.log('token', req.body.token)
 
-    res.send({'result':(await canToJoinToGame(req.body.token))})
+    try{
+        res.send({'result':(await canToJoinToGame(req.body.token))})
+    }catch{
+        res.send({'result':'not found'})
+    }
 })
 
 router.post('/getgame', async (req, res) => {
