@@ -59,7 +59,7 @@ export const OnlineAnotherPlayer = ({player, isMove}: onlineAnotherPlayerProps) 
             })()}
         </div>
         <div className={cl['carts']}>
-            <img src={`/src/assets/images/carts/shirt.png`} alt="shirt"/>
+            <img src={new URL(`/src/assets/images/carts/shirt.png`, import.meta.url).toString()} alt="shirt"/>
             <span>{player.carts.length}</span>
         </div>
     </div>)

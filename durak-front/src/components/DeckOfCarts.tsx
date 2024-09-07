@@ -21,7 +21,7 @@ export const DeckOfCarts = observer(({carts, onDragEnd, onClick}: propsDeck) => 
         <div className={cl.deck}>
             {carts.map((cart: Cart) =>
                 <img
-                    src={`/src/assets/images/carts/${cart.level}${cart.suit}.png`}
+                    src={new URL(`/src/assets/images/carts/${cart.level}${cart.suit}.png`, import.meta.url).toString()}
                     key={`${cart.level}${cart.suit}`}
                     className={cl['deck-img']}
                     onDragEnd={e => onDragEnd(e, cart)}

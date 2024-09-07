@@ -105,7 +105,7 @@ export const BattleCards = observer(({batleCards, store, myRootStore, setRerende
                 if(carts.length === 1){
                     return (<div key={index} className={cl['battlecard-cards']}>
                         <img
-                        src={`/src/assets/images/carts/${carts[0].level}${carts[0].suit}.png`}
+                        src={new URL(`/src/assets/images/carts/${carts[0].level}${carts[0].suit}.png`, import.meta.url).toString()}
                         data-type='battlecard'
                         data-index={index}
                         className={cl['battlecards-cardattack']}
@@ -116,12 +116,12 @@ export const BattleCards = observer(({batleCards, store, myRootStore, setRerende
                 }else{
                     return (<div key={index} className={cl['battlecard-cards']}>
                         <img
-                            src={`/src/assets/images/carts/${carts[0].level}${carts[0].suit}.png`}
+                            src={new URL(`/src/assets/images/carts/${carts[0].level}${carts[0].suit}.png`, import.meta.url).toString()}
                             className={cl['battlecards-cardattack']}
                             draggable
                         />
                         <img
-                            src={`/src/assets/images/carts/${carts[1].level}${carts[1].suit}.png`}
+                            src={new URL(`/src/assets/images/carts/${carts[1].level}${carts[0].suit}.png`, import.meta.url).toString()}
                             className={cl['battlecards-carddef']}
                             draggable
                         />
