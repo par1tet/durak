@@ -17,6 +17,7 @@ export class PlayerR extends Player{
     sortCarts(trump: Suit): void {
         this.carts.sort((cartA: Cart, cartB: Cart) => cartB.level - cartA.level)
         .sort((cartA: Cart, cartB: Cart) => {
+            cartA;
             if (cartB.suit === trump){
                 return 1
             }else{

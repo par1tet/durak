@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Cart } from "../abstractClasses/cart";
 import { CartR } from "../classes/cart";
-import { Suit } from "../enums/suit";
 import { fromNumberSuitToSuit } from "../functions/fromNumberSuitToSuit.ts";
 import { Player } from "../abstractClasses/player.ts";
 import { PlayerR } from "../classes/player.ts";

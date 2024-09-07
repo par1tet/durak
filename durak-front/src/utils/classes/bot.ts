@@ -1,7 +1,6 @@
 import { Bot } from "../abstractClasses/bot";
 import { Player } from "../abstractClasses/player";
 import { Game } from "../abstractClasses/game";
-import { toJS } from "mobx";
 
 export class BotR extends Bot{
     constructor(){
@@ -36,5 +35,8 @@ export class BotR extends Bot{
             }
         }
     }
-    retr(player: Player, game: Game){}
+    retr(player: Player, game: Game){
+        player;
+        game;
+    }
 }

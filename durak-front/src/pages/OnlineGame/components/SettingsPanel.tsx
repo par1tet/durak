@@ -14,10 +14,9 @@ import cl from './../OnlineGame.module.css';
 import { Setting } from "./Setting.tsx";
 import { createGame } from "../../../utils/api/createGame.ts";
 import { socket } from "../../../socket/socket.ts";
-import { toJS } from "mobx";
 
 export const SettingsPanel = ({}) => {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const setSearchParams = useSearchParams()[1];
     const myRootStore: rootStore = useStore()
     const settingsRef = useRef<HTMLDivElement>(null)
 

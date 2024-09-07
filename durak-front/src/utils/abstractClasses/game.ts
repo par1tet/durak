@@ -21,29 +21,36 @@ export abstract class Game{
         typeGame: string,
         trumpCart: Cart | null,
         batleCards: (Cart | null)[]
-    ){}
+    ){carts;players;trump;whoMove;typeGame;trumpCart;batleCards}
     // change batle cards
-    changeBatleCards(indexOfBatleCard: number, cart: Cart): number {return -1}
+    changeBatleCards(indexOfBatleCard: number, cart: Cart): number {
+        cart;
+        indexOfBatleCard;return -1
+    }
     // change def cards
-    changeDefCards(indexOfBatleCard: number, cart: Cart): number{return -1}
+    changeDefCards(indexOfBatleCard: number, cart: Cart): number{
+        indexOfBatleCard;
+        cart;
+        return -1
+    }
     // set who move
-    setWhoMove(prevFunc: (prev:number) => number): void{}
+    setWhoMove(prevFunc: (prev:number) => number): void{prevFunc}
     // get next who move
-    getNextWhoMove(prevFunc: (prev:number) => number): number{return 0}
+    getNextWhoMove(prevFunc: (prev:number) => number): number{prevFunc;return 0}
     // clear batle cards
     clearBatleCarts(): void {}
     // is clean batle cards
     isCleanBatleCards(): boolean {return true}
     // replish cart for player
-    replenishCards(playerIndex: number): void{}
+    replenishCards(playerIndex: number): void{playerIndex}
     // check is beaten cards on batle cards
     isBeaten(): boolean {return false}
     // check winners
     checkWinners(): void {}
     // check player is winner
-    isWinner(player: Player): boolean{return false}
+    isWinner(player: Player): boolean{player;return false}
     // get def player
     getDefPlayerIndex(): number{ return 1 }
     // add def carts for battle cart
-    addDefCart(indexOfBatleCard: number, cart: Cart){}
+    addDefCart(indexOfBatleCard: number, cart: Cart){indexOfBatleCard;cart}
 }

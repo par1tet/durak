@@ -168,7 +168,7 @@ export class GameR extends Game {
     }
 
     checkWinners() {
-        this.players.forEach((player: Player, index: number) => {
+        this.players.forEach((player: Player) => {
             if(player.carts.length === 0 && this.carts.length === 0 && !(this.trumpCart) && !(player.isWin)){
                 player.isWin = true
                 this.winners.push(player)

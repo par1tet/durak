@@ -8,7 +8,6 @@ import { ButtonAction } from "../../../components/UI/button/ButtonAction/ButtonA
 import { useStore } from "../../../hooks/useStore";
 import { rootStore } from "../../../store/rootStore";
 import { stateOfPlayer } from "../../../utils/enums/stateOfPlayer";
-import { createArrayRefs } from "../../../utils/functions/createArrayRefs";
 import cl from './../GameWithBots.module.css';
 import { BotElement } from "../../../components/BotElement";
 

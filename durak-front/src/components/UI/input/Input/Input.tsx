@@ -1,5 +1,5 @@
 import cl from './Input.module.css'
-import { ForwardedRef, forwardRef, useEffect } from 'react'
+import { forwardRef } from 'react'
 
 type propsInput = {
     width?: number,

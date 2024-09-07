@@ -85,7 +85,7 @@ export const PlayerElement = observer(forwardRef(({
     const myRootStore: rootStore = useStore()
 
     function handletClick(e: React.MouseEvent<HTMLImageElement, MouseEvent>, cart: Cart): undefined{
-        // e.preventDefault();
+        e;
         myRootStore.playerCart.changeCurrent(cart, player)
     }
 

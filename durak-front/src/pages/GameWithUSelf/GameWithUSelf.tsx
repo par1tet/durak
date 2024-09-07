@@ -1,13 +1,10 @@
 import { useSearchParams } from "react-router-dom";
 // import cl from './GameWithUSelf.module.css';
-import { useStore } from "../../hooks/useStore.ts";
-import { rootStore } from "../../store/rootStore.ts";
 import { SettingsPanel } from "./components/SettingsPanel.tsx";
 import { Game } from "./components/Game.tsx";
 
 export const GameWithUSelf = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const myRootStore: rootStore = useStore()
+    const [searchParams] = useSearchParams();
 
     // useEffect(() => {
     //     console.log(toJS(myRootStore.gameWithYourself.carts))

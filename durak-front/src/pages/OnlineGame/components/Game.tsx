@@ -165,7 +165,7 @@ export const Game = observer(({}) => {
     }
 
     useEffect(() => {
-        socket.on('moveOfPlayer', async data => {
+        socket.on('moveOfPlayer', async () => {
             const newData = (await getGameData(myRootStore.onlineGame.token))
             myRootStore.onlineGame.createOnlineGame(
                 newData.carts,
@@ -180,7 +180,7 @@ export const Game = observer(({}) => {
             )
         })
 
-        socket.on('joinNewPlayer', async data => {
+        socket.on('joinNewPlayer', async () => {
             const newData = (await getGameData(myRootStore.onlineGame.token))
 
             // обновляем стейт когда получаешь обновленые данные
@@ -241,9 +241,7 @@ export const Game = observer(({}) => {
         }
     }, [myRootStore.onlineGame.batleCards])
 
-    function handleAction(e: React.MouseEvent<HTMLButtonElement>){
-        const playerIndex:number = +(e.target as any).attributes.getNamedItem('data-playerindex').value
-
+    function handleAction(){
         if  (myRootStore.onlineGame.getDefPlayerIndex() === myRootStore.onlineGame.pointOfView)
         {
             // если защищающийся игрок
@@ -384,7 +382,7 @@ export const Game = observer(({}) => {
                 </div>)
             }else{
                 return (
-                    <BattleCards batleCards={toJS(myRootStore.onlineGame.batleCards)} store={myRootStore.onlineGame} myRootStore={myRootStore} setRerenderKey={setPlayerRerenderKey} onClickDecorator={e => {
+                    <BattleCards batleCards={toJS(myRootStore.onlineGame.batleCards)} store={myRootStore.onlineGame} myRootStore={myRootStore} setRerenderKey={setPlayerRerenderKey} onClickDecorator={() => {
                         // отправляем обнову на серв
                         socket.emit('movePlayer', {
                             token: myRootStore.onlineGame.token,

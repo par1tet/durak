@@ -14,7 +14,7 @@ import cl from './../GameWithUSelf.module.css';
 import { Setting } from "./Setting.tsx";
 
 export const SettingsPanel = ({}) => {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const setSearchParams = useSearchParams()[1];
     const myRootStore: rootStore = useStore()
     const settingsRef = useRef<HTMLDivElement>(null)
 

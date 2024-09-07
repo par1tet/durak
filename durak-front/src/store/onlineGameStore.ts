@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, override } from "mobx";
+import { makeObservable, observable, action } from "mobx";
 import { GameR } from "../utils/classes/game.ts";
 import { Suit } from "../utils/enums/suit.ts";
 import { Player } from "../utils/abstractClasses/player.ts";

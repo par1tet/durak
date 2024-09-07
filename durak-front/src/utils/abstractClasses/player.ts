@@ -7,8 +7,8 @@ export abstract class Player{
     nickName: string = ''
     isWin: boolean = false
 
-    removeCart(cart: Cart): void {}
-    sortCarts(trump: Suit): void{}
+    removeCart(cart: Cart): void {cart}
+    sortCarts(trump: Suit): void {trump}
 
     toString?(): string
 }
