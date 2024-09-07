@@ -56,7 +56,7 @@ export const Game = observer(({}) => {
                             if((cart as any).length === 1){
                                 return (cart as any).toString()
                             }else{
-                                return (cart as any)[0].toString() + '|' + (cart as any)[0].toString()
+                                return (cart as any)[0].toString() + '|' + (cart as any)[1].toString()
                             }
                         }else{
                             return '0'
@@ -141,7 +141,7 @@ export const Game = observer(({}) => {
                             if((cart as any).length === 1){
                                 return (cart as any).toString()
                             }else{
-                                return (cart as any)[0].toString() + '|' + (cart as any)[0].toString()
+                                return (cart as any)[0].toString() + '|' + (cart as any)[1].toString()
                             }
                         }else{
                             return '0'
@@ -294,7 +294,7 @@ export const Game = observer(({}) => {
                         if((cart as any).length === 1){
                             return (cart as any).toString()
                         }else{
-                            return (cart as any)[0].toString() + '|' + (cart as any)[0].toString()
+                            return (cart as any)[0].toString() + '|' + (cart as any)[1].toString()
                         }
                     }else{
                         return '0'
@@ -344,7 +344,7 @@ export const Game = observer(({}) => {
                         if((cart as any).length === 1){
                             return (cart as any).toString()
                         }else{
-                            return (cart as any)[0].toString() + '|' + (cart as any)[0].toString()
+                            return (cart as any)[0].toString() + '|' + (cart as any)[1].toString()
                         }
                     }else{
                         return '0'
@@ -384,7 +384,35 @@ export const Game = observer(({}) => {
                 </div>)
             }else{
                 return (
-                    <BattleCards batleCards={myRootStore.onlineGame.batleCards}></BattleCards>
+                    <BattleCards batleCards={toJS(myRootStore.onlineGame.batleCards)} store={myRootStore.onlineGame} myRootStore={myRootStore} setRerenderKey={setPlayerRerenderKey} onClickDecorator={e => {
+                        // отправляем обнову на серв
+                        socket.emit('movePlayer', {
+                            token: myRootStore.onlineGame.token,
+                            batleCarts: myRootStore.onlineGame.batleCards
+                            .map((cart: Cart[] | null) => {
+                                if(cart){
+                                    if((cart as any).length === 1){
+                                        return (cart as any).toString()
+                                    }else{
+                                        return (cart as any)[0].toString() + '|' + (cart as any)[1].toString()
+                                    }
+                                }else{
+                                    return '0'
+                                }
+                            }).join('/'),
+                            carts: myRootStore.onlineGame.carts.join('/'),
+                            players: myRootStore.onlineGame.players.map((player: Player) => {
+                                if(player.carts.length === 0){
+                                    return '0' + '(' + player.nickName
+                                }else{
+                                    return player.carts.join('/') + '(' + player.nickName
+                                }
+                            }).join('|'),
+                            whoMove: myRootStore.onlineGame.whoMove,
+                            winners: myRootStore.onlineGame.winners.join('|'),
+                            trumpCart: myRootStore.onlineGame.trumpCart != undefined ? (myRootStore.onlineGame.trumpCart as any).toString() : '',
+                        })
+                    }}></BattleCards>
                 )
             }
         })()}

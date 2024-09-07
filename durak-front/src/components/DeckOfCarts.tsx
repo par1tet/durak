@@ -1,13 +1,17 @@
 import cl from './DeckOfCarts.module.css'
 import { Cart } from '../utils/abstractClasses/cart'
 import { observer } from 'mobx-react-lite'
+import { useRef } from 'react'
 
 type propsDeck = {
     carts: Cart[],
-    onDragEnd: (e: React.DragEvent<HTMLImageElement>, cart: Cart) => undefined
+    onDragEnd: (e: React.DragEvent<HTMLImageElement>, cart: Cart) => undefined,
+    onClick: (e: React.MouseEvent<HTMLImageElement, MouseEvent>, element: Cart) => undefined,
 }
 
-export const DeckOfCarts = observer(({carts, onDragEnd}: propsDeck) => {
+export const DeckOfCarts = observer(({carts, onDragEnd, onClick}: propsDeck) => {
+    const imgRef = useRef(null)
+
     // carts.map(cart =>{
     //     console.log(cart.level)
     //     console.log(cart.suit)
@@ -21,6 +25,10 @@ export const DeckOfCarts = observer(({carts, onDragEnd}: propsDeck) => {
                     key={`${cart.level}${cart.suit}`}
                     className={cl['deck-img']}
                     onDragEnd={e => onDragEnd(e, cart)}
+                    ref={imgRef}
+                    onClick={e => {
+                        if(imgRef.current)onClick(e, cart)
+                    }}
                     draggable
                 />
             )}

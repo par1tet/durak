@@ -140,7 +140,8 @@ export const Game = observer(({}) => {
             trumpCart={toJS(myRootStore.gameWithBots.trumpCart)}
             trump={toJS(myRootStore.gameWithBots.trump)}
         ></TrumpElement>
-        <BattleCards batleCards={toJS(myRootStore.gameWithBots.batleCards)}></BattleCards>
+        <BattleCards batleCards={toJS(myRootStore.gameWithBots.batleCards)} store={myRootStore.gameWithBots} myRootStore={myRootStore} setRerenderKey={setPlayerRerenderKey}></BattleCards>
+
         <div className={cl["otherplayers"]}>
             {toJS(myRootStore.gameWithBots.players).map((player, index) => {
                 if (index === 0){

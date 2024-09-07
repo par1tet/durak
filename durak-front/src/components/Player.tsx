@@ -8,6 +8,8 @@ import { Cart } from "../utils/abstractClasses/cart"
 import { stateOfPlayer } from "../utils/enums/stateOfPlayer"
 import { forwardRef } from "react"
 import { onlineGameStore } from "../store/onlineGameStore"
+import { useStore } from "../hooks/useStore"
+import { rootStore } from "../store/rootStore"
 
 type propsPlayer = {
     player: Player,
@@ -76,10 +78,17 @@ export const PlayerElement = observer(forwardRef(({
         }
         store.checkWinners()
         player.sortCarts(store.trump)
-        setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx ебучий это не делает
+        setRerenderKey((prev: number) => prev + 1)// специально рендерим компонент, так как mobx это не делает
     }
 }: propsPlayer, ref:React.ForwardedRef<HTMLDivElement>) => {
     store.checkWinners()
+    const myRootStore: rootStore = useStore()
+
+    function handletClick(e: React.MouseEvent<HTMLImageElement, MouseEvent>, cart: Cart): undefined{
+        // e.preventDefault();
+        myRootStore.playerCart.changeCurrent(cart, player)
+    }
+
     if(store instanceof onlineGameStore){
         if(store.maxPlayers !== store.players.length){
             return (<div className={cl['player']} key={rerenderKey} ref={ref}>
@@ -91,7 +100,7 @@ export const PlayerElement = observer(forwardRef(({
                     Ожидает
                 </span>
             </div>
-            <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd}></DeckOfCarts>
+            <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd} onClick={handletClick}></DeckOfCarts>
             </div>)
         }
     }
@@ -116,7 +125,7 @@ export const PlayerElement = observer(forwardRef(({
                 Дурак
             </span>
         </div>
-        <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd}></DeckOfCarts>
+        <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd} onClick={handletClick}></DeckOfCarts>
         </div>)
     }else{
         return (<div className={cl['player']} key={rerenderKey} ref={ref}>
@@ -156,7 +165,7 @@ export const PlayerElement = observer(forwardRef(({
                 }
             })()}
         </div>
-        <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd}></DeckOfCarts>
+        <DeckOfCarts carts={player.carts} onDragEnd={handleDragEnd} onClick={handletClick}></DeckOfCarts>
     </div>)
     }
 }))

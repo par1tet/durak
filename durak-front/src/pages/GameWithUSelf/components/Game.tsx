@@ -135,7 +135,7 @@ export const Game = observer(({}) => {
             trumpCart={toJS(myRootStore.gameWithYourself.trumpCart)}
             trump={toJS(myRootStore.gameWithYourself.trump)}
         ></TrumpElement>
-        <BattleCards batleCards={toJS(myRootStore.gameWithYourself.batleCards)}></BattleCards>
+        <BattleCards batleCards={toJS(myRootStore.gameWithYourself.batleCards)} store={myRootStore.gameWithYourself} myRootStore={myRootStore} setRerenderKey={setPlayerRerenderKey}></BattleCards>
         <div className={cl["otherplayers"]}>
             {toJS(myRootStore.gameWithYourself.players).map((player, index) => {
                 if (index === 0){
@@ -167,7 +167,6 @@ export const Game = observer(({}) => {
                                 dataPlayerindex={index}
                             ></ButtonAction>
                         </div>
-
                     )
                 }
             })}
