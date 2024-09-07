@@ -1,0 +1,26 @@
+.deck {
+    display: flex;
+
+    flex-direction: row;
+}
+
+.deck-img {
+    width: 80px;
+    margin-right: -36px;
+
+    transition: margin 0.25s;
+}
+
+.deck-img:hover {
+    margin-top: -13px;
+    margin-bottom: 13px;
+}
+
+@media screen and (max-width: 480px) {
+    .deck-img {
+        width: 70px;
+        margin-right: -50px;
+    
+        transition: margin 0.25s;
+    }
+}

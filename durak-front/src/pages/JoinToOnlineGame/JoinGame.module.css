@@ -1,0 +1,64 @@
+.creategame {
+    display: flex;
+    position: fixed;
+
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 10px 8px;
+
+    gap: 12px;
+
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 800px;
+    height: 600px;
+}
+
+.creategame > div {
+    margin: 0px auto;
+}
+
+.creategame__settings {
+    display: flex;
+
+    width: 100%;
+
+    gap: 12px;
+    flex-direction: column;
+}
+
+.creategame__settings > div {
+    display: flex;
+    flex-direction: row;
+
+    gap: 8px
+}
+
+.creategame__settings > div > span {
+    font-weight: 600;
+}
+
+.error-text {
+    position: relative;
+
+    background-color: rgba(53, 53, 53, 0.705);
+    border-radius: 6px;
+
+    color: rgb(102, 204, 110);
+    font-weight: 900;
+
+    top: 180px;
+}
+
+.error-text > span {
+    padding: 10px;
+}
+
+.error-text > span:empty {
+    opacity: 0;
+    background-color: rgba(255, 14, 14, 0.705);
+    padding: 0px;
+}

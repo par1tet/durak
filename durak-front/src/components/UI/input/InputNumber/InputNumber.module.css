@@ -1,0 +1,14 @@
+.inputnumber {
+    display: flex;
+
+    border: 1px solid gray;
+    border-radius: 6px;
+
+    padding-left: 6px;
+
+    font-weight: 600;
+}
+
+.inputnumber:focus {
+    outline: 2px solid black;
+}
