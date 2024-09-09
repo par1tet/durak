@@ -15,7 +15,8 @@ export class PlayerR extends Player{
     }
 
     sortCarts(trump: Suit): void {
-        this.carts.sort((cartA: Cart, cartB: Cart) => cartB.level - cartA.level)
+        const tempCarts = this.carts
+        temoCarts.sort((cartA: Cart, cartB: Cart) => cartB.level - cartA.level)
         .sort((cartA: Cart, cartB: Cart) => {
             cartA;
             if (cartB.suit === trump){
@@ -30,6 +31,7 @@ export class PlayerR extends Player{
             }
             return cartB.level - cartA.level
         })
+        this.carts = Array.from(new Set(tempCarts))
     }
 
     toString(): string {
